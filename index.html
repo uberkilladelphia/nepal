@@ -1124,10 +1124,17 @@
     };
 
     function renderTab(key){
-      pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
-    }
+  pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
 
-   function activateTabFromEvent(e){
+  // iOS Safari (особенно landscape): иногда не перерисовывает overflow:auto внутри grid
+  // форсим reflow + сбрасываем скролл, чтобы контент точно "переехал"
+  pane.scrollTop = 0;
+  void pane.offsetHeight;              // force reflow
+  pane.style.webkitTransform = 'translateZ(0)';
+  requestAnimationFrame(() => { pane.style.webkitTransform = ''; });
+}
+
+    function activateTabFromEvent(e){
   const t = e.target.closest('.tab');
   if(!t) return;
 
@@ -1141,11 +1148,38 @@
 }
 
 // iOS/Safari: pointerdown/touchstart срабатывают стабильнее, чем click
-tabsWrap.addEventListener('pointerdown', activateTabFromEvent, { passive:false });
-tabsWrap.addEventListener('touchstart', activateTabFromEvent, { passive:false });
+function activateTab(t){
+  if(!t) return;
+  const key = (t.dataset && t.dataset.tab) ? t.dataset.tab : t.getAttribute('data-tab');
 
-// fallback
-tabsWrap.addEventListener('click', activateTabFromEvent);
+  Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
+
+  // важный момент для iOS: обновим контент на следующем кадре
+  // (после того как :active / :focus обработаются браузером)
+  requestAnimationFrame(() => renderTab(key));
+}
+
+// Вешаем прямые обработчики на каждую вкладку — стабильнее на iOS landscape
+Array.from(tabsWrap.querySelectorAll('.tab')).forEach(tabEl => {
+  tabEl.addEventListener('touchend', (e) => {
+    if (e.cancelable) e.preventDefault();
+    e.stopPropagation();
+    activateTab(tabEl);
+  }, { passive:false });
+
+  tabEl.addEventListener('pointerup', (e) => {
+    if (e.cancelable) e.preventDefault();
+    e.stopPropagation();
+    activateTab(tabEl);
+  }, { passive:false });
+
+  // fallback для десктопа
+  tabEl.addEventListener('click', (e) => {
+    e.stopPropagation();
+    activateTab(tabEl);
+  });
+});
+
 
 
     // default OFF pane content
