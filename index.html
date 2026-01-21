@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Infinite Time Thread</title>
 
-  <!-- PWA (works “no address bar” when installed as app / added to Home Screen) -->
   <meta name="theme-color" content="#050505" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="apple-mobile-web-app-title" content="Infinite Time Thread" />
 
-  <!-- Inline manifest (data URL) -->
   <link rel="manifest" href='data:application/manifest+json,%7B%22name%22%3A%22Infinite%20Time%20Thread%22%2C%22short_name%22%3A%22TimeThread%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23050505%22%2C%22theme_color%22%3A%22%23050505%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520256%2520256%2527%253E%253Crect%2520width%253D%2527256%2527%2520height%253D%2527256%2527%2520rx%253D%252756%2527%2520fill%253D%2527%2523050505%2527%252F%253E%253Cpath%2520d%253D%2527M130%2520228c-44%25200-80-34-80-76%25200-30%252017-53%252043-78%252012-12%252016-28%252017-41%25201-12%25200-24%25200-24s36%252025%252047%252056c3%25209%25205%252018%25204%252027%252011-9%252017-20%252017-20s30%252026%252030%252068c0%252045-34%252088-78%252088z%2527%2520fill%253D%2527%2523FF2E2E%2527%252F%253E%253Cpath%2520d%253D%2527M128%2520206c-28%25200-50-21-50-47%25200-19%252011-33%252028-48%252010-10%252012-19%252013-28%252013%25200%252023%252021%252030%252045c0%25207-2%252014-5%252020%25208-4%252014-11%252018-19%25207%252010%252011%252021%252011%252033%25200%252026-23%252047-50%252047z%2527%2520fill%253D%2527%2523FFFFFF%2527%2520opacity%253D%25270.9%2527%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520256%2520256%2527%253E%253Crect%2520width%253D%2527256%2527%2520height%253D%2527256%2527%2520rx%253D%252756%2527%2520fill%253D%2527%2523050505%2527%252F%253E%253Cpath%2520d%253D%2527M130%2520228c-44%25200-80-34-80-76%25200-30%252017-53%252043-78%252012-12%252016-28%252017-41%25201-12%25200-24%25200-24s36%252025%252047%252056c3%25209%25205%252018%25204%252027%252011-9%252017-20%252017-20s30%252026%252030%252068c0%252045-34%252088-78%252088z%2527%2520fill%253D%2527%2523FF2E2E%2527%252F%253E%253Cpath%2520d%253D%2527M128%2520206c-28%25200-50-21-50-47%25200-19%252011-33%252028-48%252010-10%252012-19%252013-28%252013%25200%252023%252021%252030%252045c0%25207-2%252014-5%252020%25208-4%252014-11%252018-19%25207%252010%252011%252021%252011%252033%25200%252026-23%252047-50%252047z%2527%2520fill%253D%2527%2523FFFFFF%2527%2520opacity%253D%25270.9%2527%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D' />
 
   <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20128%20128%27%3E%3Crect%20width%3D%27128%27%20height%3D%271128%27%20rx%3D%2732%27%20fill%3D%27%23050505%27%2F%3E%3Cpath%20d%3D%27M65%20114c-22%200-40-17-40-38%200-15%209-27%2021-39%206-6%208-14%208-20%200-6%200-12%200-12s18%2013%2024%2028c2%204%203%209%202%2014%206-4%2010-10%2010-10s15%2013%2015%2034c0%2023-17%2043-40%2043z%27%20fill%3D%27%23FF2E2E%27%2F%3E%3Cpath%20d%3D%27M64%20103c-14%200-25-10-25-23%200-10%206-16%2014-24%205-5%206-10%207-14%200%200%2011%2010%2015%2022c0%203-1%206-2%209%204-2%207-5%209-9%203%204%205%2010%205%2016%200%2013-11%2023-23%2023z%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%270.9%27%2F%3E%3C%2Fsvg%3E" />
@@ -35,17 +33,9 @@
       --panel-border: rgba(255,255,255,0.60);
       --panel-text: rgba(255,255,255,0.98);
 
-      --switch-w: 168px;
-      --switch-h: 16px;
-      --switch-pad: 2px;
-
-      --off-ink: #111;
-      --off-bg: #f6f6f6;
-
       --dot: 18px;
       --flame: 30px;
 
-      /* lift years up to avoid collision with info/timeline */
       --year-lift: 14vh;
     }
 
@@ -79,322 +69,6 @@
       --panel-border: rgba(0,0,0,0.30);
       --panel-text: rgba(255,46,46,0.98);
     }
-
-    /* ========= SMALL SWITCH (TOP-LEFT) ========= */
-    .topbar{
-      position:fixed;
-      top:14px;
-      left:14px;
-      z-index:200;
-      pointer-events:auto;
-    }
-
-    .ios-switch{
-      width: var(--switch-w);
-      height: var(--switch-h);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      pointer-events:auto;
-    }
-
-    .ios-switch .label{
-      font-size: 10px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.80);
-      display:flex;
-      gap:8px;
-      align-items:center;
-      pointer-events:none;
-      line-height:1;
-      font-family: 'Fira Code', monospace;
-      font-weight:700;
-    }
-
-    .ios-switch .label span{
-      opacity:0.55;
-      transition: opacity .18s steps(12,end), color .18s steps(12,end);
-    }
-    .ios-switch[data-state="on"] .label .on{ opacity:1; color: rgba(255,255,255,0.98); }
-    .ios-switch[data-state="on"] .label .off{ opacity:0.35; }
-    .ios-switch[data-state="off"] .label .off{ opacity:1; color: rgba(255,255,255,0.98); }
-    .ios-switch[data-state="off"] .label .on{ opacity:0.35; }
-
-    .track{
-      position: relative;
-      width: calc(var(--switch-w) - 64px);
-      height: var(--switch-h);
-      border-radius: 999px;
-      background: rgba(255,255,255,0.14);
-      border: 1px solid rgba(255,255,255,0.30);
-      overflow:hidden;
-      flex: 0 0 auto;
-      box-shadow:none !important;
-    }
-
-    .thumb{
-      position:absolute;
-      top: var(--switch-pad);
-      left: var(--switch-pad);
-      width: calc(50% - (var(--switch-pad) * 2));
-      height: calc(100% - (var(--switch-pad) * 2));
-      border-radius: 999px;
-      background: rgba(255,255,255,0.92);
-      transition: transform .22s steps(12,end), background .18s steps(12,end);
-      transform: translateX(0);
-      box-shadow:none !important;
-    }
-
-    .ios-switch[data-state="on"] .thumb{
-      transform: translateX(100%);
-      background: rgba(255,46,46,0.95);
-    }
-
-    .track-btn{
-      position:absolute;
-      inset:0;
-      background: transparent;
-      border:0;
-      cursor:pointer;
-      padding:0;
-    }
-
-    /* readable switch on OFF */
-    body.mode-off .ios-switch .label{ color: rgba(0,0,0,0.92); }
-    body.mode-off .track{ background: rgba(0,0,0,0.10); border-color: rgba(0,0,0,0.42); }
-    body.mode-off .thumb{ background: rgba(255,255,255,0.98); border: 1px solid rgba(0,0,0,0.35); }
-    body.mode-off .ios-switch[data-state="on"] .thumb{ background: rgba(255,46,46,0.96); border-color: rgba(0,0,0,0.30); }
-
-    /* ========= OFF SCENE (PIXEL DESKTOP + MESSENGER) ========= */
-    .off-scene{
-      position:fixed;
-      inset:0;
-      z-index:50;
-      display:none;
-      pointer-events:none;
-      height: calc(var(--vh, 1vh) * 100);
-    }
-    body.mode-off .off-scene{
-      display:block;
-      pointer-events:auto;
-    }
-    body.mode-off .on-scene{
-      opacity:0;
-      pointer-events:none;
-    }
-
-    .pixel-desktop{
-      position:absolute;
-      inset:0;
-      background:
-        linear-gradient(0deg, rgba(0,0,0,0.06), rgba(0,0,0,0.06)),
-        repeating-linear-gradient(90deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 3px),
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 3px),
-        var(--off-bg);
-      image-rendering: pixelated;
-      filter: saturate(0.95);
-    }
-
-    .pixel-taskbar{
-      position:absolute;
-      left:0;
-      right:0;
-      bottom:0;
-      height: 44px;
-      background: #e9e9e9;
-      border-top: 3px solid #cfcfcf;
-      box-shadow: inset 0 2px 0 rgba(255,255,255,0.6);
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 0 10px;
-      font-family: 'Fira Code', monospace;
-      font-size: 12px;
-      color:#1a1a1a;
-      image-rendering: pixelated;
-    }
-    .pixel-start{
-      background:#fff;
-      border:2px solid #1a1a1a;
-      padding: 6px 10px;
-      box-shadow: 2px 2px 0 #1a1a1a;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      font-weight:700;
-    }
-    .pixel-clock{
-      margin-left:auto;
-      background:#fff;
-      border:2px solid #1a1a1a;
-      padding: 6px 10px;
-      box-shadow: 2px 2px 0 #1a1a1a;
-    }
-
-    .messenger-window{
-      position:absolute;
-      left:50%;
-      top:52%;
-      transform:translate(-50%,-50%);
-      width: min(980px, 92vw);
-      height: min(560px, 64vh);
-      background:#ffffff;
-      border:4px solid var(--red);
-      box-shadow: 8px 8px 0 rgba(0,0,0,0.85);
-      image-rendering: pixelated;
-      font-family: 'Fira Code', monospace;
-      color:#111;
-      display:flex;
-      flex-direction:column;
-    }
-
-    .messenger-titlebar{
-      height:44px;
-      background: #fff;
-      border-bottom: 3px solid #111;
-      display:flex;
-      align-items:center;
-      padding: 0 12px;
-      gap:10px;
-      font-weight:800;
-      letter-spacing:0.14em;
-      text-transform:uppercase;
-    }
-    .win-dots{ display:flex; gap:8px; margin-left:auto; }
-    .dot{ width:12px; height:12px; background:#111; box-shadow: 2px 2px 0 #111; }
-    .dot.red{ background: var(--red); box-shadow: 2px 2px 0 #111; }
-
-    .messenger-body{
-      flex:1;
-      display:grid;
-      grid-template-columns: 320px 1fr;
-      min-height:0;
-    }
-
-    .sidebar{
-      border-right: 3px solid #111;
-      background:
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.04) 0 1px, transparent 1px 3px),
-        #fdfdfd;
-      padding: 10px;
-      overflow:auto;
-    }
-    .tab{
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      padding: 8px 10px;
-      margin-bottom: 10px;
-      background:#fff;
-      font-weight:800;
-      letter-spacing:0.06em;
-      cursor:pointer;
-      user-select:none;
-      transition: transform .14s steps(12,end);
-    }
-    .tab:active{ transform: translate(1px,1px); }
-    .tab.active{
-      border-color: var(--red);
-      box-shadow: 2px 2px 0 #111, 0 0 0 2px rgba(255,46,46,0.18) inset;
-    }
-
-    .pane{
-      padding: 12px;
-      overflow:auto;
-      background:
-        repeating-linear-gradient(0deg, rgba(0,0,0,0.03) 0 1px, transparent 1px 3px),
-        #ffffff;
-      min-height:0;
-      position:relative;
-    }
-    .pane-title{
-      font-weight:900;
-      letter-spacing:0.14em;
-      text-transform:uppercase;
-      font-size:12px;
-      margin: 2px 0 10px;
-      color:#111;
-    }
-    .pane-card{
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      background:#fff;
-      padding: 12px;
-      line-height:1.25;
-      font-size: 12px;
-    }
-
-    .pixel-bullets{
-      margin: 10px 0 0;
-      padding: 0;
-      list-style:none;
-    }
-    .pixel-bullets li{
-      margin: 8px 0;
-      padding-left: 14px;
-      position:relative;
-    }
-    .pixel-bullets li::before{
-      content:"■";
-      position:absolute;
-      left:0;
-      top:0;
-      color: var(--red);
-    }
-
-    .compose{
-      height: 56px;
-      border-top: 3px solid #111;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      padding: 0 12px;
-      background:#fff;
-    }
-    .input{
-      flex:1;
-      height: 34px;
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      padding: 0 10px;
-      display:flex;
-      align-items:center;
-      font-size: 12px;
-      color:#777;
-    }
-    .send{
-      width: 92px;
-      height: 34px;
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      background: var(--red);
-      color:#fff;
-      font-weight:900;
-      letter-spacing:0.14em;
-      text-transform:uppercase;
-      font-size: 12px;
-    }
-
-    /* Random pixel slogans */
-    .slogan{
-      position:absolute;
-      font-family:'Fira Code', monospace;
-      font-size: 12px;
-      font-weight:900;
-      letter-spacing:0.10em;
-      text-transform:uppercase;
-      padding: 6px 8px;
-      background:#fff;
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      color: var(--red);
-      image-rendering: pixelated;
-      white-space:nowrap;
-      pointer-events:none;
-      opacity:0;
-      transform: translateY(2px);
-    }
-    .slogan.on{ opacity:1; transform: translateY(0); }
-    body.mode-off .slogan{ transition: opacity .20s steps(12,end), transform .20s steps(12,end); }
 
     /* ========= ON SCENE (TIMELINE) ========= */
     .on-scene{
@@ -445,11 +119,11 @@
           rgba(0,0,0,0.92));
     }
 
-    /* NEW: floating 3D cards (above video, behind everything else) */
+    /* floating 3D cards */
     .float-cards{
       position:fixed;
       inset:0;
-      z-index:3; /* above video/vignette (2), below fire (4) and all UI */
+      z-index:3;
       pointer-events:none;
       overflow:hidden;
       perspective: 1200px;
@@ -511,20 +185,18 @@
       transform: translateZ(24px);
       user-select:none;
     }
-
     .float-card .slot img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius: 12px;
-  display:block;
-}
-
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      border-radius: 12px;
+      display:block;
+    }
     @media (prefers-reduced-motion: reduce){
       .float-cards{ display:none; }
     }
 
-    /* keep fire glued to bottom (no floating) */
+    /* ASCII FIRE */
     .ascii-fire{
       position:absolute;
       left:0;
@@ -548,6 +220,121 @@
       text-align: left;
     }
 
+    /* OFF tab content styles (reused inside panel body) */
+    .pm-two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .pm-col{
+      border:2px solid #111;
+      box-shadow: 2px 2px 0 #111;
+      background:#fff;
+      padding: 10px;
+      font-size: 12px;
+      line-height:1.25;
+      color:#111;
+    }
+    .pm-col-title{
+      font-weight:900;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color: var(--red);
+      font-size: 11px;
+      margin-bottom:8px;
+    }
+    @media (max-width: 560px){
+      .pm-two-col{ grid-template-columns: 1fr; }
+    }
+
+    .pm-grid4{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+      margin-top:10px;
+    }
+    .pm-box{
+      border:2px solid #111;
+      box-shadow: 2px 2px 0 #111;
+      background:#fff;
+      padding: 10px;
+      font-size: 12px;
+      line-height:1.25;
+      min-height: 92px;
+      color:#111;
+    }
+    .pm-box-title{
+      font-weight:900;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color: var(--red);
+      font-size: 11px;
+      margin-bottom:8px;
+    }
+    @media (max-width: 560px){
+      .pm-grid4{ grid-template-columns: 1fr; }
+    }
+
+    .pm-quote{
+      margin-top:10px;
+      border:2px solid #111;
+      box-shadow: 2px 2px 0 #111;
+      background:#fff;
+      padding: 12px;
+      position:relative;
+      font-size: 12px;
+      line-height:1.25;
+      color:#111;
+    }
+    .pm-quote::before{
+      content:"QUOTE";
+      position:absolute;
+      top:-10px;
+      left:10px;
+      background:#fff;
+      padding:0 6px;
+      font-weight:900;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color: var(--red);
+      font-size:10px;
+    }
+    .pm-quote-text{
+      font-weight:800;
+      color:#111;
+    }
+    .pm-quote-text::before{ content:"“"; color: var(--red); }
+    .pm-quote-text::after{ content:"”"; color: var(--red); }
+    .pm-quote-meta{
+      margin-top:10px;
+      padding-top:10px;
+      border-top:2px dashed #111;
+      font-size: 11px;
+      letter-spacing:0.10em;
+      text-transform:uppercase;
+      color:#111;
+      opacity:0.85;
+    }
+
+    .pane-title{
+      font-weight:900;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      font-size:12px;
+      margin: 2px 0 10px;
+      color:#111;
+    }
+    .pane-card{
+      border:2px solid #111;
+      box-shadow: 2px 2px 0 #111;
+      background:#fff;
+      padding: 12px;
+      line-height:1.25;
+      font-size: 12px;
+      color:#111;
+    }
+
     /* Years lifted up */
     .year-display{
       position:absolute;
@@ -560,7 +347,6 @@
       pointer-events:none;
       transform: translateY(calc(-1 * var(--year-lift)));
     }
-
     .huge-text{
       pointer-events:auto;
       cursor:pointer;
@@ -606,8 +392,8 @@
       left:50%;
       top:50%;
       transform: translate(-50%,-50%) scale(0.96);
-      width: min(920px, 88vw);
-      height: min(440px, 46vh);
+      width: min(980px, 92vw);
+      height: min(720px, 78vh);
       border-radius: 12px;
       z-index: 90;
       pointer-events: none;
@@ -618,6 +404,7 @@
         0 0 0 2px rgba(0,0,0,0.16) inset;
       opacity: 0;
       will-change: transform, opacity;
+      overflow:hidden;
     }
     body.panel-open .center-panel{
       opacity: 1;
@@ -649,6 +436,7 @@
       position:absolute; inset:22px;
       display:flex; flex-direction:column; gap:14px;
       color: var(--panel-text);
+      min-height:0;
     }
     .panel-kicker{
       font-size:12px; letter-spacing:0.22em;
@@ -657,19 +445,24 @@
       font-weight:900;
     }
     .panel-title{
-      font-size: clamp(26px, 3vw, 44px);
+      font-size: clamp(22px, 2.4vw, 36px);
       line-height:1.02; letter-spacing:-0.02em;
       font-weight:900; text-transform:uppercase;
       font-family:'Inter', sans-serif;
     }
     .panel-body{
-      font-size: clamp(14px, 1.25vw, 18px);
-      line-height:1.35; max-width: 70ch; opacity:0.95;
+      flex:1;
+      min-height:0;
+      overflow:auto;
+      padding-right: 6px;
+      font-size: clamp(14px, 1.1vw, 16px);
+      line-height:1.35;
       font-family:'Inter', sans-serif;
-      white-space: pre-wrap;
+      white-space: normal;
     }
     .panel-actions{
-      margin-top:auto; display:flex; gap:12px; align-items:center;
+      display:flex; gap:12px; align-items:center;
+      margin-top: 6px;
     }
     .btn{
       display:inline-flex; align-items:center; justify-content:center;
@@ -692,6 +485,20 @@
       text-transform:uppercase; opacity:0.85;
       font-family:'Fira Code', monospace;
       font-weight:900;
+    }
+
+    /* allow selection inside panel */
+    body.panel-open .center-panel,
+    body.panel-open .center-panel *{
+      user-select:text;
+      -webkit-user-select:text;
+      cursor: text;
+    }
+    body.panel-open .btn,
+    body.panel-open .btn *{
+      user-select:none;
+      -webkit-user-select:none;
+      cursor: pointer;
     }
 
     /* TIMELINE */
@@ -736,23 +543,7 @@
       transition: transform .22s steps(12,end), background .22s steps(12,end), border-color .22s steps(12,end), box-shadow .22s steps(12,end), opacity .22s steps(12,end);
       opacity: 0.75;
     }
-
-    .milestone:hover{
-      opacity: 0.95;
-      transform: scale(1.08);
-    }
-
-    .milestone .flame{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width: var(--flame);
-      height: var(--flame);
-      transform: translate(-50%,-50%);
-      display:none;
-      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
-      pointer-events:none;
-    }
+    .milestone:hover{ opacity: 0.95; transform: scale(1.08); }
 
     .milestone.active{
       background: rgba(255,255,255,0.00);
@@ -761,7 +552,6 @@
       transform: none;
       box-shadow: 0 0 18px rgba(255,255,255,0.55);
     }
-    .milestone.active .flame{ display:block; }
     .milestone.active::after{
       content:"";
       position:absolute;
@@ -771,8 +561,20 @@
       pointer-events:none;
     }
 
-    .flame .fill-accent{ fill: var(--ui-accent); }
-    .flame .fill-primary{ fill: var(--ui-primary); }
+    .active-flame{
+      position:absolute;
+      width: var(--flame);
+      height: var(--flame);
+      left:0; top:0;
+      transform: translate(-50%,-50%);
+      pointer-events:none;
+      z-index:2;
+      display:none;
+      filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+    }
+    .active-flame.show{ display:block; }
+    .active-flame .fill-accent{ fill: var(--ui-accent); }
+    .active-flame .fill-primary{ fill: var(--ui-primary); }
 
     /* INFO */
     .info-wrap{
@@ -836,7 +638,6 @@
       -webkit-backdrop-filter: blur(10px);
     }
     .lightbox.open{ display:flex; }
-
     .lightbox-card{
       width: min(1100px, 94vw);
       height: min(720px, 82vh);
@@ -893,95 +694,22 @@
 
     @media (max-width: 560px){
       :root{
-        --switch-w: 156px;
-        --switch-h: 14px;
         --dot: 16px;
         --flame: 26px;
         --year-lift: 12vh;
       }
-      .topbar{ top: 12px; left: 12px; }
-      .ios-switch .label{ font-size: 9px; gap:6px; }
-      .messenger-body{ grid-template-columns: 1fr; }
-      .sidebar{ border-right:0; border-bottom:3px solid #111; }
       .thread-container{ bottom: calc(15vh + env(safe-area-inset-bottom, 0px)); height:34px; }
       .lightbox-card{ height: min(640px, 84vh); }
+      .center-panel{ height: min(720px, 84vh); }
     }
 
     /* iPad/iPhone “desktop layout” mode */
     body.mobile-desktop{ -webkit-text-size-adjust:100%; }
-    body.mobile-desktop .messenger-body{ grid-template-columns: 320px 1fr; }
-    body.mobile-desktop .sidebar{ border-right: 3px solid #111; border-bottom:0; }
-    body.mobile-desktop .pane-title{ font-size: 13px; }
-    body.mobile-desktop .pane-card{ font-size: 13px; }
-    body.mobile-desktop .tab{ font-size: 13px; }
   </style>
 </head>
 
 <body class="mode-on">
 
-  <!-- SWITCH -->
-  <div class="topbar">
-    <div class="ios-switch" id="modeSwitch" data-state="on" aria-label="Mode switch">
-      <div class="label">
-        <span class="off">OFF</span>
-        <span class="on">ON</span>
-      </div>
-      <div class="track">
-        <div class="thumb"></div>
-        <button class="track-btn" id="switchBtn" aria-label="Toggle"></button>
-      </div>
-    </div>
-  </div>
-
-  <!-- OFF SCENE -->
-  <div class="off-scene" id="offScene" aria-hidden="true">
-    <div class="pixel-desktop" id="pixelDesktop"></div>
-
-    <div class="messenger-window">
-      <div class="messenger-titlebar">
-        PIXEL MESSENGER
-        <div class="win-dots">
-          <div class="dot"></div>
-          <div class="dot red"></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-
-      <div class="messenger-body">
-        <div class="sidebar" id="tabs">
-          <div class="tab active" data-tab="q">Исследовательские вопросы</div>
-          <div class="tab" data-tab="e">Эмпирические данные</div>
-          <div class="tab" data-tab="m">Метод</div>
-          <div class="tab" data-tab="u">Уникальные характеристики протестных сообщений</div>
-          <div class="tab" data-tab="i">Инфраструктура кибер-мобилизации</div>
-          <div class="tab" data-tab="l">Лидеры "Youth Against Corruption"</div>
-          <div class="tab" data-tab="h">Горизонтальные практики взаимного обучения</div>
-          <div class="tab" data-tab="n">Новости: как протест увидели медиа</div>
-          <div class="tab" data-tab="c">Два взгляда: нарратив и цитаты</div>
-          <div class="tab" data-tab="g">Коллективная идентичность «Gen Z»</div>
-          <div class="tab" data-tab="k">Ключевые находки</div>
-          <div class="tab" data-tab="s">Выводы</div>
-        </div>
-
-        <div class="pane" id="pane">
-          <!-- injected by JS -->
-        </div>
-      </div>
-
-      <div class="compose">
-        <div class="input">type a message…</div>
-        <button class="send" type="button">SEND</button>
-      </div>
-    </div>
-
-    <div class="pixel-taskbar">
-      <div class="pixel-start">MENU</div>
-      <div>PIXEL DESKTOP</div>
-      <div class="pixel-clock" id="pixelClock">00:00</div>
-    </div>
-  </div>
-
-  <!-- ON SCENE -->
   <div class="on-scene" id="onScene">
     <div class="bg-stage" aria-hidden="true">
       <div class="vid-wrap" id="vidWrap">
@@ -993,18 +721,16 @@
       <pre class="ascii-fire" id="asciiFire"></pre>
     </div>
 
-    <!-- NEW: floating cards layer -->
     <div class="float-cards" id="floatCards" aria-hidden="true"></div>
 
-    <!-- Center panel popup -->
     <div class="center-panel" id="centerPanel" aria-hidden="true">
       <div class="panel-grid"></div>
       <div class="panel-content">
-        <div class="panel-kicker" id="panelKicker">ALERT / TIMELINE</div>
+        <div class="panel-kicker" id="panelKicker">SLIDE / DECK</div>
         <div class="panel-title" id="panelTitle">…</div>
         <div class="panel-body" id="panelBody">…</div>
         <div class="panel-actions">
-          <div class="btn">CONTINUE</div>
+          <div class="btn" id="panelContinue" role="button" tabindex="0">CONTINUE</div>
           <div class="panel-note">ESC / CLICK — CLOSE</div>
         </div>
       </div>
@@ -1015,72 +741,34 @@
     <div class="thread-container" id="timeline">
       <div class="thread-line"></div>
 
-      <!-- 7 milestones -->
-      <div class="milestone" data-idx="0" aria-label="2018">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
+      <!-- 11 milestones -->
+      <div class="milestone" data-idx="0" aria-label="Q"></div>
+      <div class="milestone" data-idx="1" aria-label="DATA"></div>
+      <div class="milestone" data-idx="2" aria-label="METHOD"></div>
+      <div class="milestone" data-idx="3" aria-label="UNIQUE"></div>
+      <div class="milestone" data-idx="4" aria-label="INFRA"></div>
+      <div class="milestone" data-idx="5" aria-label="LEADERS"></div>
+      <div class="milestone" data-idx="6" aria-label="LEARN"></div>
+      <div class="milestone" data-idx="7" aria-label="ARENA"></div>
+      <div class="milestone" data-idx="8" aria-label="GEN Z"></div>
+      <div class="milestone" data-idx="9" aria-label="FIND"></div>
+      <div class="milestone" data-idx="10" aria-label="OUTRO"></div>
 
-      <div class="milestone" data-idx="1" aria-label="2019">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
-
-      <div class="milestone" data-idx="2" aria-label="2020">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
-
-      <div class="milestone" data-idx="3" aria-label="2021">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
-
-      <div class="milestone" data-idx="4" aria-label="2022">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
-
-      <div class="milestone" data-idx="5" aria-label="2023">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
-
-      <div class="milestone" data-idx="6" aria-label="2024">
-        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
-          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-        </svg>
-      </div>
+      <!-- one shared flame -->
+      <svg class="active-flame" id="activeFlame" viewBox="0 0 64 64" aria-hidden="true">
+        <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+        <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+        <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+      </svg>
     </div>
 
     <div class="info-wrap">
-      <div class="info-label" id="label">TIMELINE</div>
+      <div class="info-label" id="label">DECK</div>
       <h1 class="info-title" id="infoTitle"></h1>
       <p class="info-desc" id="infoDesc"></p>
     </div>
   </div>
 
-  <!-- Lightbox (kept as-is) -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-card" role="dialog" aria-modal="true" aria-label="Image preview">
       <div class="lightbox-top">
@@ -1118,236 +806,333 @@
       };
     }
 
-    // ========= FPS CONTROL (old OS vibe) =========
-    const OFF_FPS = 12;
-    const OFF_TICK_MS = Math.round(1000 / OFF_FPS);
+    // ===== CONTENT (moved from OFF tabs, without loss) =====
+    const slides = [
+      {
+        year: "Q",
+        title: "Исследовательские вопросы",
+        desc: "Каркас исследования: 4 ключевых вопроса.",
+        html: `
+          <div class="pane-title">Исследовательские вопросы</div>
+          <div class="pane-card">
+            1) Действительно ли это были протесты «Поколения Z»?<br><br>
+            2) Как координировался протест?<br><br>
+            3) Какова социотехника протеста?<br><br>
+            4) Что было настоящей причиной протестов?
+          </div>
+        `
+      },
+      {
+        year: "DATA",
+        title: "Эмпирические данные",
+        desc: "Источник выгрузки + масштабы корпуса.",
+        html: `
+          <div class="pane-title">Эмпирические данные</div>
+          <div class="pane-card">
+            ИСТОЧНИК: Выгрузка текстовых сообщений с сервера Discord движения Youth against corruption с помощью инструмента DiscordChatExporter<br><br>
+            СТАТИСТИКА:<br>
+            1) Более одного миллиона текстовых сообщений<br><br>
+            2) 100 мегабайт чистого текстаю<br><br>
+            3) 300 мегабайт мемов, голосовых сообщений<br><br>
+            <b>~99% от всех текстовых сообщений</b>
+          </div>
+        `
+      },
+      {
+        year: "METHOD",
+        title: "Метод",
+        desc: "RAG vs традиционные методы (сравнение).",
+        html: `
+          <div class="pm-two-col">
+            <div class="pm-col">
+              <div class="pm-col-title"><b>RAG-система</b></div>
+              <div class="pm-col-body">
+                Индексация: 2-3 минуты<br><br>
+                Индексация: 2-3 минуты<br><br>
+                Полный анализ: 3-15 минут<br><br>
+                Поиск: 0.1-0.3 секунды<br><br>
+                Адаптивность: Мгновенная<br><br>
+                <b>✓ Преимущество во всех параметрах</b>
+              </div>
+            </div>
+            <div class="pm-col">
+              <div class="pm-col-title">Традиционные методы</div>
+              <div class="pm-col-body">
+                Чтение: 1500 часов<br><br>
+                Полный анализ: ~год<br><br>
+                Поиск: 2-4 часа на запрос<br><br>
+                Адаптивность: отсутствует<br><br>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        year: "UNIQUE",
+        title: "Уникальные характеристики протестных сообщений",
+        desc: "Мультиязычность + эмоциональная динамика + цитата.",
+        html: `
+          <div class="pm-two-col">
+            <div class="pm-col">
+              <div class="pm-col-title">Многоязычность и переключение кодов</div>
+              <div class="pm-col-body">
+                Интенсивное использование непальского и английского языков<br><br>
+                Английский — для международной коммуникации<br><br>
+                Непальский — для внутренней координации и эмоций
+              </div>
+            </div>
+            <div class="pm-col">
+              <div class="pm-col-title">Эмоциональная интенсивность</div>
+              <div class="pm-col-body">
+                Эскалация эмоций: от оптимизма к гневу<br><br>
+                7 сентября: призывы к единству<br><br>
+                9 сентября: гнев и требования возмездия<br><br>
+              </div>
+            </div>
+          </div>
 
-    // ========= SWITCH / MODES =========
-    const modeSwitch = document.getElementById('modeSwitch');
-    const switchBtn = document.getElementById('switchBtn');
+          <div class="pm-quote">
+            <div class="pm-quote-text">
+              Sabailey halnu paryo ki yo protest bas under 28 samma matra ko haina Every influencer celebrity haru ley mero age ta 28 barsa vanda mathi vo ma aauna mildaina vandai video banaudai best of luck vanya xan vaney.
+            </div>
+            <div class="pm-quote-meta">
+              DISCORD / Сентябрь 2025
+            </div>
+          </div>
+        `
+      },
+      {
+        year: "INFRA",
+        title: "Инфраструктура кибер-мобилизации",
+        desc: "Функции Discord как инфраструктуры координации.",
+        html: `
+          <div class="pane-title">Инфраструктура кибер-мобилизации</div>
+          <div class="pane-card">
+            Эмодзи-реакции<br><br>
+            @-упоминания<br><br>
+            Пинг-алерты<br><br>
+            Режим slow mode<br><br>
+            Тематические каналы<br><br>
+            Voice channels и stage-режим (PTT и Extra Curricular)
+          </div>
+        `
+      },
+      {
+        year: "LEAD",
+        title: "Лидеры “Youth Against Corruption”",
+        desc: "Модераторы + тактические координаторы + распределение ролей.",
+        html: `
+          <div class="pane-title">Лидеры "Youth Against Corruption"</div>
+          <div class="pane-card">
+            <div class="pm-grid4">
+              <div class="pm-box">
+                <div class="pm-box-title">Модераторы</div>
+                <div class="pm-box-body">
+                  <b>Sam</b> — Head-Moderator: круглосуточные голосовые сессии, координация «красных каналов»<br><br>
+                  Morb — Senior-Mod: безопасность PTT-каналов<br><br>
+                  Sid — Voice-Mod: контроль спикеров<br><br>
+                  Ankit — Crisis-Mod<br><br>
+                  ZAXX — Field-Mod: карты «Emergency Arena», горячая линия 01-5979000<br><br>
+                  JALEBi — Community-Mod<br><br>
+                  Night-Shift Mods — Команда ночных модераторов<br><br>
+                </div>
+              </div>
 
-    function setMode(on) {
-      const state = on ? "on" : "off";
-      modeSwitch.setAttribute("data-state", state);
-      document.body.classList.toggle("mode-on", on);
-      document.body.classList.toggle("mode-off", !on);
+              <div class="pm-box">
+                <div class="pm-box-title">Тактические координаторы</div>
+                <div class="pm-box-body">
+                  Sudan Gurung — Переговорщик с армией, 410+ упоминаний, 38% реакций «🔥»<br><br>
+                  Hami Nepal — Логистика, 1,600 сообщений, 11 горячих линий<br><br>
+                  Sagar2Himalaya — Автор «Transition Compact 2025», скачан &gt;4,000 раз<br><br>
+                  Tears Talk — Видео-репорт с улиц, 230 клипов, подтвердил боевые патроны<br><br>
+                  NoirKingOfVoid — Международные петиции, 700+ репостов<br><br>
+                </div>
+              </div>
 
-      if (bgVideo) {
-        if (on) { forcePlay(); }
-        else { try { bgVideo.pause(); } catch(e){} }
+              <div class="pm-box">
+                <div class="pm-box-title">Итоговое распределение ролей</div>
+                <div class="pm-box-body">
+                  Стратегия: Sudan Gurung, Sagar2Himalaya<br><br>
+                  Техническая инфраструктура: Sam, Morb, Sid, ZAXX<br><br>
+                  Полевые медиа: Tears Talk, NoirKingOfVoid<br><br>
+                  Антикризисная логистика: Hami Nepal, ZAXX<br><br>
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        year: "LEARN",
+        title: "Горизонтальные практики взаимного обучения",
+        desc: "Peer-to-peer обучение как ресурс движения.",
+        html: `
+          <div class="pane-title">Горизонтальные практики взаимного обучения</div>
+          <div class="pane-card">
+            <div class="pm-grid4">
+              <div class="pm-box">
+                <div class="pm-box-title">Цифровые туториалы</div>
+                <div class="pm-box-body">
+                  Участники обучают друг друга использованию инструментов (Google Forms, Zoom, Linktree) для организации помощи и опросов, создавая шаблоны для экстренных сообщений и регистрации волонтёров.
+                </div>
+              </div>
+
+              <div class="pm-box">
+                <div class="pm-box-title">Краудсорсинг идей</div>
+                <div class="pm-box-body">
+                  Идеи и решения собираются через публичные голосования («YantraVote», опросы RONB) и мозговые штурмы, где каждый может предложить свой вариант действий.
+                </div>
+              </div>
+
+              <div class="pm-box">
+                <div class="pm-box-title">Правовые разъяснения</div>
+                <div class="pm-box-body">
+                  Распространяются разъяснения о Конституции (ст. 76, 132, «доктрина необходимости») простым языком, становясь общим знанием среди участников.
+                </div>
+              </div>
+
+              <div class="pm-box">
+                <div class="pm-box-title">Горизонтальное распространение знаний</div>
+                <div class="pm-box-body">
+                  Каждая инструкция репостится в среднем 3,6 раза в первые 20 минут<br><br>
+                  Наиболее «вирусные» темы: правовые тонкости (46%) и цифровые инструменты (38%)<br><br>
+                  Peer-to-peer обучение — ключевой ресурс движения
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        year: "ARENA",
+        title: "Провокаторы и EmergencyArena",
+        desc: "Разграничение “третьей стороны” + контур Emergency Arena.",
+        html: `
+          <div class="pm-two-col">
+            <div class="pm-col">
+              <div class="pm-col-title">Отношение к «третьей стороне» (провокаторы)</div>
+              <div class="pm-col-body">
+                Прямое разграничение<br><br>
+                <i>«I think these are not true protestors they are jholes doing all the vandalism»</i><br><br>
+                Идентификация провокаторов<br><br>
+                <i>«Sab banda gara sab aru party ko manxe le garda hamro badnam bhako xa»</i><br><br>
+                Осуждение и дистанцирование<br><br>
+                <i>«Separate yourself from the ones who are vandalizing. We are better than this»</i><br><br>
+                Количественные данные:<br><br>
+                <b>300+</b> призывов к изоляции провокаторов<br><br>
+                <b>1500+</b> сообщений с упоминанием «jholey», «party ko manxe», «goons»<br><br>
+                <b>✓ Преимущество во всех параметрах</b>
+              </div>
+            </div>
+
+            <div class="pm-col">
+              <div class="pm-col-title">Emergency Arena</div>
+              <div class="pm-col-body">
+                <b>Источники данных</b><br><br>
+                8 913 сообщений, 8-10 сентября 2025 г.<br><br>
+                <b>Причины создания</b><br><br>
+                Перегруз служб: Единое окно для фильтрации звонков и маршрутизации бригад<br><br>
+                Противодействие дезинформации: Верификация сообщений о насилии перед публикацией<br><br>
+                Быстрая координация: Приоритизация угроз и распределение ресурсов<br><br>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        year: "GEN Z",
+        title: "Коллективная идентичность «Gen Z»",
+        desc: "Парламент Discord, самоопределение, противник, формы противостояния.",
+        html: `
+          <div class="pane-title">Формирование коллективной идентичности «Gen Z»</div>
+          <div class="pane-card">
+            <b>Виртуальный парламент</b>: Голосовые каналы стали «виртуальным парламентом» с модераторами, обсуждениями и резолюциями. «Discord is now the parliament of Nepal». 5-минутный «slow-mode» для контроля обсуждений.<br><br>
+            <b>Самоопределение</b>: Коллективные «мы-утверждения» показывают самоопределение как отдельного актора. «We are Nepali, and together we make NEPAL». «Gen Z», it's our time to demand fresh elections, fresh faces, and real change».<br><br>
+            <b>Главный противник</b> «Коррумпированный истеблишмент»: парламент, старые партии, силовики. «Sansad bigathan» (распустить парламент). «Yo sabai party harulai ni hataunu parxa» (убрать все партии). «jhole» (прихвостни).<br><br>
+            <b>Форма противостояния</b>: Массовые требования, опросы, мемы, бойкот СМИ. «DISSOLVE PARLIAMENT». «Arrest KP». «FORTNITE PLAYER FORMULATING NEW GOVERNMENT». Мемы и игровой жаргон.
+          </div>
+        `
+      },
+      {
+        year: "FIND",
+        title: "Ключевые находки",
+        desc: "Сводка по ключевым блокам анализа.",
+        html: `
+          <div class="pane-title">Ключевые находки</div>
+          <div class="pane-card">
+            <div class="pm-grid4">
+              <div class="pm-box">
+                <div class="pm-box-title">Emergency Arena</div>
+                <div class="pm-box-body">
+                  Экстренный чат/пространство в Discord против насилия и эскалации.<br><br>
+                  Функция «тревожной кнопки»: сбор сообщений о насилии, верификация, быстрые сводки.<br><br>
+                  Механика доверия: модераторы, правила, “чёрные списки”, опровержение фейков.<br><br>
+                </div>
+              </div>
+
+              <div class="pm-box">
+                <div class="pm-box-title">Мультиязычность</div>
+                <div class="pm-box-body">
+                  Смешение непальского и английского: один и тот же тезис в нескольких версиях.<br><br>
+                  Переводы как инструмент расширения аудитории и легитимации «международного взгляда».<br><br>
+                  Код-свитчинг как маркер «молодёжного» и «сетевого» стиля.<br><br>
+                </div>
+              </div>
+
+              <div class="pm-box">
+                <div class="pm-box-title">Ценности и отношение к ним</div>
+                <div class="pm-box-body">
+                  Антикоррупция и анти-непотизм (“Nepo Kids”) как моральный каркас.<br><br>
+                  Требование прозрачности: “покажите правила/процедуры/ответственных”.<br><br>
+                  Амбивалентность к насилию: поддержка протеста + границы «допустимого».<br><br>
+                </div>
+              </div>
+
+              <div class="pm-box">
+                <div class="pm-box-title">Социотехника координации</div>
+                <div class="pm-box-body">
+                  Каждая инструкция репостится в среднем 3,6 раза в первые 20 минут<br><br>
+                  Наиболее «вирусные» темы: правовые тонкости (46%) и цифровые инструменты (38%)<br><br>
+                  Peer-to-peer обучение — ключевой ресурс движения
+                </div>
+              </div>
+            </div>
+          </div>
+        `
+      },
+      {
+        year: "OUTRO",
+        title: "Выводы",
+        desc: "Финальные тезисы.",
+        html: `
+          <div class="pane-title">Выводы</div>
+          <div class="pane-card">
+            Запрет соцсетей – не причина и не триггер протеста<br><br>
+            Соцсети не являются инструментом организации беспорядков<br><br>
+            «Gen Z» – не движение, а временно возникший составной субъект<br><br>
+            Фактические лидеры сформировали репутацию давно и не в Discord<br><br>
+            Аналоговая политика оказалась сильнее цифровой социотехники (протест своих целей не достиг)<br><br>
+            «Gen Z» спасли Непал от крупномасштабной гражданской войны<br><br>
+          </div>
+        `
       }
-
-      if (!on) startOffLoops();
-      else stopOffLoops();
-
-      // close panel if switching modes
-      if (!on) togglePanel(true);
-    }
-
-    switchBtn.addEventListener('click', (e) => {
-      e.preventDefault();
-      const isOn = modeSwitch.getAttribute("data-state") === "on";
-      setMode(!isOn);
-    });
-
-    // Pixel clock
-    const pixelClock = document.getElementById('pixelClock');
-    function pad2(n){ return String(n).padStart(2,'0'); }
-    function tickClock(){
-      const d = new Date();
-      pixelClock.textContent = `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
-    }
-    tickClock();
-    setInterval(tickClock, 1000);
-
-    // ========= OFF TABS CONTENT =========
-    const pane = document.getElementById('pane');
-    const tabsWrap = document.getElementById('tabs');
-
-    const tabContent = {
-      q: `
-        <div class="pane-title">Исследовательские вопросы</div>
-        <div class="pane-card">
-          1) Как устроена циркуляция протестных сообщений между платформами?<br><br>
-          2) Какие признаки позволяют отличить “органический” рост от управляемой мобилизации?<br><br>
-          3) Как меняется язык призывов при переходе от локальной повестки к общему движению?
-        </div>
-      `,
-      e: `
-        <div class="pane-title">Эмпирические данные</div>
-        <div class="pane-card">
-          Корпус сообщений и постов; временные ряды активности; сетевые графы взаимодействия;
-          выборки по ключевым тегам и узлам распространения; медиавложения и метаданные публикаций.
-        </div>
-      `,
-      m: `
-        <div class="pane-title">Метод</div>
-        <div class="pane-card">
-          Сбор → очистка → разметка → анализ.
-          <ul class="pixel-bullets">
-            <li>Контент-анализ (мотивы, риторика, фреймы)</li>
-            <li>Сетевой анализ (узлы, мосты, кластеры)</li>
-            <li>Темпоральный анализ (волны, триггеры, отклики)</li>
-            <li>Качественная проверка кейсами (ручные срезы)</li>
-          </ul>
-        </div>
-      `,
-      u: `
-        <div class="pane-title">Уникальные характеристики протестных сообщений</div>
-        <div class="pane-card">
-          Короткие формулы → меметичность → “инструкции” → микро-ритуалы → переводы между платформами.
-        </div>
-      `,
-      i: `
-        <div class="pane-title">Инфраструктура кибер-мобилизации</div>
-        <div class="pane-card">
-          Контуры ретрансляции, “переводчики” повестки, узлы дублирования, расписания публикаций,
-          точки синхронизации и периоды усиления.
-        </div>
-      `,
-      l: `
-        <div class="pane-title">Лидеры "Youth Against Corruption"</div>
-        <div class="pane-card">
-          Стабильные хабы распространения и организаторы “мостов” между кластерами.
-          Дополнительно: роли “курьеров” и “сборщиков”.
-        </div>
-      `,
-      h: `
-        <div class="pane-title">Горизонтальные практики взаимного обучения</div>
-        <div class="pane-card">
-          Взаимное обучение как набор простых модулей (шаблоны, навигация, координация, поддержка).
-        </div>
-      `,
-      n: `
-        <div class="pane-title">Новости: как протест увидели медиа</div>
-        <div class="pane-card">
-          Медиа-оптика часто сводит сложный протест к простым “кадрам”. Разные редакции выбирают разные рамки.
-        </div>
-      `,
-      c: `
-        <div class="pane-title">Два взгляда: нарратив и цитаты</div>
-        <div class="pane-card">
-          Сопоставление объясняющей рамки и “голоса изнутри”.
-        </div>
-      `,
-      g: `
-        <div class="pane-title">Коллективная идентичность «Gen Z»</div>
-        <div class="pane-card">
-          Идентичность как инструмент координации: общий язык, этический код, опыт и тактики.
-        </div>
-      `,
-      k: `
-        <div class="pane-title">Ключевые находки</div>
-        <div class="pane-card">
-          Сигналы, маршруты, роли, динамика — как блоки “панели управления”.
-        </div>
-      `,
-      s: `
-        <div class="pane-title">Выводы</div>
-        <div class="pane-card">
-          Сообщения работают как интерфейс коллективного действия: объясняют, координируют, создают принадлежность.
-        </div>
-      `
-    };
-
-    function renderTab(key){
-      pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
-      pane.scrollTop = 0;
-    }
-
-    tabsWrap.addEventListener('click', (e) => {
-      const t = e.target.closest('.tab');
-      if(!t) return;
-      const key = t.getAttribute('data-tab');
-      Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
-      renderTab(key);
-    });
-
-    renderTab('q');
-
-    // ========= OFF RANDOM SLOGANS (12fps-ish) =========
-    const pixelDesktop = document.getElementById('pixelDesktop');
-
-    const slogans = [
-      "NO CAP","BASED","TOUCH GRASS","WE MOVE","СТОЙКОСТЬ",
-      "СВОБОДА ДЛЯ ВСЕХ","ПРАВА НЕ ТИШИНА","ГОЛОС ИМЕЕТ ЗНАЧЕНИЕ",
-      "НЕ НОРМА • НЕ ОК","WE SEE YOU","SAY IT LOUD","KEEP SIGNAL","ДЕРЖИ СИГНАЛ"
     ];
 
-    let offSloganTimer = null;
-
-    function quantizedTimeout(fn, ms){
-      const steps = Math.max(1, Math.round(ms / OFF_TICK_MS));
-      return setTimeout(fn, steps * OFF_TICK_MS);
-    }
-
-    function spawnSlogan(){
-      if (!document.body.classList.contains('mode-off')) return;
-
-      const el = document.createElement('div');
-      el.className = 'slogan';
-      el.textContent = slogans[(Math.random() * slogans.length) | 0];
-
-      const pad = 18;
-      const vp = viewportSize();
-      const w = vp.w;
-      const h = vp.h;
-
-      const maxX = Math.max(pad, w - pad - 220);
-      const maxY = Math.max(pad, h - pad - 120);
-
-      const x = Math.floor(pad + Math.random() * (maxX - pad));
-      const y = Math.floor(pad + Math.random() * (maxY - pad));
-
-      el.style.left = x + "px";
-      el.style.top  = y + "px";
-
-      pixelDesktop.appendChild(el);
-
-      quantizedTimeout(() => el.classList.add('on'), OFF_TICK_MS);
-      quantizedTimeout(() => el.classList.remove('on'), 1800 + Math.random()*900);
-      quantizedTimeout(() => { if(el.parentNode) el.remove(); }, 2400 + Math.random()*900);
-    }
-
-    function startOffLoops(){
-      if (offSloganTimer) return;
-      offSloganTimer = setInterval(() => {
-        if (Math.random() < 0.62) spawnSlogan();
-      }, 900);
-    }
-
-    function stopOffLoops(){
-      if (offSloganTimer){ clearInterval(offSloganTimer); offSloganTimer = null; }
-    }
-
-    // ========= ON DATA =========
-    const data = [
-      { year: "2018", title: "SEED / ЗАРОЖДЕНИЕ", desc: "Первые искры: разрозненные группы, локальные поводы, поиск языка и символов." },
-      { year: "2019", title: "IGNITION / ИМПУЛЬС", desc: "Ускорение: общие точки сборки, повторяемые сценарии, резонансные триггеры." },
-      { year: "2020", title: "SHIFT / ПОВОРОТ", desc: "Смена режима: новые каналы, новые риски, новая скорость распространения сигналов." },
-      { year: "2021", title: "GENESIS / ИСТОКИ", desc: "Сборка структуры: роли, протоколы, инфраструктура выживания и устойчивости." },
-      { year: "2022", title: "EXPANSION / РОСТ", desc: "Расширение: география, аудитория, сложность коалиций, уровень наблюдения." },
-      { year: "2023", title: "SYNERGY / СИНТЕЗ", desc: "Синтез: коалиции, совместные действия, общая грамматика визуала и поведения." },
-      { year: "2024", title: "FUTURE / ЗАВТРА", desc: "Будущее: сценарии эскалации/затухания. Выбор между вспышкой и долгим тлением." }
-    ];
-
-    let currentIndex = 0;
-    let isAnimating = false;
-
+    // ========= UI hooks =========
     const yearContainer = document.getElementById('yearContainer');
     const infoTitle = document.getElementById('infoTitle');
     const infoDesc  = document.getElementById('infoDesc');
 
-    // Panel elements
     const panelTitleEl = document.getElementById('panelTitle');
     const panelBodyEl  = document.getElementById('panelBody');
+    const panelContinue = document.getElementById('panelContinue');
 
-    function updatePanelCopy(index){
-      const t = (data[index] && (data[index].title || data[index].year)) || "…";
-      const b = (data[index] && (data[index].desc || "")) || "";
-      panelTitleEl.innerHTML = String(t).replace(/\n/g, "<br>");
-      panelBodyEl.textContent = String(b);
-    }
+    const timeline = document.getElementById('timeline');
+    const milestones = Array.from(timeline.querySelectorAll('.milestone'));
+    const activeFlame = document.getElementById('activeFlame');
+
+    let currentIndex = 0;
+    let isAnimating = false;
 
     function togglePanel(forceClose = false){
       const open = document.body.classList.contains('panel-open');
@@ -1375,11 +1160,10 @@
 
       const el = document.createElement('div');
       el.className = `huge-text ${stateClass}`;
-      el.innerHTML = splitChars(data[index].year);
+      el.innerHTML = splitChars(slides[index].year);
 
       el.addEventListener('click', (e) => {
         e.stopPropagation();
-        if (document.body.classList.contains('mode-off')) return;
         updatePanelCopy(index);
         togglePanel();
       });
@@ -1397,26 +1181,45 @@
       infoDesc.classList.remove('visible');
 
       setTimeout(() => {
-        infoTitle.textContent = data[index].title || "";
-        infoDesc.textContent = data[index].desc || "";
+        infoTitle.textContent = slides[index].title || "";
+        infoDesc.textContent = slides[index].desc || "";
         infoTitle.classList.add('visible');
         infoDesc.classList.add('visible');
       }, 240);
     }
 
-    const timeline = document.getElementById('timeline');
-    const milestones = Array.from(timeline.querySelectorAll('.milestone'));
+    function updatePanelCopy(index){
+      const t = (slides[index] && slides[index].title) || "…";
+      panelTitleEl.innerHTML = String(t).replace(/\n/g, "<br>");
+      panelBodyEl.innerHTML = slides[index].html || "";
+      panelBodyEl.scrollTop = 0;
+    }
 
     function updateMilestones(idx) {
       milestones.forEach((m, i) => m.classList.toggle('active', i === idx));
+      positionFlameToIndex(idx);
+    }
+
+    function positionFlameToIndex(idx){
+      const m = milestones[idx];
+      if (!m || !activeFlame) return;
+
+      const tRect = timeline.getBoundingClientRect();
+      const r = m.getBoundingClientRect();
+
+      const cx = (r.left + r.right) / 2 - tRect.left;
+      const cy = (r.top + r.bottom) / 2 - tRect.top;
+
+      activeFlame.style.left = cx + "px";
+      activeFlame.style.top  = cy + "px";
+      activeFlame.classList.add('show');
     }
 
     function goToIndex(targetIndex) {
       if (isAnimating) return;
-      if (document.body.classList.contains('mode-off')) return;
       if (document.body.classList.contains('panel-open')) return;
 
-      targetIndex = Math.max(0, Math.min(data.length - 1, targetIndex));
+      targetIndex = Math.max(0, Math.min(slides.length - 1, targetIndex));
       if (targetIndex === currentIndex) return;
 
       isAnimating = true;
@@ -1441,6 +1244,15 @@
       m.addEventListener('touchend', handler, { passive:true });
       m.addEventListener('pointerdown', (e)=>e.stopPropagation(), { passive:true });
     });
+
+    // Continue -> next slide (wrap)
+    function nextSlide(){
+      if (slides.length <= 1) return;
+      togglePanel(true);
+      setTimeout(() => goToIndex((currentIndex + 1) % slides.length), 60);
+    }
+    panelContinue.addEventListener('click', (e)=>{ e.preventDefault(); nextSlide(); });
+    panelContinue.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextSlide(); } });
 
     // ===== Lightbox (kept as-is; currently unused) =====
     const lightbox = document.getElementById('lightbox');
@@ -1493,7 +1305,7 @@
     window.addEventListener('touchstart', forcePlay, { once:true, passive:true });
 
     // =========================
-    // FLOATING 3D CARDS (14 pcs)
+    // FLOATING 3D CARDS
     // =========================
     (function(){
       const host = document.getElementById('floatCards');
@@ -1501,9 +1313,9 @@
 
       const COUNT = 12;
       const IMAGES = [
-  "2.jpg","10.png","5.png","4.png","1.jpg","9.png","3.png",
-  "7.png","8.png","3.jpg","11.jpg","10.png","8.png","10.png"
-    ];
+        "2.jpg","10.png","5.png","4.png","1.jpg","9.png","3.png",
+        "7.png","8.png","3.jpg","11.jpg","10.png","8.png","10.png"
+      ];
       const cards = [];
       let vp = viewportSize();
 
@@ -1533,27 +1345,21 @@
           const s2 = rand(0.000035, 0.00010);
 
           const z = rand(-80, 140);
-          const rz = rand(-10, 10);  // легкий поворот в плоскости
-          const rx = rand(-4, 4);    // почти без наклона к зрителю
-          const ry = rand(-4, 4);    // почти без наклона к зрителю
-
+          const rz = rand(-10, 10);
+          const rx = rand(-4, 4);
+          const ry = rand(-4, 4);
 
           el.style.width = w + "px";
           el.style.height = h + "px";
 
           const slot = document.createElement('div');
-slot.className = 'slot';
+          slot.className = 'slot';
 
-const src = IMAGES[i];
-if (src) {
-  slot.innerHTML = `<img src="${src}" alt="">`;
-} else {
-  slot.textContent = `IMAGE ${String(i+1).padStart(2,'0')}`;
-}
+          const src = IMAGES[i];
+          if (src) slot.innerHTML = `<img src="${src}" alt="">`;
+          else slot.textContent = `IMAGE ${String(i+1).padStart(2,'0')}`;
 
-el.appendChild(slot);
-
-
+          el.appendChild(slot);
           host.appendChild(el);
 
           cards.push({
@@ -1572,7 +1378,6 @@ el.appendChild(slot);
 
       function onResize(){
         vp = viewportSize();
-        // keep cards near their original region but clamped to viewport
         for (const c of cards){
           c.baseX = clamp(c.baseX, 18, Math.max(18, vp.w - 18 - c.w));
           c.baseY = clamp(c.baseY, 18, Math.max(18, vp.h - 18 - c.h));
@@ -1654,7 +1459,7 @@ el.appendChild(slot);
 
     function computeTargetRows(idx) {
       const r = fireRowsBase * (1 + idx);
-      return clamp(r, fireRowsBase, fireRowsBase * data.length);
+      return clamp(r, fireRowsBase, fireRowsBase * slides.length);
     }
 
     function setFireTargetByIndex(idx){
@@ -1727,14 +1532,13 @@ el.appendChild(slot);
     }
 
     function fireTick() {
-      if (document.body.classList.contains('mode-on')) {
-        fireRows += (fireTargetRows - fireRows) * 0.12;
-        if (Math.abs(fireTargetRows - fireRows) < 0.35) fireRows = fireTargetRows;
+      fireRows += (fireTargetRows - fireRows) * 0.12;
+      if (Math.abs(fireTargetRows - fireRows) < 0.35) fireRows = fireTargetRows;
 
-        ensureFireSize();
-        fireStep();
-        fireRender();
-      }
+      ensureFireSize();
+      fireStep();
+      fireRender();
+
       requestAnimationFrame(fireTick);
     }
 
@@ -1754,7 +1558,12 @@ el.appendChild(slot);
       setFireTargetByIndex(0);
       fireTick();
 
-      setMode(true);
+      // flame reposition on resize
+      function flameResize(){
+        positionFlameToIndex(currentIndex);
+      }
+      window.addEventListener('resize', flameResize);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', flameResize);
     }
 
     init();
