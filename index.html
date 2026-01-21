@@ -1127,13 +1127,26 @@
       pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
     }
 
-    tabsWrap.addEventListener('click', (e) => {
-      const t = e.target.closest('.tab');
-      if(!t) return;
-      const key = t.getAttribute('data-tab');
-      Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
-      renderTab(key);
-    });
+   function activateTabFromEvent(e){
+  const t = e.target.closest('.tab');
+  if(!t) return;
+
+  // важно для iOS landscape: срезаем "жест" и гарантируем обработку
+  if (e.cancelable) e.preventDefault();
+  e.stopPropagation();
+
+  const key = t.getAttribute('data-tab');
+  Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
+  renderTab(key);
+}
+
+// iOS/Safari: pointerdown/touchstart срабатывают стабильнее, чем click
+tabsWrap.addEventListener('pointerdown', activateTabFromEvent, { passive:false });
+tabsWrap.addEventListener('touchstart', activateTabFromEvent, { passive:false });
+
+// fallback
+tabsWrap.addEventListener('click', activateTabFromEvent);
+
 
     // default OFF pane content
     renderTab('q');
