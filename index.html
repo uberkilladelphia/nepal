@@ -909,52 +909,48 @@ body.mode-off .pane{
 .sidebar-arrows{ display:none; }
 
 /* показываем на устройствах с touch + мелких экранах */
-@media (hover: none) and (pointer: coarse){
-  .sidebar{
-    overflow: hidden;           /* отключаем ручной скролл жестом */
-    padding-right: 40px;        /* место под стрелки */
-  }
+/* ===== Force mobile arrows when body has .is-touch ===== */
+.sidebar{ position: relative; }
+.sidebar-arrows{ display:none; }
 
-  .sidebar-arrows{
-    display:flex;
-    position:absolute;
-    top:10px;
-    right:10px;
-    bottom:10px;
-    width:28px;
-    flex-direction:column;
-    gap:10px;
-    z-index:9999;
-    pointer-events:auto;
-  }
-
-  .sidebar-arrow{
-    flex: 0 0 44px;
-    background:#fff;
-    border:2px solid #111;
-    box-shadow: 2px 2px 0 #111;
-    font-family: 'Fira Code', monospace;
-    font-weight: 900;
-    color:#111;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    user-select:none;
-    -webkit-tap-highlight-color: transparent;
-    touch-action: manipulation;
-  }
-  .sidebar-arrow:active{ transform: translate(1px,1px); }
-
-  /* нижняя стрелка прижимается вниз */
-  .sidebar-arrow.down{ margin-top:auto; }
-
-  /* если “некуда” — делаем бледной */
-  .sidebar-arrow.disabled{
-    opacity:0.35;
-    pointer-events:none;
-  }
+body.is-touch .sidebar{
+  overflow: hidden;      /* отключаем жестовый скролл списка */
+  padding-right: 40px;   /* место под стрелки */
 }
+
+body.is-touch .sidebar-arrows{
+  display:flex;
+  position:absolute;
+  top:10px;
+  right:10px;
+  bottom:10px;
+  width:28px;
+  flex-direction:column;
+  gap:10px;
+  z-index:9999;
+  pointer-events:auto;
+}
+
+body.is-touch .sidebar-arrow{
+  flex: 0 0 44px;
+  background:#fff;
+  border:2px solid #111;
+  box-shadow: 2px 2px 0 #111;
+  font-family: 'Fira Code', monospace;
+  font-weight: 900;
+  color:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  user-select:none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+body.is-touch .sidebar-arrow:active{ transform: translate(1px,1px); }
+body.is-touch .sidebar-arrow.down{ margin-top:auto; }
+body.is-touch .sidebar-arrow.disabled{ opacity:0.35; pointer-events:none; }
+
 
 
   </style>
@@ -1081,9 +1077,13 @@ body.mode-off .pane{
   <script>
     // ===== iOS/iPad: keep desktop layout + stable viewport height (no logic changes) =====
     (function(){
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-      if (isIOS) document.body.classList.add('mobile-desktop');
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+
+  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (isTouch) document.body.classList.add('is-touch');
+
+  if (isIOS) document.body.classList.add('mobile-desktop');
 
       function setVhVar(){
         const h = (window.visualViewport && window.visualViewport.height) ? window.visualViewport.height : window.innerHeight;
