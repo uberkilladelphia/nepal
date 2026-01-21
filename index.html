@@ -32,11 +32,12 @@
       --panel-bg: rgba(255,46,46,0.88);
       --panel-border: rgba(255,255,255,0.60);
       --panel-text: rgba(255,255,255,0.98);
+      --panel-title-shift: -10px;
 
       --dot: 18px;
       --flame: 30px;
-
-      --year-lift: 14vh;
+      --panel-lift: -10vh;     /* окно вверх/вниз */
+      --info-lift: 3vh;      /* подписи над таймлайном вверх/вниз */
     }
 
     html{
@@ -61,23 +62,12 @@
       touch-action: manipulation;
     }
 
-    body.invert{
-      --ui-primary: var(--red);
-      --ui-accent: var(--white);
-
-      --panel-bg: rgba(255,255,255,0.90);
-      --panel-border: rgba(0,0,0,0.30);
-      --panel-text: rgba(255,46,46,0.98);
-    }
-
-    /* ========= ON SCENE (TIMELINE) ========= */
     .on-scene{
       position:relative;
       inset:0;
       width:100%;
       height: calc(var(--vh, 1vh) * 100);
       z-index:60;
-      transition: opacity .18s ease;
     }
 
     .bg-stage{
@@ -220,7 +210,7 @@
       text-align: left;
     }
 
-    /* OFF tab content styles (reused inside panel body) */
+    /* Content blocks (from tabs) */
     .pm-two-col{
       display:grid;
       grid-template-columns: 1fr 1fr;
@@ -300,10 +290,7 @@
       color: var(--red);
       font-size:10px;
     }
-    .pm-quote-text{
-      font-weight:800;
-      color:#111;
-    }
+    .pm-quote-text{ font-weight:800; color:#111; }
     .pm-quote-text::before{ content:"“"; color: var(--red); }
     .pm-quote-text::after{ content:"”"; color: var(--red); }
     .pm-quote-meta{
@@ -335,87 +322,24 @@
       color:#111;
     }
 
-    /* Years lifted up */
-    .year-display{
-      position:absolute;
-      inset:0;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      z-index:8;
-      perspective:1000px;
-      pointer-events:none;
-      transform: translateY(calc(-1 * var(--year-lift)));
-    }
-    .huge-text{
-      pointer-events:auto;
-      cursor:pointer;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 700; /* Bold */
-      font-size:min(28.6vw, 286px);
-      line-height:0.88;
-      width:100vw;
-      text-align:center;
-      letter-spacing:-0.02em;
-      text-transform:uppercase;
-      position:absolute;
-      white-space:nowrap;
-      color: var(--red);
-      transition: transform .8s cubic-bezier(.2,1,.3,1), opacity .65s cubic-bezier(.2,1,.3,1);
-      will-change: transform, opacity;
-    }
-    .huge-text .ch{ display:inline-block; will-change: transform, opacity; }
-    .huge-text.active .ch{ animation: chSnapIn 720ms cubic-bezier(.12,1,.22,1) both; }
-    .huge-text.active .ch:nth-child(1){ animation-delay: 0ms; }
-    .huge-text.active .ch:nth-child(2){ animation-delay: 40ms; }
-    .huge-text.active .ch:nth-child(3){ animation-delay: 80ms; }
-    .huge-text.active .ch:nth-child(4){ animation-delay: 120ms; }
-    @keyframes chSnapIn{
-      0%   { transform: translateY(32px) rotateX(42deg) scale(1.06); opacity:0; }
-      55%  { transform: translateY(-6px) rotateX(0deg) scale(1.0); opacity:1; }
-      100% { transform: translateY(0px) rotateX(0deg) scale(1.0); opacity:1; }
-    }
-    .huge-text.enter-right{ transform:translateX(58vw) rotateY(-18deg); opacity:0; }
-    .huge-text.enter-left { transform:translateX(-58vw) rotateY(18deg); opacity:0; }
-    .huge-text.active     { transform:translateX(0) rotateY(0); opacity:1; }
-    .huge-text.exit-left  { transform:translateX(-58vw) rotateY(18deg); opacity:0; }
-    .huge-text.exit-right { transform:translateX(58vw) rotateY(-18deg); opacity:0; }
-
-    /* panel open hides year */
-    body.panel-open .huge-text.active{
-      transform: translateY(-55vh) rotateX(22deg) scale(0.98);
-      opacity: 0.0;
-    }
-
-    /* CENTER PANEL */
+    /* CENTER PANEL (always visible) */
     .center-panel{
       position:absolute;
       left:50%;
       top:50%;
-      transform: translate(-50%,-50%) scale(0.96);
+      transform: translate(-50%,-50%) translateY(var(--panel-lift));
       width: min(980px, 92vw);
-      height: min(720px, 78vh);
+      height: min(620px, 78vh);
       border-radius: 12px;
       z-index: 90;
-      pointer-events: none;
+      pointer-events: auto;
       background: var(--panel-bg);
       border: 2px solid var(--panel-border);
       box-shadow:
         0 30px 120px rgba(0,0,0,0.55),
         0 0 0 2px rgba(0,0,0,0.16) inset;
-      opacity: 0;
-      will-change: transform, opacity;
-      overflow:hidden;
-    }
-    body.panel-open .center-panel{
       opacity: 1;
-      pointer-events: auto;
-      animation: panelIn 720ms cubic-bezier(.12,1,.22,1) both;
-    }
-    @keyframes panelIn{
-      0%   { transform: translate(-50%,-50%) scale(0.84) rotateX(10deg); opacity: 0; }
-      55%  { transform: translate(-50%,-50%) scale(1.02) rotateX(0deg); opacity: 1; }
-      100% { transform: translate(-50%,-50%) scale(1.00) rotateX(0deg); opacity: 1; }
+      overflow:hidden;
     }
     .panel-grid{
       position:absolute; inset:0; border-radius:10px; pointer-events:none;
@@ -425,13 +349,6 @@
         linear-gradient(to bottom, rgba(0,0,0,0.22) 1px, transparent 1px);
       background-size: 26px 26px;
       mix-blend-mode: multiply;
-    }
-    body.invert .panel-grid{
-      background:
-        linear-gradient(to right, rgba(255,46,46,0.22) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,46,46,0.18) 1px, transparent 1px);
-      mix-blend-mode: normal;
-      opacity:0.28;
     }
     .panel-content{
       position:absolute; inset:22px;
@@ -450,6 +367,7 @@
       line-height:1.02; letter-spacing:-0.02em;
       font-weight:900; text-transform:uppercase;
       font-family:'Inter', sans-serif;
+      transform: translateY(var(--panel-title-shift));
     }
     .panel-body{
       flex:1;
@@ -460,7 +378,21 @@
       line-height:1.35;
       font-family:'Inter', sans-serif;
       white-space: normal;
+      user-select:text;
+      -webkit-user-select:text;
+      cursor:text;
     }
+
+    :root{
+  --panel-body-font: 16px;      /* будет менять JS */
+  --panel-body-line: 1.35;
+}
+
+.panel-body{
+  font-size: var(--panel-body-font);
+  line-height: var(--panel-body-line);
+}
+
     .panel-actions{
       display:flex; gap:12px; align-items:center;
       margin-top: 6px;
@@ -475,31 +407,14 @@
       text-transform:uppercase; font-size:12px;
       font-family:'Fira Code', monospace;
       user-select:none;
-    }
-    body.invert .btn{
-      border-color: rgba(255,46,46,0.55);
-      background: rgba(255,46,46,0.10);
-      color: rgba(255,46,46,0.98);
+      -webkit-user-select:none;
+      cursor:pointer;
     }
     .panel-note{
       font-size:12px; letter-spacing:0.14em;
       text-transform:uppercase; opacity:0.85;
       font-family:'Fira Code', monospace;
       font-weight:900;
-    }
-
-    /* allow selection inside panel */
-    body.panel-open .center-panel,
-    body.panel-open .center-panel *{
-      user-select:text;
-      -webkit-user-select:text;
-      cursor: text;
-    }
-    body.panel-open .btn,
-    body.panel-open .btn *{
-      user-select:none;
-      -webkit-user-select:none;
-      cursor: pointer;
     }
 
     /* TIMELINE */
@@ -586,6 +501,7 @@
       text-align:center;
       z-index:35;
       pointer-events:none;
+      transform: translateY(var(--info-lift));
     }
     .info-label{
       font-size:.78rem;
@@ -697,14 +613,26 @@
       :root{
         --dot: 16px;
         --flame: 26px;
-        --year-lift: 12vh;
       }
       .thread-container{ bottom: calc(15vh + env(safe-area-inset-bottom, 0px)); height:34px; }
       .lightbox-card{ height: min(640px, 84vh); }
       .center-panel{ height: min(720px, 84vh); }
     }
 
-    /* iPad/iPhone “desktop layout” mode */
+    /* iPad / tablets: поднимаем окно и подписи, чтобы не перекрывали таймлайн */
+@media (max-width: 1024px){
+  :root{
+    --panel-lift: -8vh;  /* подними окно выше: -6vh ... -12vh */
+    --info-lift: -6vh;   /* подними подписи выше таймлайна */
+  }
+
+  /* чуть уменьшим высоту окна, чтобы гарантированно не налезало */
+  .center-panel{
+    height: min(680px, 72vh);
+  }
+}
+
+
     body.mobile-desktop{ -webkit-text-size-adjust:100%; }
   </style>
 </head>
@@ -724,7 +652,8 @@
 
     <div class="float-cards" id="floatCards" aria-hidden="true"></div>
 
-    <div class="center-panel" id="centerPanel" aria-hidden="true">
+    <!-- Always-visible slide panel -->
+    <div class="center-panel" id="centerPanel" aria-hidden="false">
       <div class="panel-grid"></div>
       <div class="panel-content">
         <div class="panel-kicker" id="panelKicker">SLIDE / DECK</div>
@@ -732,22 +661,20 @@
         <div class="panel-body" id="panelBody">…</div>
         <div class="panel-actions">
           <div class="btn" id="panelContinue" role="button" tabindex="0">CONTINUE</div>
-          <div class="panel-note">ESC / CLICK — CLOSE</div>
+          <div class="panel-note">DOTS / CLICK — NAVIGATE</div>
         </div>
       </div>
     </div>
-
-    <div class="year-display" id="yearContainer"></div>
 
     <div class="thread-container" id="timeline">
       <div class="thread-line"></div>
 
       <!-- 11 milestones -->
-      <div class="milestone" data-idx="0" aria-label="ИССЛЕДОВАТЕЛЬСКИЕ ВОПРОСЫ"></div>
-      <div class="milestone" data-idx="1" aria-label="ЭМПИРИКА"></div>
+      <div class="milestone" data-idx="0" aria-label="Q"></div>
+      <div class="milestone" data-idx="1" aria-label="DATA"></div>
       <div class="milestone" data-idx="2" aria-label="METHOD"></div>
       <div class="milestone" data-idx="3" aria-label="UNIQUE"></div>
-      <div class="milestone" data-idx="4" aria-label="ИНФРАСТРУКТУРА"></div>
+      <div class="milestone" data-idx="4" aria-label="INFRA"></div>
       <div class="milestone" data-idx="5" aria-label="LEADERS"></div>
       <div class="milestone" data-idx="6" aria-label="LEARN"></div>
       <div class="milestone" data-idx="7" aria-label="ARENA"></div>
@@ -764,7 +691,7 @@
     </div>
 
     <div class="info-wrap">
-      <div class="info-label" id="label">DECK</div>
+      <div class="info-label" id="label">ЭТАП</div>
       <h1 class="info-title" id="infoTitle"></h1>
       <p class="info-desc" id="infoDesc"></p>
     </div>
@@ -807,10 +734,9 @@
       };
     }
 
-    // ===== CONTENT (moved from OFF tabs, without loss) =====
+    // ===== CONTENT =====
     const slides = [
       {
-        year: "Q?",
         title: "Исследовательские вопросы",
         desc: "Каркас исследования: 4 ключевых вопроса.",
         html: `
@@ -824,9 +750,8 @@
         `
       },
       {
-        year: "FACTS",
         title: "Эмпирические данные",
-        desc: "Источник выгрузки + масштабы корпуса.",
+        desc: "Источник выгрузки + масштабы.",
         html: `
           <div class="pane-title">Эмпирические данные</div>
           <div class="pane-card">
@@ -840,8 +765,7 @@
         `
       },
       {
-        year: "METHOD",
-        title: "Как проводилось исследование",
+        title: "Метод",
         desc: "RAG vs традиционные методы (сравнение).",
         html: `
           <div class="pm-two-col">
@@ -869,7 +793,6 @@
         `
       },
       {
-        year: "UNIQUE",
         title: "Уникальные характеристики протестных сообщений",
         desc: "Мультиязычность + эмоциональная динамика + цитата.",
         html: `
@@ -903,8 +826,7 @@
         `
       },
       {
-        year: "STRUCTURE",
-        title: "На чем держалась кибер-мобилизация",
+        title: "Инфраструктура кибер-мобилизации",
         desc: "Функции Discord как инфраструктуры координации.",
         html: `
           <div class="pane-title">Инфраструктура кибер-мобилизации</div>
@@ -919,7 +841,6 @@
         `
       },
       {
-        year: "LEADERS",
         title: "Лидеры “Youth Against Corruption”",
         desc: "Модераторы + тактические координаторы + распределение ролей.",
         html: `
@@ -964,7 +885,6 @@
         `
       },
       {
-        year: "COOPERATION",
         title: "Горизонтальные практики взаимного обучения",
         desc: "Peer-to-peer обучение как ресурс движения.",
         html: `
@@ -1005,7 +925,6 @@
         `
       },
       {
-        year: "3RD PARTY",
         title: "Провокаторы и EmergencyArena",
         desc: "Разграничение “третьей стороны” + контур Emergency Arena.",
         html: `
@@ -1041,7 +960,6 @@
         `
       },
       {
-        year: "GEN Z",
         title: "Коллективная идентичность «Gen Z»",
         desc: "Парламент Discord, самоопределение, противник, формы противостояния.",
         html: `
@@ -1055,7 +973,6 @@
         `
       },
       {
-        year: "FINDINGS",
         title: "Ключевые находки",
         desc: "Сводка по ключевым блокам анализа.",
         html: `
@@ -1102,7 +1019,6 @@
         `
       },
       {
-        year: "TOTAL",
         title: "Выводы",
         desc: "Финальные тезисы.",
         html: `
@@ -1120,7 +1036,6 @@
     ];
 
     // ========= UI hooks =========
-    const yearContainer = document.getElementById('yearContainer');
     const infoTitle = document.getElementById('infoTitle');
     const infoDesc  = document.getElementById('infoDesc');
 
@@ -1135,48 +1050,6 @@
     let currentIndex = 0;
     let isAnimating = false;
 
-    function togglePanel(forceClose = false){
-      const open = document.body.classList.contains('panel-open');
-      if (forceClose || open){
-        document.body.classList.remove('panel-open');
-        document.body.classList.remove('invert');
-        return;
-      }
-      document.body.classList.add('panel-open');
-      document.body.classList.add('invert');
-    }
-
-    function splitChars(text) {
-      return Array.from(text).map(ch => `<span class="ch">${ch}</span>`).join('');
-    }
-
-    function renderYear(index, stateClass) {
-      const old = yearContainer.querySelector('.huge-text.active');
-      if (old) {
-        if (stateClass === 'enter-right') old.className = 'huge-text active exit-left';
-        else if (stateClass === 'enter-left') old.className = 'huge-text active exit-right';
-        else old.remove();
-        setTimeout(() => { if (old && old.parentNode) old.remove(); }, 800);
-      }
-
-      const el = document.createElement('div');
-      el.className = `huge-text ${stateClass}`;
-      el.innerHTML = splitChars(slides[index].year);
-
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        updatePanelCopy(index);
-        togglePanel();
-      });
-
-      yearContainer.appendChild(el);
-
-      requestAnimationFrame(() => {
-        el.classList.remove(stateClass);
-        el.classList.add('active');
-      });
-    }
-
     function updateInfo(index){
       infoTitle.classList.remove('visible');
       infoDesc.classList.remove('visible');
@@ -1186,7 +1059,7 @@
         infoDesc.textContent = slides[index].desc || "";
         infoTitle.classList.add('visible');
         infoDesc.classList.add('visible');
-      }, 240);
+      }, 120);
     }
 
     function updatePanelCopy(index){
@@ -1195,11 +1068,7 @@
       panelBodyEl.innerHTML = slides[index].html || "";
       panelBodyEl.scrollTop = 0;
     }
-
-    function updateMilestones(idx) {
-      milestones.forEach((m, i) => m.classList.toggle('active', i === idx));
-      positionFlameToIndex(idx);
-    }
+    autoFitPanelBodyText();
 
     function positionFlameToIndex(idx){
       const m = milestones[idx];
@@ -1216,19 +1085,19 @@
       activeFlame.classList.add('show');
     }
 
+    function updateMilestones(idx) {
+      milestones.forEach((m, i) => m.classList.toggle('active', i === idx));
+      positionFlameToIndex(idx);
+    }
+
     function goToIndex(targetIndex) {
       if (isAnimating) return;
-      if (document.body.classList.contains('panel-open')) return;
 
       targetIndex = Math.max(0, Math.min(slides.length - 1, targetIndex));
       if (targetIndex === currentIndex) return;
 
       isAnimating = true;
 
-      const direction = targetIndex > currentIndex ? 1 : -1;
-      const animationClass = direction > 0 ? 'enter-right' : 'enter-left';
-
-      renderYear(targetIndex, animationClass);
       updateMilestones(targetIndex);
       updateInfo(targetIndex);
       updatePanelCopy(targetIndex);
@@ -1236,7 +1105,7 @@
       currentIndex = targetIndex;
       setFireTargetByIndex(currentIndex);
 
-      setTimeout(() => { isAnimating = false; }, 800);
+      setTimeout(() => { isAnimating = false; }, 220);
     }
 
     milestones.forEach((m, idx) => {
@@ -1246,11 +1115,8 @@
       m.addEventListener('pointerdown', (e)=>e.stopPropagation(), { passive:true });
     });
 
-    // Continue -> next slide (wrap)
     function nextSlide(){
-      if (slides.length <= 1) return;
-      togglePanel(true);
-      setTimeout(() => goToIndex((currentIndex + 1) % slides.length), 60);
+      goToIndex((currentIndex + 1) % slides.length);
     }
     panelContinue.addEventListener('click', (e)=>{ e.preventDefault(); nextSlide(); });
     panelContinue.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextSlide(); } });
@@ -1277,18 +1143,9 @@
     lbClose.addEventListener('click', (e)=>{ e.preventDefault(); closeLightbox(); });
     lightbox.addEventListener('click', (e)=>{ if (e.target === lightbox) closeLightbox(); });
 
-    // ESC closes lightbox first, else closes panel
     window.addEventListener('keydown', (e)=>{
       if (e.key !== 'Escape') return;
-      if (lightbox.classList.contains('open')) { closeLightbox(); return; }
-      if (document.body.classList.contains('panel-open')) { togglePanel(true); return; }
-    });
-
-    // click outside panel closes it
-    window.addEventListener('pointerdown', (e) => {
-      if (!document.body.classList.contains('panel-open')) return;
-      if (e.target.closest('#centerPanel')) return;
-      togglePanel(true);
+      if (lightbox.classList.contains('open')) closeLightbox();
     });
 
     // ===== Ensure local video plays =====
@@ -1385,7 +1242,6 @@
         }
       }
 
-      let rafId = 0;
       function tick(t){
         const now = t || performance.now();
 
@@ -1406,12 +1262,12 @@
             `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(${rotZ.toFixed(2)}deg)`;
         }
 
-        rafId = requestAnimationFrame(tick);
+        requestAnimationFrame(tick);
       }
 
       build();
       onResize();
-      rafId = requestAnimationFrame(tick);
+      requestAnimationFrame(tick);
 
       window.addEventListener('resize', onResize);
       if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
@@ -1545,12 +1401,6 @@
 
     // init
     function init() {
-      renderYear(0, 'enter-right');
-      requestAnimationFrame(() => {
-        const el = yearContainer.querySelector('.huge-text');
-        if (el && !el.classList.contains('active')) el.classList.add('active');
-      });
-
       updateMilestones(0);
       updateInfo(0);
       updatePanelCopy(0);
@@ -1559,18 +1409,51 @@
       setFireTargetByIndex(0);
       fireTick();
 
-      // flame reposition on resize
-      function flameResize(){
+      function onResize(){
         positionFlameToIndex(currentIndex);
+        fireResize(true);
       }
-      window.addEventListener('resize', flameResize);
-      if (window.visualViewport) window.visualViewport.addEventListener('resize', flameResize);
+      window.addEventListener('resize', onResize);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
     }
 
-    init();
+    function autoFitPanelBodyText() {
+  if (!panelBodyEl) return;
 
-    window.addEventListener('resize', () => fireResize(true));
-    if (window.visualViewport) window.visualViewport.addEventListener('resize', () => fireResize(true));
+  // границы размеров (можешь подстроить)
+  const maxPx = Math.max(16, Math.min(20, Math.round(window.innerWidth / 40))); // ~16..20
+  const minPx = 13;
+
+  // чтобы корректно измерить после вставки HTML
+  requestAnimationFrame(() => {
+    // сначала пробуем сделать крупнее
+    let size = maxPx;
+    panelBodyEl.style.setProperty('--panel-body-font', size + 'px');
+
+    // уменьшаем пока не влезет без скролла
+    // (оставляем маленький запас на "дыхание")
+    const safety = 6;
+
+    while (size > minPx && (panelBodyEl.scrollHeight > panelBodyEl.clientHeight + safety)) {
+      size -= 1;
+      panelBodyEl.style.setProperty('--panel-body-font', size + 'px');
+    }
+
+    // если контент короткий (много воздуха), можно слегка увеличить еще
+    // (но не выше maxPx)
+    const free = panelBodyEl.clientHeight - panelBodyEl.scrollHeight;
+    if (free > 140 && size < maxPx) {
+      size = Math.min(maxPx, size + 1);
+      panelBodyEl.style.setProperty('--panel-body-font', size + 'px');
+    }
+  });
+}
+
+window.addEventListener('resize', autoFitPanelBodyText);
+if (window.visualViewport) window.visualViewport.addEventListener('resize', autoFitPanelBodyText);
+
+
+    init();
   </script>
 </body>
 </html>
