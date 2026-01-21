@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>Внутри дискурса непальских протестов</title>
+  <title>Infinite Time Thread</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Anton&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
@@ -900,21 +900,41 @@ body.mode-off .pane{
   touch-action: pan-y; /* но внутри окон — можно скроллить */
 }
 
-/* ===== Pixel Messenger: scroll only inside sidebar/pane (iOS-safe) ===== */
-body.mode-off{
-  overscroll-behavior: none;
-  -webkit-overflow-scrolling: auto;
+/* ===== Pixel Messenger: draggable custom scrollbar for sidebar ===== */
+.sidebar{
+  position: relative;
+  padding-right: 30px; /* место под скроллбар */
+  overflow-y: auto;    /* оставляем обычный скролл тоже */
+  -webkit-overflow-scrolling: touch;
 }
 
-body.mode-off .sidebar,
-body.mode-off .pane{
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  touch-action: pan-y;
-  max-height: 100%;
-  min-height: 0;
-  align-self: stretch;
+/* трек */
+.sidebar .sb-scrollbar{
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  bottom: 8px;
+  width: 12px;
+  background: #fff;
+  border: 2px solid #111;
+  box-shadow: 2px 2px 0 #111;
+  z-index: 5;
 }
+
+/* ползунок */
+.sidebar .sb-thumb{
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 44px; /* перезапишется JS-ом */
+  background: var(--red);
+  border-bottom: 2px solid #111;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset;
+  cursor: grab;
+  touch-action: none; /* важно для drag на iOS */
+}
+.sidebar .sb-thumb:active{ cursor: grabbing; }
+
   </style>
 </head>
 
@@ -1046,21 +1066,95 @@ body.mode-off .pane{
       if (window.visualViewport) window.visualViewport.addEventListener('resize', setVhVar);
     })();
 
-    // ===== iOS: block page rubber-band scroll, allow only messenger inner scroll =====
+    // ===== Custom draggable scrollbar for Pixel Messenger sidebar (iOS-friendly) =====
 (function(){
-  const allowScrollInside = (el) => el && el.closest && el.closest('.sidebar, .pane');
+  const sidebar = document.getElementById('tabs');
+  if(!sidebar) return;
 
-  document.addEventListener('touchmove', (e) => {
-    if (!document.body.classList.contains('mode-off')) return;
+  // создаём элементы скроллбара
+  const bar = document.createElement('div');
+  bar.className = 'sb-scrollbar';
+  const thumb = document.createElement('div');
+  thumb.className = 'sb-thumb';
+  bar.appendChild(thumb);
+  sidebar.appendChild(bar);
 
-    // если свайп НЕ внутри sidebar/pane — запрещаем (иначе скроллится "страница")
-    if (!allowScrollInside(e.target)) {
-      e.preventDefault();
+  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
+
+  function updateThumb(){
+    const ch = sidebar.clientHeight;
+    const sh = sidebar.scrollHeight;
+
+    // если контент не больше контейнера — прячем
+    if (sh <= ch + 1){
+      bar.style.display = 'none';
       return;
     }
+    bar.style.display = 'block';
 
-    // если свайп внутри — НЕ мешаем нативному скроллу списка/контента
-  }, { passive: false });
+    const trackH = bar.clientHeight;
+    const minThumb = 34;
+    const thumbH = clamp(Math.round(trackH * (ch / sh)), minThumb, trackH);
+    thumb.style.height = thumbH + 'px';
+
+    const maxScroll = sh - ch;
+    const maxTop = trackH - thumbH;
+    const top = (maxScroll > 0) ? (sidebar.scrollTop / maxScroll) * maxTop : 0;
+    thumb.style.top = clamp(top, 0, maxTop) + 'px';
+  }
+
+  // синхронизация при обычном скролле
+  sidebar.addEventListener('scroll', updateThumb, { passive:true });
+  window.addEventListener('resize', updateThumb);
+
+  // drag ползунка
+  let dragging = false;
+  let startY = 0;
+  let startScrollTop = 0;
+
+  thumb.addEventListener('pointerdown', (e) => {
+    dragging = true;
+    startY = e.clientY;
+    startScrollTop = sidebar.scrollTop;
+    try { thumb.setPointerCapture(e.pointerId); } catch(_) {}
+    e.preventDefault();
+    e.stopPropagation();
+  }, { passive:false });
+
+  thumb.addEventListener('pointermove', (e) => {
+    if(!dragging) return;
+
+    const ch = sidebar.clientHeight;
+    const sh = sidebar.scrollHeight;
+    const maxScroll = sh - ch;
+
+    const trackH = bar.clientHeight;
+    const thumbH = thumb.clientHeight;
+    const maxTop = Math.max(1, trackH - thumbH);
+
+    const deltaY = e.clientY - startY;
+    const deltaScroll = (deltaY / maxTop) * maxScroll;
+
+    sidebar.scrollTop = startScrollTop + deltaScroll;
+
+    e.preventDefault();
+    e.stopPropagation();
+  }, { passive:false });
+
+  function endDrag(e){
+    if(!dragging) return;
+    dragging = false;
+    e && e.preventDefault && e.preventDefault();
+  }
+
+  thumb.addEventListener('pointerup', endDrag, { passive:false });
+  thumb.addEventListener('pointercancel', endDrag, { passive:false });
+
+  // первичная отрисовка
+  requestAnimationFrame(updateThumb);
+
+  // если открываешь OFF режим — после переключения размеры могут меняться, обновим ещё раз
+  setTimeout(updateThumb, 200);
 })();
 
 
