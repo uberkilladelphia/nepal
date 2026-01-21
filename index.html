@@ -1065,8 +1065,8 @@ body.mode-off .pane{
       window.addEventListener('resize', setVhVar);
       if (window.visualViewport) window.visualViewport.addEventListener('resize', setVhVar);
     })();
-
-    // ===== Custom draggable scrollbar for Pixel Messenger sidebar (iOS-friendly) =====
+    
+// ===== Custom draggable scrollbar for Pixel Messenger sidebar (iOS-friendly) =====
 (function(){
   const sidebar = document.getElementById('tabs');
   if(!sidebar) return;
@@ -1156,7 +1156,6 @@ body.mode-off .pane{
   // если открываешь OFF режим — после переключения размеры могут меняться, обновим ещё раз
   setTimeout(updateThumb, 200);
 })();
-
 
     // ========= FPS CONTROL (old OS vibe) =========
     const OFF_FPS = 12;
