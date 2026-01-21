@@ -288,8 +288,6 @@
         #fdfdfd;
       padding: 10px;
       overflow:auto;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
     }
     .tab{
       border:2px solid #111;
@@ -302,8 +300,6 @@
       cursor:pointer;
       user-select:none;
       transition: transform .14s steps(12,end);
-      pointer-events:auto;
-      touch-action: manipulation;
     }
     .tab:active{ transform: translate(1px,1px); }
     .tab.active{
@@ -320,8 +316,6 @@
         #ffffff;
       min-height:0;
       position:relative;
-      -webkit-overflow-scrolling: touch;
-      touch-action: pan-y;
     }
 
     .pane-title{
@@ -546,7 +540,7 @@
       line-height:1;
       white-space:pre;
       margin:0;
-      padding:0; /* FIX #1: no bottom padding gap */
+      padding:0 0 1.2vh;
       color: var(--ui-accent);
       opacity:0.92;
       mix-blend-mode: screen;
@@ -859,100 +853,6 @@
     body.mobile-desktop .pane-card{ font-size: 13px; }
     body.mobile-desktop .tab{ font-size: 13px; }
     body.mobile-desktop .grid4 .block{ font-size: 13px; }
-
-    /* =========================================================
-       FIX #3: iPhone landscape anti-overlap (small height)
-       ========================================================= */
-    @media (max-height: 430px) and (orientation: landscape){
-      .thread-container{ bottom: 10vh; }
-      .orb-cursor{ bottom: calc(10vh + 13px); width:70px; height:70px; }
-      .info-wrap{ bottom: 15vh; }
-      .huge-text{ font-size: min(26vw, 240px); }
-      body.panel-open .huge-text.active{
-        transform: translateY(-48vh) rotateX(18deg) scale(0.98);
-      }
-      .center-panel{ height: min(360px, 56vh); }
-      .panel-content{ inset:18px; }
-      .panel-title{ font-size: clamp(22px, 3vw, 38px); }
-      .panel-body{ font-size: clamp(14px, 1.25vw, 16px); }
-    }
-
-    /* ===== FIX: allow scrolling in Pixel Messenger on mobile ===== */
-body.mode-off .messenger-window,
-body.mode-off .messenger-body,
-body.mode-off .sidebar,
-body.mode-off .pane{
-  touch-action: pan-y;
-}
-
-body.mode-off .sidebar,
-body.mode-off .pane{
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* iOS Safari: make sure vertical swipe isn't treated as page gesture */
-body.mode-off{
-  touch-action: none; /* body не ловит жесты */
-}
-body.mode-off .sidebar,
-body.mode-off .pane{
-  touch-action: pan-y; /* но внутри окон — можно скроллить */
-}
-
-/* ===== Mobile-only arrows to move Pixel Messenger categories ===== */
-.sidebar{
-  position: relative;
-}
-
-/* стрелки спрятаны по умолчанию */
-.sidebar-arrows{ display:none; }
-
-/* показываем на устройствах с touch + мелких экранах */
-/* ===== Force mobile arrows when body has .is-touch ===== */
-.sidebar{ position: relative; }
-.sidebar-arrows{ display:none; }
-
-body.is-touch .sidebar{
-  overflow: hidden;      /* отключаем жестовый скролл списка */
-  padding-right: 40px;   /* место под стрелки */
-}
-
-body.is-touch .sidebar-arrows{
-  display:flex;
-  position:absolute;
-  top:10px;
-  right:10px;
-  bottom:10px;
-  width:28px;
-  flex-direction:column;
-  gap:10px;
-  z-index:9999;
-  pointer-events:auto;
-}
-
-body.is-touch .sidebar-arrow{
-  flex: 0 0 44px;
-  background:#fff;
-  border:2px solid #111;
-  box-shadow: 2px 2px 0 #111;
-  font-family: 'Fira Code', monospace;
-  font-weight: 900;
-  color:#111;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  user-select:none;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-body.is-touch .sidebar-arrow:active{ transform: translate(1px,1px); }
-body.is-touch .sidebar-arrow.down{ margin-top:auto; }
-body.is-touch .sidebar-arrow.disabled{ opacity:0.35; pointer-events:none; }
-
-
-
   </style>
 </head>
 
@@ -1066,24 +966,14 @@ body.is-touch .sidebar-arrow.disabled{ opacity:0.35; pointer-events:none; }
       <h1 class="info-title" id="infoTitle"></h1>
       <p class="info-desc" id="infoDesc"></p>
     </div>
-
-    <div class="sidebar-arrows" aria-hidden="true">
-      <div class="sidebar-arrow up" id="tabsUp">▲</div>
-      <div class="sidebar-arrow down" id="tabsDown">▼</div>
-    </div>
-
   </div>
 
   <script>
     // ===== iOS/iPad: keep desktop layout + stable viewport height (no logic changes) =====
     (function(){
-  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
-  const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  if (isTouch) document.body.classList.add('is-touch');
-
-  if (isIOS) document.body.classList.add('mobile-desktop');
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+        (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      if (isIOS) document.body.classList.add('mobile-desktop');
 
       function setVhVar(){
         const h = (window.visualViewport && window.visualViewport.height) ? window.visualViewport.height : window.innerHeight;
@@ -1211,127 +1101,16 @@ body.is-touch .sidebar-arrow.disabled{ opacity:0.35; pointer-events:none; }
     };
 
     function renderTab(key){
-  pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
+      pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
+    }
 
-  // iOS Safari (особенно landscape): иногда не перерисовывает overflow:auto внутри grid
-  // форсим reflow + сбрасываем скролл, чтобы контент точно "переехал"
-  pane.scrollTop = 0;
-  void pane.offsetHeight;              // force reflow
-  pane.style.webkitTransform = 'translateZ(0)';
-  requestAnimationFrame(() => { pane.style.webkitTransform = ''; });
-}
-
-    function activateTabFromEvent(e){
-  const t = e.target.closest('.tab');
-  if(!t) return;
-
-  // важно для iOS landscape: срезаем "жест" и гарантируем обработку
-  if (e.cancelable) e.preventDefault();
-  e.stopPropagation();
-
-  const key = t.getAttribute('data-tab');
-  Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
-  renderTab(key);
-}
-
-// ===== Mobile arrows: step-scroll categories list reliably (no gesture scroll) =====
-(function(){
-  const sidebar = document.getElementById('tabs');
-  const up = document.getElementById('tabsUp');
-  const down = document.getElementById('tabsDown');
-  if(!sidebar || !up || !down) return;
-
-  const isCoarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
-
-  function maxScroll(){
-    return Math.max(0, sidebar.scrollHeight - sidebar.clientHeight);
-  }
-
-  function stepAmount(){
-    // шаг примерно как 3 вкладки; но не меньше 140px
-    return Math.max(140, Math.round(sidebar.clientHeight * 0.38));
-  }
-
-  function updateButtons(){
-    const m = maxScroll();
-    const y = sidebar.scrollTop;
-
-    up.classList.toggle('disabled', y <= 2);
-    down.classList.toggle('disabled', y >= m - 2);
-  }
-
-  function scrollByStep(dir){
-    const m = maxScroll();
-    const next = Math.max(0, Math.min(m, sidebar.scrollTop + dir * stepAmount()));
-    sidebar.scrollTop = next;
-    updateButtons();
-  }
-
-  function tapHandler(fn){
-    return (e) => {
-      if (e.cancelable) e.preventDefault();
-      e.stopPropagation();
-      fn();
-    };
-  }
-
-  // делаем “тап” максимально совместимым
-  up.addEventListener('touchend', tapHandler(() => scrollByStep(-1)), { passive:false });
-  down.addEventListener('touchend', tapHandler(() => scrollByStep(1)), { passive:false });
-  up.addEventListener('click', (e)=>{ e.stopPropagation(); scrollByStep(-1); });
-  down.addEventListener('click', (e)=>{ e.stopPropagation(); scrollByStep(1); });
-
-  sidebar.addEventListener('scroll', updateButtons, { passive:true });
-  window.addEventListener('resize', updateButtons);
-
-  // на мобилках включаем стрелки сразу, и убеждаемся что scrollHeight посчитан
-  if (isCoarse){
-    requestAnimationFrame(updateButtons);
-    setTimeout(updateButtons, 250);
-  }
-})();
-
-
-// iOS/Safari: pointerdown/touchstart срабатывают стабильнее, чем click
-function activateTab(t){
-  if(!t) return;
-  const key = (t.dataset && t.dataset.tab) ? t.dataset.tab : t.getAttribute('data-tab');
-
-  Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
-
-  // важный момент для iOS: обновим контент на следующем кадре
-  // (после того как :active / :focus обработаются браузером)
-  requestAnimationFrame(() => renderTab(key));
-}
-
-// Вешаем прямые обработчики на каждую вкладку — стабильнее на iOS landscape
-Array.from(tabsWrap.querySelectorAll('.tab')).forEach(tabEl => {
-  tabEl.addEventListener('touchend', (e) => {
-    if (e.cancelable) e.preventDefault();
-    e.stopPropagation();
-    activateTab(tabEl);
-  }, { passive:false });
-
-  // Allow native scroll in tabs list (iOS)
-tabsWrap.addEventListener('touchmove', (e) => {
-  // не блокируем скролл в списке категорий
-  e.stopPropagation();
-}, { passive:true });
-
-  tabEl.addEventListener('pointerup', (e) => {
-    if (e.cancelable) e.preventDefault();
-    e.stopPropagation();
-    activateTab(tabEl);
-  }, { passive:false });
-
-  // fallback для десктопа
-  tabEl.addEventListener('click', (e) => {
-    e.stopPropagation();
-    activateTab(tabEl);
-  });
-});
-
-
+    tabsWrap.addEventListener('click', (e) => {
+      const t = e.target.closest('.tab');
+      if(!t) return;
+      const key = t.getAttribute('data-tab');
+      Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
+      renderTab(key);
+    });
 
     // default OFF pane content
     renderTab('q');
@@ -1602,14 +1381,7 @@ tabsWrap.addEventListener('touchmove', (e) => {
     window.addEventListener('mouseup', onEnd);
 
     orb.addEventListener('touchstart', e => { e.preventDefault(); onStart(e.touches[0].clientX); }, { passive:false });
-
-    // FIX #2: don't globally preventDefault touchmove (it breaks OFF tabs in iPhone landscape)
-    window.addEventListener('touchmove', e => {
-      if (!isDragging) return;
-      e.preventDefault();
-      onMove(e.touches[0].clientX);
-    }, { passive:false });
-
+    window.addEventListener('touchmove', e => { e.preventDefault(); onMove(e.touches[0].clientX); }, { passive:false });
     window.addEventListener('touchend', onEnd);
 
     // ===== Ensure local video plays =====
