@@ -445,6 +445,85 @@
           rgba(0,0,0,0.92));
     }
 
+    /* NEW: floating 3D cards (above video, behind everything else) */
+    .float-cards{
+      position:fixed;
+      inset:0;
+      z-index:3; /* above video/vignette (2), below fire (4) and all UI */
+      pointer-events:none;
+      overflow:hidden;
+      perspective: 1200px;
+      transform: translateZ(0);
+    }
+    .float-card{
+      position:absolute;
+      border-radius: 18px;
+      transform-style: preserve-3d;
+      background: rgba(255,255,255,0.09);
+      border: 1px solid rgba(255,255,255,0.18);
+      box-shadow:
+        0 22px 90px rgba(0,0,0,0.48),
+        0 0 0 1px rgba(255,255,255,0.06) inset;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      overflow:hidden;
+      opacity: 0.45;
+      filter: saturate(1.02);
+    }
+    .float-card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(600px 220px at 15% 10%, rgba(255,255,255,0.18), rgba(255,255,255,0) 55%),
+        radial-gradient(500px 260px at 80% 90%, rgba(255,46,46,0.12), rgba(255,46,46,0) 60%);
+      pointer-events:none;
+      mix-blend-mode: screen;
+      opacity:0.85;
+    }
+    .float-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:
+        repeating-linear-gradient(135deg, rgba(255,255,255,0.08) 0 10px, rgba(255,255,255,0.00) 10px 20px);
+      opacity:0.18;
+      pointer-events:none;
+    }
+    .float-card .slot{
+      position:absolute;
+      inset:10px;
+      border-radius: 14px;
+      border: 1px dashed rgba(255,255,255,0.35);
+      background:
+        linear-gradient(180deg, rgba(0,0,0,0.18), rgba(0,0,0,0.08)),
+        radial-gradient(700px 240px at 50% 10%, rgba(255,255,255,0.10), rgba(255,255,255,0) 60%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Fira Code', monospace;
+      font-weight:900;
+      letter-spacing:0.14em;
+      text-transform:uppercase;
+      font-size: 11px;
+      color: rgba(255,255,255,0.78);
+      text-shadow: 0 0 18px rgba(0,0,0,0.55);
+      transform: translateZ(24px);
+      user-select:none;
+    }
+
+    .float-card .slot img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  border-radius: 12px;
+  display:block;
+}
+
+    @media (prefers-reduced-motion: reduce){
+      .float-cards{ display:none; }
+    }
+
     /* keep fire glued to bottom (no floating) */
     .ascii-fire{
       position:absolute;
@@ -515,13 +594,13 @@
     .huge-text.exit-left  { transform:translateX(-58vw) rotateY(18deg); opacity:0; }
     .huge-text.exit-right { transform:translateX(58vw) rotateY(-18deg); opacity:0; }
 
-    /* NEW: panel open hides year (matches your earlier behavior) */
+    /* panel open hides year */
     body.panel-open .huge-text.active{
       transform: translateY(-55vh) rotateX(22deg) scale(0.98);
       opacity: 0.0;
     }
 
-    /* NEW: CENTER PANEL (year description popup) */
+    /* CENTER PANEL */
     .center-panel{
       position:absolute;
       left:50%;
@@ -622,7 +701,7 @@
       bottom: calc(16vh + env(safe-area-inset-bottom, 0px));
       width:100%;
       height:34px;
-      z-index:80; /* was 30: keep milestones always clickable */
+      z-index:80;
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -663,7 +742,6 @@
       transform: scale(1.08);
     }
 
-    /* flame replaces dot and is perfectly centered */
     .milestone .flame{
       position:absolute;
       left:50%;
@@ -739,60 +817,6 @@
       text-shadow: 0 0 24px rgba(0,0,0,0.55);
     }
     .info-desc.visible{ opacity: 1; transform: translateY(0); }
-
-    /* clickable media slots under description */
-    .phase-media{
-      margin: 12px auto 0;
-      width: min(980px, 92vw);
-      display:flex;
-      gap:10px;
-      justify-content:center;
-      align-items:stretch;
-      opacity:0;
-      transform: translateY(10px);
-      transition: opacity .45s, transform .45s;
-      pointer-events:none; /* important: don't block timeline */
-    }
-    .phase-media.visible{ opacity:1; transform: translateY(0); }
-    .media-slot{
-      pointer-events:auto; /* clickable */
-      flex: 0 1 280px;
-      border: 2px dashed rgba(255,255,255,0.55);
-      background:
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 10px, rgba(255,255,255,0.00) 10px 20px);
-      border-radius: 12px;
-      height: 120px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      font-family:'Fira Code', monospace;
-      font-weight:900;
-      letter-spacing:0.12em;
-      text-transform:uppercase;
-      color: rgba(255,255,255,0.82);
-      text-shadow: 0 0 18px rgba(0,0,0,0.55);
-      cursor:pointer;
-      user-select:none;
-      overflow:hidden;
-    }
-    .media-slot img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      pointer-events:none;
-    }
-    body.invert .media-slot{
-      border-color: rgba(255,46,46,0.55);
-      background:
-        repeating-linear-gradient(45deg, rgba(255,46,46,0.10) 0 10px, rgba(255,46,46,0.00) 10px 20px);
-      color: rgba(255,46,46,0.92);
-      text-shadow: none;
-    }
-    .media-slot.disabled{
-      opacity:0.55;
-      cursor:not-allowed;
-    }
 
     /* LIGHTBOX */
     .lightbox{
@@ -880,14 +904,6 @@
       .messenger-body{ grid-template-columns: 1fr; }
       .sidebar{ border-right:0; border-bottom:3px solid #111; }
       .thread-container{ bottom: calc(15vh + env(safe-area-inset-bottom, 0px)); height:34px; }
-      .phase-media{
-        width: min(980px, 92vw);
-        overflow-x:auto;
-        justify-content:flex-start;
-        padding: 0 6px;
-        -webkit-overflow-scrolling: touch;
-      }
-      .media-slot{ flex: 0 0 240px; }
       .lightbox-card{ height: min(640px, 84vh); }
     }
 
@@ -977,7 +993,10 @@
       <pre class="ascii-fire" id="asciiFire"></pre>
     </div>
 
-    <!-- NEW: Center panel popup -->
+    <!-- NEW: floating cards layer -->
+    <div class="float-cards" id="floatCards" aria-hidden="true"></div>
+
+    <!-- Center panel popup -->
     <div class="center-panel" id="centerPanel" aria-hidden="true">
       <div class="panel-grid"></div>
       <div class="panel-content">
@@ -1058,11 +1077,10 @@
       <div class="info-label" id="label">TIMELINE</div>
       <h1 class="info-title" id="infoTitle"></h1>
       <p class="info-desc" id="infoDesc"></p>
-      <div class="phase-media" id="phaseMedia"></div>
     </div>
   </div>
 
-  <!-- Lightbox -->
+  <!-- Lightbox (kept as-is) -->
   <div class="lightbox" id="lightbox" aria-hidden="true">
     <div class="lightbox-card" role="dialog" aria-modal="true" aria-label="Image preview">
       <div class="lightbox-top">
@@ -1302,36 +1320,15 @@
       if (offSloganTimer){ clearInterval(offSloganTimer); offSloganTimer = null; }
     }
 
-    // ========= ON DATA + MEDIA (click-to-open for EVERY year) =========
+    // ========= ON DATA =========
     const data = [
-      { year: "2018", title: "SEED / ЗАРОЖДЕНИЕ", desc: "Первые искры: разрозненные группы, локальные поводы, поиск языка и символов.", media: [
-        { label: "2018 SCREEN #1", src: "" },
-        { label: "2018 SCREEN #2", src: "" }
-      ]},
-      { year: "2019", title: "IGNITION / ИМПУЛЬС", desc: "Ускорение: общие точки сборки, повторяемые сценарии, резонансные триггеры.", media: [
-        { label: "2019 SCREEN #1", src: "" },
-        { label: "2019 SCREEN #2", src: "" }
-      ]},
-      { year: "2020", title: "SHIFT / ПОВОРОТ", desc: "Смена режима: новые каналы, новые риски, новая скорость распространения сигналов.", media: [
-        { label: "2020 SCREEN #1", src: "" },
-        { label: "2020 SCREEN #2", src: "" }
-      ]},
-      { year: "2021", title: "GENESIS / ИСТОКИ", desc: "Сборка структуры: роли, протоколы, инфраструктура выживания и устойчивости.", media: [
-        { label: "2021 SCREEN #1", src: "2021_1.jpg" },
-        { label: "2021 SCREEN #2", src: "2021_2.jpg" }
-      ]},
-      { year: "2022", title: "EXPANSION / РОСТ", desc: "Расширение: география, аудитория, сложность коалиций, уровень наблюдения.", media: [
-        { label: "2022 SCREEN #1", src: "" },
-        { label: "2022 SCREEN #2", src: "" }
-      ]},
-      { year: "2023", title: "SYNERGY / СИНТЕЗ", desc: "Синтез: коалиции, совместные действия, общая грамматика визуала и поведения.", media: [
-        { label: "2023 SCREEN #1", src: "" },
-        { label: "2023 SCREEN #2", src: "" }
-      ]},
-      { year: "2024", title: "FUTURE / ЗАВТРА", desc: "Будущее: сценарии эскалации/затухания. Выбор между вспышкой и долгим тлением.", media: [
-        { label: "2024 SCREEN #1", src: "" },
-        { label: "2024 SCREEN #2", src: "" }
-      ]}
+      { year: "2018", title: "SEED / ЗАРОЖДЕНИЕ", desc: "Первые искры: разрозненные группы, локальные поводы, поиск языка и символов." },
+      { year: "2019", title: "IGNITION / ИМПУЛЬС", desc: "Ускорение: общие точки сборки, повторяемые сценарии, резонансные триггеры." },
+      { year: "2020", title: "SHIFT / ПОВОРОТ", desc: "Смена режима: новые каналы, новые риски, новая скорость распространения сигналов." },
+      { year: "2021", title: "GENESIS / ИСТОКИ", desc: "Сборка структуры: роли, протоколы, инфраструктура выживания и устойчивости." },
+      { year: "2022", title: "EXPANSION / РОСТ", desc: "Расширение: география, аудитория, сложность коалиций, уровень наблюдения." },
+      { year: "2023", title: "SYNERGY / СИНТЕЗ", desc: "Синтез: коалиции, совместные действия, общая грамматика визуала и поведения." },
+      { year: "2024", title: "FUTURE / ЗАВТРА", desc: "Будущее: сценарии эскалации/затухания. Выбор между вспышкой и долгим тлением." }
     ];
 
     let currentIndex = 0;
@@ -1340,7 +1337,6 @@
     const yearContainer = document.getElementById('yearContainer');
     const infoTitle = document.getElementById('infoTitle');
     const infoDesc  = document.getElementById('infoDesc');
-    const phaseMedia = document.getElementById('phaseMedia');
 
     // Panel elements
     const panelTitleEl = document.getElementById('panelTitle');
@@ -1381,7 +1377,6 @@
       el.className = `huge-text ${stateClass}`;
       el.innerHTML = splitChars(data[index].year);
 
-      // NEW: click year -> open panel with this year's description
       el.addEventListener('click', (e) => {
         e.stopPropagation();
         if (document.body.classList.contains('mode-off')) return;
@@ -1397,40 +1392,15 @@
       });
     }
 
-    function renderPhaseMedia(index){
-      const items = (data[index] && data[index].media) ? data[index].media : [];
-      phaseMedia.innerHTML = items.map((it, i) => {
-        const src = (it.src || "").trim();
-        const label = (it.label || "IMAGE PLACEHOLDER");
-        const safeLabel = label.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
-        const safeSrc = src.replace(/"/g,"&quot;");
-
-        if (src){
-          return `
-            <div class="media-slot" data-year="${data[index].year}" data-idx="${i}" data-src="${safeSrc}" data-label="${safeLabel}" title="Open">
-              <img src="${safeSrc}" alt="">
-            </div>`;
-        }
-        return `
-          <div class="media-slot disabled" data-year="${data[index].year}" data-idx="${i}" data-src="" data-label="${safeLabel}" title="No image yet">
-            ${safeLabel}
-          </div>`;
-      }).join("");
-
-      phaseMedia.classList.add('visible');
-    }
-
     function updateInfo(index){
       infoTitle.classList.remove('visible');
       infoDesc.classList.remove('visible');
-      phaseMedia.classList.remove('visible');
 
       setTimeout(() => {
         infoTitle.textContent = data[index].title || "";
         infoDesc.textContent = data[index].desc || "";
         infoTitle.classList.add('visible');
         infoDesc.classList.add('visible');
-        renderPhaseMedia(index);
       }, 240);
     }
 
@@ -1472,7 +1442,7 @@
       m.addEventListener('pointerdown', (e)=>e.stopPropagation(), { passive:true });
     });
 
-    // ===== Lightbox: open by clicking any year’s media slot (if src present) =====
+    // ===== Lightbox (kept as-is; currently unused) =====
     const lightbox = document.getElementById('lightbox');
     const lbImg = document.getElementById('lbImg');
     const lbTitle = document.getElementById('lbTitle');
@@ -1494,24 +1464,14 @@
     lbClose.addEventListener('click', (e)=>{ e.preventDefault(); closeLightbox(); });
     lightbox.addEventListener('click', (e)=>{ if (e.target === lightbox) closeLightbox(); });
 
-    phaseMedia.addEventListener('click', (e)=>{
-      const slot = e.target.closest('.media-slot');
-      if (!slot || slot.classList.contains('disabled')) return;
-      const src = (slot.getAttribute('data-src') || "").trim();
-      if (!src) return;
-      const year = slot.getAttribute('data-year') || "";
-      const label = slot.getAttribute('data-label') || "SCREEN";
-      openLightbox(src, `${year} / ${label}`);
-    });
-
-    // NEW: ESC closes lightbox first, else closes panel
+    // ESC closes lightbox first, else closes panel
     window.addEventListener('keydown', (e)=>{
       if (e.key !== 'Escape') return;
       if (lightbox.classList.contains('open')) { closeLightbox(); return; }
       if (document.body.classList.contains('panel-open')) { togglePanel(true); return; }
     });
 
-    // NEW: click outside panel closes it (but doesn't interfere with other clicks)
+    // click outside panel closes it
     window.addEventListener('pointerdown', (e) => {
       if (!document.body.classList.contains('panel-open')) return;
       if (e.target.closest('#centerPanel')) return;
@@ -1531,6 +1491,125 @@
     setTimeout(forcePlay, 900);
     window.addEventListener('pointerdown', forcePlay, { once:true });
     window.addEventListener('touchstart', forcePlay, { once:true, passive:true });
+
+    // =========================
+    // FLOATING 3D CARDS (14 pcs)
+    // =========================
+    (function(){
+      const host = document.getElementById('floatCards');
+      if (!host) return;
+
+      const COUNT = 12;
+      const IMAGES = [
+  "2.jpg","10.png","5.png","4.png","1.jpg","9.png","3.png",
+  "7.png","8.png","3.jpg","11.jpg","10.png","8.png","10.png"
+    ];
+      const cards = [];
+      let vp = viewportSize();
+
+      function rand(min, max){ return min + Math.random() * (max - min); }
+      function clamp(n, a, b){ return Math.max(a, Math.min(b, n)); }
+
+      function build(){
+        host.innerHTML = "";
+        cards.length = 0;
+
+        const margin = 56;
+
+        for (let i = 0; i < COUNT; i++){
+          const el = document.createElement('div');
+          el.className = 'float-card';
+
+          const w = Math.round(rand(140, 320));
+          const h = Math.round(w * rand(0.62, 0.82));
+
+          const baseX = rand(margin, Math.max(margin, vp.w - margin - w));
+          const baseY = rand(margin, Math.max(margin, vp.h - margin - h));
+
+          const ax = rand(40, 200) * (Math.random() < 0.5 ? -1 : 1);
+          const ay = rand(40, 200) * (Math.random() < 0.5 ? -1 : 1);
+
+          const s1 = rand(0.00004, 0.00011);
+          const s2 = rand(0.000035, 0.00010);
+
+          const z = rand(-80, 140);
+          const rz = rand(-10, 10);  // легкий поворот в плоскости
+          const rx = rand(-4, 4);    // почти без наклона к зрителю
+          const ry = rand(-4, 4);    // почти без наклона к зрителю
+
+
+          el.style.width = w + "px";
+          el.style.height = h + "px";
+
+          const slot = document.createElement('div');
+slot.className = 'slot';
+
+const src = IMAGES[i];
+if (src) {
+  slot.innerHTML = `<img src="${src}" alt="">`;
+} else {
+  slot.textContent = `IMAGE ${String(i+1).padStart(2,'0')}`;
+}
+
+el.appendChild(slot);
+
+
+          host.appendChild(el);
+
+          cards.push({
+            el, w, h,
+            baseX, baseY,
+            ax, ay,
+            s1, s2,
+            z,
+            rz, rx, ry,
+            p1: rand(0, Math.PI*2),
+            p2: rand(0, Math.PI*2),
+            wob: rand(0.35, 0.95)
+          });
+        }
+      }
+
+      function onResize(){
+        vp = viewportSize();
+        // keep cards near their original region but clamped to viewport
+        for (const c of cards){
+          c.baseX = clamp(c.baseX, 18, Math.max(18, vp.w - 18 - c.w));
+          c.baseY = clamp(c.baseY, 18, Math.max(18, vp.h - 18 - c.h));
+        }
+      }
+
+      let rafId = 0;
+      function tick(t){
+        const now = t || performance.now();
+
+        for (const c of cards){
+          const dx = Math.sin(now * c.s1 + c.p1) * c.ax;
+          const dy = Math.cos(now * c.s2 + c.p2) * c.ay;
+
+          const x = c.baseX + dx;
+          const y = c.baseY + dy;
+
+          const tiltX = c.rx + Math.sin(now * (c.s1*1.8) + c.p2) * (6 * c.wob);
+          const tiltY = c.ry + Math.cos(now * (c.s2*1.7) + c.p1) * (7 * c.wob);
+          const rotZ  = c.rz + Math.sin(now * (c.s1*1.3) + c.p1) * (4 * c.wob);
+
+          const z = c.z + Math.sin(now * (c.s2*1.1) + c.p2) * (18 * c.wob);
+
+          c.el.style.transform =
+            `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${z.toFixed(1)}px) rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg) rotateZ(${rotZ.toFixed(2)}deg)`;
+        }
+
+        rafId = requestAnimationFrame(tick);
+      }
+
+      build();
+      onResize();
+      rafId = requestAnimationFrame(tick);
+
+      window.addEventListener('resize', onResize);
+      if (window.visualViewport) window.visualViewport.addEventListener('resize', onResize);
+    })();
 
     // =========================
     // ASCII FIRE
