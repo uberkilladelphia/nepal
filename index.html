@@ -876,6 +876,29 @@
       .panel-title{ font-size: clamp(22px, 3vw, 38px); }
       .panel-body{ font-size: clamp(14px, 1.25vw, 16px); }
     }
+
+    /* ===== FIX: allow scrolling in Pixel Messenger on mobile ===== */
+body.mode-off .messenger-window,
+body.mode-off .messenger-body,
+body.mode-off .sidebar,
+body.mode-off .pane{
+  touch-action: pan-y;
+}
+
+body.mode-off .sidebar,
+body.mode-off .pane{
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* iOS Safari: make sure vertical swipe isn't treated as page gesture */
+body.mode-off{
+  touch-action: none; /* body не ловит жесты */
+}
+body.mode-off .sidebar,
+body.mode-off .pane{
+  touch-action: pan-y; /* но внутри окон — можно скроллить */
+}
   </style>
 </head>
 
@@ -1166,6 +1189,12 @@ Array.from(tabsWrap.querySelectorAll('.tab')).forEach(tabEl => {
     e.stopPropagation();
     activateTab(tabEl);
   }, { passive:false });
+
+  // Allow native scroll in tabs list (iOS)
+tabsWrap.addEventListener('touchmove', (e) => {
+  // не блокируем скролл в списке категорий
+  e.stopPropagation();
+}, { passive:true });
 
   tabEl.addEventListener('pointerup', (e) => {
     if (e.cancelable) e.preventDefault();
