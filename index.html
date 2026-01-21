@@ -5,6 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
   <title>Infinite Time Thread</title>
 
+  <!-- PWA (works “no address bar” when installed as app / added to Home Screen) -->
+  <meta name="theme-color" content="#050505" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Infinite Time Thread" />
+
+  <!-- Inline manifest (data URL) -->
+  <link rel="manifest" href='data:application/manifest+json,%7B%22name%22%3A%22Infinite%20Time%20Thread%22%2C%22short_name%22%3A%22TimeThread%22%2C%22start_url%22%3A%22.%2F%22%2C%22display%22%3A%22standalone%22%2C%22background_color%22%3A%22%23050505%22%2C%22theme_color%22%3A%22%23050505%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520256%2520256%2527%253E%253Crect%2520width%253D%2527256%2527%2520height%253D%2527256%2527%2520rx%253D%252756%2527%2520fill%253D%2527%2523050505%2527%252F%253E%253Cpath%2520d%253D%2527M130%2520228c-44%25200-80-34-80-76%25200-30%252017-53%252043-78%252012-12%252016-28%252017-41%25201-12%25200-24%25200-24s36%252025%252047%252056c3%25209%25205%252018%25204%252027%252011-9%252017-20%252017-20s30%252026%252030%252068c0%252045-34%252088-78%252088z%2527%2520fill%253D%2527%2523FF2E2E%2527%252F%253E%253Cpath%2520d%253D%2527M128%2520206c-28%25200-50-21-50-47%25200-19%252011-33%252028-48%252010-10%252012-19%252013-28%252013%25200%252023%252021%252030%252045c0%25207-2%252014-5%252020%25208-4%252014-11%252018-19%25207%252010%252011%252021%252011%252033%25200%252026-23%252047-50%252047z%2527%2520fill%253D%2527%2523FFFFFF%2527%2520opacity%253D%25270.9%2527%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%2C%7B%22src%22%3A%22data%3Aimage%2Fsvg%2Bxml%2C%253Csvg%2520xmlns%253D%2527http%253A%252F%252Fwww.w3.org%252F2000%252Fsvg%2527%2520viewBox%253D%25270%25200%2520256%2520256%2527%253E%253Crect%2520width%253D%2527256%2527%2520height%253D%2527256%2527%2520rx%253D%252756%2527%2520fill%253D%2527%2523050505%2527%252F%253E%253Cpath%2520d%253D%2527M130%2520228c-44%25200-80-34-80-76%25200-30%252017-53%252043-78%252012-12%252016-28%252017-41%25201-12%25200-24%25200-24s36%252025%252047%252056c3%25209%25205%252018%25204%252027%252011-9%252017-20%252017-20s30%252026%252030%252068c0%252045-34%252088-78%252088z%2527%2520fill%253D%2527%2523FF2E2E%2527%252F%253E%253Cpath%2520d%253D%2527M128%2520206c-28%25200-50-21-50-47%25200-19%252011-33%252028-48%252010-10%252012-19%252013-28%252013%25200%252023%252021%252030%252045c0%25207-2%252014-5%252020%25208-4%252014-11%252018-19%25207%252010%252011%252021%252011%252033%25200%252026-23%252047-50%252047z%2527%2520fill%253D%2527%2523FFFFFF%2527%2520opacity%253D%25270.9%2527%252F%253E%253C%252Fsvg%253E%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fsvg%2Bxml%22%2C%22purpose%22%3A%22any%20maskable%22%7D%5D%7D' />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%20128%20128%27%3E%3Crect%20width%3D%27128%27%20height%3D%271128%27%20rx%3D%2732%27%20fill%3D%27%23050505%27%2F%3E%3Cpath%20d%3D%27M65%20114c-22%200-40-17-40-38%200-15%209-27%2021-39%206-6%208-14%208-20%200-6%200-12%200-12s18%2013%2024%2028c2%204%203%209%202%2014%206-4%2010-10%2010-10s15%2013%2015%2034c0%2023-17%2043-40%2043z%27%20fill%3D%27%23FF2E2E%27%2F%3E%3Cpath%20d%3D%27M64%20103c-14%200-25-10-25-23%200-10%206-16%2014-24%205-5%206-10%207-14%200%200%2011%2010%2015%2022c0%203-1%206-2%209%204-2%207-5%209-9%203%204%205%2010%205%2016%200%2013-11%2023-23%2023z%27%20fill%3D%27%23FFFFFF%27%20opacity%3D%270.9%27%2F%3E%3C%2Fsvg%3E" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com/">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Anton&family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
 
@@ -23,16 +35,18 @@
       --panel-border: rgba(255,255,255,0.60);
       --panel-text: rgba(255,255,255,0.98);
 
-      /* SMALL SWITCH (TOP-LEFT) */
       --switch-w: 168px;
       --switch-h: 16px;
       --switch-pad: 2px;
 
-      /* OFF mode readability */
       --off-ink: #111;
       --off-bg: #f6f6f6;
-      --off-line: #111;
-      --off-soft: #bdbdbd;
+
+      --dot: 18px;
+      --flame: 30px;
+
+      /* lift years up to avoid collision with info/timeline */
+      --year-lift: 14vh;
     }
 
     html{
@@ -116,6 +130,7 @@
       border: 1px solid rgba(255,255,255,0.30);
       overflow:hidden;
       flex: 0 0 auto;
+      box-shadow:none !important;
     }
 
     .thumb{
@@ -128,7 +143,7 @@
       background: rgba(255,255,255,0.92);
       transition: transform .22s steps(12,end), background .18s steps(12,end);
       transform: translateX(0);
-      box-shadow: 0 4px 10px rgba(0,0,0,0.35);
+      box-shadow:none !important;
     }
 
     .ios-switch[data-state="on"] .thumb{
@@ -145,35 +160,11 @@
       padding:0;
     }
 
-    /* Make switch readable on OFF (light) background */
-    body.mode-off .ios-switch .label{
-      color: rgba(0,0,0,0.92);
-      text-shadow: none;
-    }
-    body.mode-off .ios-switch .label span{ opacity:0.55; }
-    body.mode-off .ios-switch[data-state="off"] .label .off{
-      opacity:1;
-      color: rgba(0,0,0,0.98);
-    }
-    body.mode-off .ios-switch[data-state="on"] .label .on{
-      opacity:1;
-      color: rgba(0,0,0,0.98);
-    }
-
-    body.mode-off .track{
-      background: rgba(0,0,0,0.10);
-      border-color: rgba(0,0,0,0.42);
-      box-shadow: 2px 2px 0 rgba(0,0,0,0.88);
-    }
-    body.mode-off .thumb{
-      background: rgba(255,255,255,0.98);
-      border: 1px solid rgba(0,0,0,0.35);
-      box-shadow: 2px 2px 0 rgba(0,0,0,0.88);
-    }
-    body.mode-off .ios-switch[data-state="on"] .thumb{
-      background: rgba(255,46,46,0.96);
-      border-color: rgba(0,0,0,0.30);
-    }
+    /* readable switch on OFF */
+    body.mode-off .ios-switch .label{ color: rgba(0,0,0,0.92); }
+    body.mode-off .track{ background: rgba(0,0,0,0.10); border-color: rgba(0,0,0,0.42); }
+    body.mode-off .thumb{ background: rgba(255,255,255,0.98); border: 1px solid rgba(0,0,0,0.35); }
+    body.mode-off .ios-switch[data-state="on"] .thumb{ background: rgba(255,46,46,0.96); border-color: rgba(0,0,0,0.30); }
 
     /* ========= OFF SCENE (PIXEL DESKTOP + MESSENGER) ========= */
     .off-scene{
@@ -280,7 +271,6 @@
       min-height:0;
     }
 
-    /* Tabs list */
     .sidebar{
       border-right: 3px solid #111;
       background:
@@ -307,7 +297,6 @@
       box-shadow: 2px 2px 0 #111, 0 0 0 2px rgba(255,46,46,0.18) inset;
     }
 
-    /* Content pane */
     .pane{
       padding: 12px;
       overflow:auto;
@@ -317,7 +306,6 @@
       min-height:0;
       position:relative;
     }
-
     .pane-title{
       font-weight:900;
       letter-spacing:0.14em;
@@ -326,7 +314,6 @@
       margin: 2px 0 10px;
       color:#111;
     }
-
     .pane-card{
       border:2px solid #111;
       box-shadow: 2px 2px 0 #111;
@@ -352,69 +339,6 @@
       left:0;
       top:0;
       color: var(--red);
-    }
-
-    /* Ticker marquee (loop) */
-    .ticker{
-      margin-top: 10px;
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      background:#fff;
-      overflow:hidden;
-      height: 34px;
-      display:flex;
-      align-items:center;
-    }
-    .ticker .track{
-      width:100%;
-      height:auto;
-      border:none;
-      background:transparent;
-      box-shadow:none;
-      border-radius:0;
-      overflow:visible;
-    }
-    .ticker-line{
-      white-space:nowrap;
-      will-change: transform;
-      font-weight:900;
-      letter-spacing:0.10em;
-      text-transform:uppercase;
-      color: var(--red);
-      padding-left: 100%;
-      animation: tickerMove 14s linear infinite;
-    }
-    @keyframes tickerMove{
-      0%{ transform: translateX(0); }
-      100%{ transform: translateX(-100%); }
-    }
-    /* clamp to “retro fps” */
-    body.mode-off .ticker-line{
-      animation-timing-function: steps(168, end);
-    }
-
-    /* Horizontal learning blocks */
-    .grid4{
-      margin-top: 10px;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-    }
-    .grid4 .block{
-      border:2px solid #111;
-      box-shadow: 2px 2px 0 #111;
-      background:#fff;
-      padding: 10px;
-      font-size: 12px;
-      line-height:1.25;
-    }
-    .grid4 .block b{
-      display:block;
-      margin-bottom:6px;
-      letter-spacing:0.10em;
-      text-transform:uppercase;
-      color: var(--red);
-      font-size:11px;
     }
 
     .compose{
@@ -450,7 +374,7 @@
       font-size: 12px;
     }
 
-    /* Random pixel slogans on desktop */
+    /* Random pixel slogans */
     .slogan{
       position:absolute;
       font-family:'Fira Code', monospace;
@@ -469,14 +393,8 @@
       opacity:0;
       transform: translateY(2px);
     }
-    .slogan.on{
-      opacity:1;
-      transform: translateY(0);
-    }
-    /* 12fps-ish transitions */
-    body.mode-off .slogan{
-      transition: opacity .20s steps(12,end), transform .20s steps(12,end);
-    }
+    .slogan.on{ opacity:1; transform: translateY(0); }
+    body.mode-off .slogan{ transition: opacity .20s steps(12,end), transform .20s steps(12,end); }
 
     /* ========= ON SCENE (TIMELINE) ========= */
     .on-scene{
@@ -527,11 +445,12 @@
           rgba(0,0,0,0.92));
     }
 
+    /* keep fire glued to bottom (no floating) */
     .ascii-fire{
       position:absolute;
       left:0;
       right:0;
-      bottom:0;
+      bottom: env(safe-area-inset-bottom, 0px);
       width:100vw;
       z-index:4;
       pointer-events:none;
@@ -540,7 +459,7 @@
       line-height:1;
       white-space:pre;
       margin:0;
-      padding:0 0 1.2vh;
+      padding:0;
       color: var(--ui-accent);
       opacity:0.92;
       mix-blend-mode: screen;
@@ -550,6 +469,7 @@
       text-align: left;
     }
 
+    /* Years lifted up */
     .year-display{
       position:absolute;
       inset:0;
@@ -559,7 +479,9 @@
       z-index:8;
       perspective:1000px;
       pointer-events:none;
+      transform: translateY(calc(-1 * var(--year-lift)));
     }
+
     .huge-text{
       pointer-events:auto;
       cursor:pointer;
@@ -572,11 +494,7 @@
       text-transform:uppercase;
       position:absolute;
       white-space:nowrap;
-
       color: var(--red);
-      -webkit-text-stroke: 0px transparent;
-      text-shadow: none;
-
       transition: transform .8s cubic-bezier(.2,1,.3,1), opacity .65s cubic-bezier(.2,1,.3,1);
       will-change: transform, opacity;
     }
@@ -597,161 +515,91 @@
     .huge-text.exit-left  { transform:translateX(-58vw) rotateY(18deg); opacity:0; }
     .huge-text.exit-right { transform:translateX(58vw) rotateY(-18deg); opacity:0; }
 
-    body.panel-open .huge-text.active{
-      transform: translateY(-55vh) rotateX(22deg) scale(0.98);
-      opacity: 0.0;
+    /* TIMELINE */
+    .thread-container{
+      position:absolute;
+      left:0;
+      bottom: calc(16vh + env(safe-area-inset-bottom, 0px));
+      width:100%;
+      height:34px;
+      z-index:30;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:0 10vw;
+      box-sizing:border-box;
+      pointer-events:auto;
+    }
+    .thread-line{
+      position:absolute;
+      top:50%;
+      left:10vw;
+      right:10vw;
+      height:2px;
+      background: var(--ui-line);
+      z-index:0;
+      transform: translateY(-50%);
     }
 
-    .center-panel{
+    .milestone{
+      width: var(--dot);
+      height: var(--dot);
+      border-radius: 999px;
+      position:relative;
+      z-index:1;
+      display:block;
+      cursor:pointer;
+      pointer-events:auto;
+      overflow: visible;
+      background: rgba(255,255,255,0.18);
+      border: 2px solid rgba(255,255,255,0.45);
+      transform: translateZ(0);
+      transition: transform .22s steps(12,end), background .22s steps(12,end), border-color .22s steps(12,end), box-shadow .22s steps(12,end), opacity .22s steps(12,end);
+      opacity: 0.75;
+    }
+
+    .milestone:hover{
+      opacity: 0.95;
+      transform: scale(1.08);
+    }
+
+    /* flame replaces dot and is perfectly centered */
+    .milestone .flame{
       position:absolute;
       left:50%;
       top:50%;
-      transform: translate(-50%,-50%) scale(0.96);
-      width: min(920px, 88vw);
-      height: min(440px, 46vh);
-      border-radius: 12px;
-      z-index: 40;
-      pointer-events: none;
-      background: var(--panel-bg);
-      border: 2px solid var(--panel-border);
-      box-shadow:
-        0 30px 120px rgba(0,0,0,0.55),
-        0 0 0 2px rgba(0,0,0,0.16) inset;
-      opacity: 0;
-      will-change: transform, opacity;
-    }
-    body.panel-open .center-panel{ opacity: 1; animation: panelIn 720ms cubic-bezier(.12,1,.22,1) both; }
-    @keyframes panelIn{
-      0%   { transform: translate(-50%,-50%) scale(0.84) rotateX(10deg); opacity: 0; }
-      55%  { transform: translate(-50%,-50%) scale(1.02) rotateX(0deg); opacity: 1; }
-      100% { transform: translate(-50%,-50%) scale(1.00) rotateX(0deg); opacity: 1; }
-    }
-    .panel-grid{
-      position:absolute; inset:0; border-radius:10px; pointer-events:none;
-      opacity:0.30;
-      background:
-        linear-gradient(to right, rgba(0,0,0,0.28) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(0,0,0,0.22) 1px, transparent 1px);
-      background-size: 26px 26px;
-      mix-blend-mode: multiply;
-    }
-    body.invert .panel-grid{
-      background:
-        linear-gradient(to right, rgba(255,46,46,0.22) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(255,46,46,0.18) 1px, transparent 1px);
-      mix-blend-mode: normal;
-      opacity:0.28;
-    }
-    .panel-content{
-      position:absolute; inset:22px;
-      display:flex; flex-direction:column; gap:14px;
-      color: var(--panel-text);
-    }
-    .panel-kicker{
-      font-size:12px; letter-spacing:0.22em;
-      text-transform:uppercase; opacity:0.9;
-      font-family:'Fira Code', monospace;
-      font-weight:900;
-    }
-    .panel-title{
-      font-size: clamp(26px, 3vw, 44px);
-      line-height:1.02; letter-spacing:-0.02em;
-      font-weight:900; text-transform:uppercase;
-      font-family:'Inter', sans-serif;
-    }
-    .panel-body{
-      font-size: clamp(14px, 1.25vw, 18px);
-      line-height:1.35; max-width: 70ch; opacity:0.95;
-      font-family:'Inter', sans-serif;
-    }
-    .panel-actions{
-      margin-top:auto; display:flex; gap:12px; align-items:center;
-    }
-    .btn{
-      pointer-events:none;
-      display:inline-flex; align-items:center; justify-content:center;
-      height:44px; padding:0 16px; border-radius:10px;
-      border:2px solid rgba(0,0,0,0.35);
-      background: rgba(0,0,0,0.18);
-      color: var(--panel-text);
-      font-weight:900; letter-spacing:0.12em;
-      text-transform:uppercase; font-size:12px;
-      font-family:'Fira Code', monospace;
-    }
-    body.invert .btn{
-      border-color: rgba(255,46,46,0.55);
-      background: rgba(255,46,46,0.10);
-      color: rgba(255,46,46,0.98);
-    }
-    .panel-note{
-      font-size:12px; letter-spacing:0.14em;
-      text-transform:uppercase; opacity:0.85;
-      font-family:'Fira Code', monospace;
-      font-weight:900;
-    }
-
-    .thread-container{
-      position:absolute; left:0; bottom:16vh;
-      width:100%; height:26px; z-index:30;
-      display:flex; justify-content:space-between; align-items:center;
-      padding:0 10vw; box-sizing:border-box;
-      pointer-events:none;
-    }
-    .thread-line{
-      position:absolute; top:50%; left:10vw; right:10vw;
-      height:2px; background: var(--ui-line); z-index:0;
-    }
-    .notch{
-      width:10px; height:10px;
-      background: rgba(0,0,0,0.35);
-      border: 2px solid var(--ui-line);
-      border-radius: 999px;
-      position:relative; z-index:1;
-      transition: all .25s ease;
-    }
-    .notch.active{
-      background: var(--ui-primary);
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.25), 0 0 18px rgba(255,255,255,0.75);
-      transform: scale(1.7);
-      border-color: transparent;
-    }
-
-    .orb-cursor{
-      position:absolute; left:50%;
-      bottom: calc(16vh + 13px);
-      width:78px; height:78px;
-      transform: translate(-50%, 50%);
-      z-index:60;
-      cursor: grab;
-      border-radius: 12px;
-      background: rgba(0,0,0,0.26);
-      border: 2px solid rgba(255,255,255,0.30);
-      box-shadow:
-        0 18px 60px rgba(0,0,0,0.55),
-        inset 0 0 0 2px rgba(0,0,0,0.18);
-      transition: width .18s, height .18s, transform .18s, border-color .18s;
-      pointer-events:auto;
-      display:flex; align-items:center; justify-content:center;
-    }
-    body.invert .orb-cursor{
-      background: rgba(255,255,255,0.26);
-      border-color: rgba(0,0,0,0.28);
-    }
-    .orb-cursor:active{
-      cursor:grabbing;
-      width:72px; height:72px;
-      border-color: rgba(255,255,255,0.92);
-    }
-    .handle-icon{
-      width:34px; height:34px; display:block;
+      width: var(--flame);
+      height: var(--flame);
+      transform: translate(-50%,-50%);
+      display:none;
       filter: drop-shadow(0 10px 18px rgba(0,0,0,0.45));
+      pointer-events:none;
     }
-    .handle-icon .fill-accent{ fill: var(--ui-accent); }
-    .handle-icon .fill-primary{ fill: var(--ui-primary); }
 
+    .milestone.active{
+      background: rgba(255,255,255,0.00);
+      border-color: transparent;
+      opacity: 1;
+      transform: none;
+      box-shadow: 0 0 18px rgba(255,255,255,0.55);
+    }
+    .milestone.active .flame{ display:block; }
+    .milestone.active::after{
+      content:"";
+      position:absolute;
+      inset:-8px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(255,255,255,0.22), rgba(255,255,255,0.00) 70%);
+      pointer-events:none;
+    }
+
+    .flame .fill-accent{ fill: var(--ui-accent); }
+    .flame .fill-primary{ fill: var(--ui-primary); }
+
+    /* INFO */
     .info-wrap{
       position:absolute;
-      bottom: 23vh;
+      bottom: calc(23vh + env(safe-area-inset-bottom, 0px));
       left:0;
       width:100%;
       text-align:center;
@@ -792,67 +640,163 @@
     }
     .info-desc.visible{ opacity: 1; transform: translateY(0); }
 
+    /* clickable media slots under description */
+    .phase-media{
+      margin: 12px auto 0;
+      width: min(980px, 92vw);
+      display:flex;
+      gap:10px;
+      justify-content:center;
+      align-items:stretch;
+      opacity:0;
+      transform: translateY(10px);
+      transition: opacity .45s, transform .45s;
+      pointer-events:auto;
+    }
+    .phase-media.visible{ opacity:1; transform: translateY(0); }
+    .media-slot{
+      flex: 0 1 280px;
+      border: 2px dashed rgba(255,255,255,0.55);
+      background:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.08) 0 10px, rgba(255,255,255,0.00) 10px 20px);
+      border-radius: 12px;
+      height: 120px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:'Fira Code', monospace;
+      font-weight:900;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,0.82);
+      text-shadow: 0 0 18px rgba(0,0,0,0.55);
+      cursor:pointer;
+      user-select:none;
+      overflow:hidden;
+    }
+    .media-slot img{
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      pointer-events:none;
+    }
+    body.invert .media-slot{
+      border-color: rgba(255,46,46,0.55);
+      background:
+        repeating-linear-gradient(45deg, rgba(255,46,46,0.10) 0 10px, rgba(255,46,46,0.00) 10px 20px);
+      color: rgba(255,46,46,0.92);
+      text-shadow: none;
+    }
+    .media-slot.disabled{
+      opacity:0.55;
+      cursor:not-allowed;
+    }
+
+    /* LIGHTBOX */
+    .lightbox{
+      position:fixed;
+      inset:0;
+      z-index:1000;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:
+        max(16px, env(safe-area-inset-top, 0px))
+        max(16px, env(safe-area-inset-right, 0px))
+        max(16px, env(safe-area-inset-bottom, 0px))
+        max(16px, env(safe-area-inset-left, 0px));
+      background: rgba(0,0,0,0.82);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+    }
+    .lightbox.open{ display:flex; }
+
+    .lightbox-card{
+      width: min(1100px, 94vw);
+      height: min(720px, 82vh);
+      border-radius: 16px;
+      border: 2px solid rgba(255,255,255,0.22);
+      box-shadow: 0 40px 160px rgba(0,0,0,0.65);
+      background: rgba(8,8,8,0.55);
+      display:flex;
+      flex-direction:column;
+      overflow:hidden;
+    }
+    .lightbox-top{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      padding: 12px 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.14);
+      font-family:'Fira Code', monospace;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,0.88);
+      font-weight:900;
+      font-size: 11px;
+    }
+    .lb-spacer{ margin-left:auto; }
+    .lb-btn{
+      height: 30px;
+      padding: 0 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.24);
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.9);
+      font-family:'Fira Code', monospace;
+      font-weight:900;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      font-size: 11px;
+      cursor:pointer;
+    }
+    .lightbox-body{
+      flex:1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 12px;
+    }
+    .lightbox-body img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      border-radius: 12px;
+      background: rgba(0,0,0,0.25);
+    }
+
     @media (max-width: 560px){
       :root{
         --switch-w: 156px;
         --switch-h: 14px;
+        --dot: 16px;
+        --flame: 26px;
+        --year-lift: 12vh;
       }
       .topbar{ top: 12px; left: 12px; }
       .ios-switch .label{ font-size: 9px; gap:6px; }
       .messenger-body{ grid-template-columns: 1fr; }
       .sidebar{ border-right:0; border-bottom:3px solid #111; }
-      .thread-container{ bottom: 15vh; }
-      .orb-cursor{ bottom: calc(15vh + 13px); width:70px; height:70px; }
-      .info-wrap{ bottom: 22vh; }
-      .huge-text{ font-size: 34vw; }
-      .center-panel{ height: min(460px, 54vh); border-radius: 10px; }
-      .panel-content{ inset:18px; }
-      .ascii-fire{ font-size: 11px; letter-spacing: 0.08em; }
+      .thread-container{ bottom: calc(15vh + env(safe-area-inset-bottom, 0px)); height:34px; }
+      .phase-media{
+        width: min(980px, 92vw);
+        overflow-x:auto;
+        justify-content:flex-start;
+        padding: 0 6px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .media-slot{ flex: 0 0 240px; }
+      .lightbox-card{ height: min(640px, 84vh); }
     }
 
-    .track,
-    .thumb{
-      box-shadow: none !important;
-    }
-
-    /* OFF mode тоже без пиксельной тени */
-    body.mode-off .track,
-    body.mode-off .thumb{
-      box-shadow: none !important;
-    }
-
-    /* =========================================================
-       iPad/iPhone: keep desktop layout + bump minimum readability
-       (doesn't touch animations/logic; only overrides small-screen reflow)
-       ========================================================= */
-    body.mobile-desktop{
-      -webkit-text-size-adjust:100%;
-    }
-    body.mobile-desktop .topbar{ top:14px; left:14px; }
-
+    /* iPad/iPhone “desktop layout” mode */
+    body.mobile-desktop{ -webkit-text-size-adjust:100%; }
     body.mobile-desktop .messenger-body{ grid-template-columns: 320px 1fr; }
     body.mobile-desktop .sidebar{ border-right: 3px solid #111; border-bottom:0; }
-    body.mobile-desktop .thread-container{ bottom:16vh; }
-    body.mobile-desktop .orb-cursor{ bottom: calc(16vh + 13px); width:78px; height:78px; }
-    body.mobile-desktop .info-wrap{ bottom: 23vh; }
-    body.mobile-desktop .huge-text{ font-size:min(28.6vw, 286px); }
-    body.mobile-desktop .center-panel{ height: min(440px, 46vh); border-radius: 12px; }
-    body.mobile-desktop .panel-content{ inset:22px; }
-    body.mobile-desktop .ascii-fire{ font-size: clamp(10px, 1.15vw, 13px); letter-spacing: 0.06em; }
-
-    /* readability bump for presentation on small physical screens (desktop look preserved) */
-    body.mobile-desktop .info-label{ font-size: 12px; letter-spacing: 4px; }
-    body.mobile-desktop .info-desc{ font-size: clamp(14px, 1.1vw, 16px); }
-    body.mobile-desktop .panel-kicker{ font-size: 13px; }
-    body.mobile-desktop .panel-body{ font-size: clamp(16px, 1.25vw, 18px); }
-    body.mobile-desktop .btn{ font-size: 13px; }
-    body.mobile-desktop .panel-note{ font-size: 13px; }
-
-    body.mobile-desktop .pixel-taskbar{ font-size: 13px; }
     body.mobile-desktop .pane-title{ font-size: 13px; }
     body.mobile-desktop .pane-card{ font-size: 13px; }
     body.mobile-desktop .tab{ font-size: 13px; }
-    body.mobile-desktop .grid4 .block{ font-size: 13px; }
   </style>
 </head>
 
@@ -892,9 +836,14 @@
           <div class="tab" data-tab="e">Эмпирические данные</div>
           <div class="tab" data-tab="m">Метод</div>
           <div class="tab" data-tab="u">Уникальные характеристики протестных сообщений</div>
-          <div class="tab" data-tab="i">Выявлена инфраструктура кибер-мобилизации</div>
-          <div class="tab" data-tab="l">Выявлены лидеры движения "Youth Against Corruption"</div>
+          <div class="tab" data-tab="i">Инфраструктура кибер-мобилизации</div>
+          <div class="tab" data-tab="l">Лидеры "Youth Against Corruption"</div>
           <div class="tab" data-tab="h">Горизонтальные практики взаимного обучения</div>
+          <div class="tab" data-tab="n">Новости: как протест увидели медиа</div>
+          <div class="tab" data-tab="c">Два взгляда: нарратив и цитаты</div>
+          <div class="tab" data-tab="g">Коллективная идентичность «Gen Z»</div>
+          <div class="tab" data-tab="k">Ключевые находки</div>
+          <div class="tab" data-tab="s">Выводы</div>
         </div>
 
         <div class="pane" id="pane">
@@ -927,49 +876,93 @@
       <pre class="ascii-fire" id="asciiFire"></pre>
     </div>
 
-    <div class="center-panel" id="centerPanel" aria-hidden="true">
-      <div class="panel-grid"></div>
-      <div class="panel-content">
-        <div class="panel-kicker" id="panelKicker">ALERT / 7-STEP TIMELINE</div>
-        <div class="panel-title" id="panelTitle">STREET SIGNALS<br>INFORMATION WAR</div>
-        <div class="panel-body" id="panelBody">…</div>
-        <div class="panel-actions">
-          <div class="btn">CONTINUE</div>
-          <div class="panel-note">ESC / CLICK — CLOSE</div>
-        </div>
-      </div>
-    </div>
-
     <div class="year-display" id="yearContainer"></div>
 
-    <div class="thread-container">
+    <div class="thread-container" id="timeline">
       <div class="thread-line"></div>
-      <div class="notch" id="n0"></div>
-      <div class="notch" id="n1"></div>
-      <div class="notch" id="n2"></div>
-      <div class="notch" id="n3"></div>
-      <div class="notch" id="n4"></div>
-      <div class="notch" id="n5"></div>
-      <div class="notch" id="n6"></div>
-    </div>
 
-    <div class="orb-cursor" id="orb" aria-label="drag handle">
-      <svg class="handle-icon" viewBox="0 0 64 64" aria-hidden="true">
-        <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
-        <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
-        <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
-      </svg>
+      <!-- 7 milestones -->
+      <div class="milestone" data-idx="0" aria-label="2018">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
+
+      <div class="milestone" data-idx="1" aria-label="2019">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
+
+      <div class="milestone" data-idx="2" aria-label="2020">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
+
+      <div class="milestone" data-idx="3" aria-label="2021">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
+
+      <div class="milestone" data-idx="4" aria-label="2022">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
+
+      <div class="milestone" data-idx="5" aria-label="2023">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
+
+      <div class="milestone" data-idx="6" aria-label="2024">
+        <svg class="flame" viewBox="0 0 64 64" aria-hidden="true">
+          <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
+          <path class="fill-accent" d="M31.8 58c-10.7 0-19.4-8.2-19.4-18.3 0-7.2 4.1-12.6 10.4-18.6 2.8-2.7 3.6-6.2 3.8-9.1.2-2.7 0-5.2 0-5.2s8.7 6 11.3 13.6c.7 2.1 1.1 4.4 1 6.5 2.6-2 4-4.8 4-4.8s7.3 6.3 7.3 16.7C50.2 50 42 58 31.8 58z"/>
+          <path class="fill-primary" d="M31.6 53.2c-6.8 0-12.3-5.2-12.3-11.6 0-4.8 2.8-8.4 6.8-12.2 2.2-2.1 3-4.7 3.2-7.2 3.1 2.8 5.4 6.9 5.4 11.2 0 1.6-.3 3.1-.9 4.5 2-1 3.4-2.6 4.3-4.4 1.8 2.5 2.7 5.3 2.7 8.1 0 6.4-5.5 11.6-12.2 11.6z" opacity="0.92"/>
+        </svg>
+      </div>
     </div>
 
     <div class="info-wrap">
       <div class="info-label" id="label">TIMELINE</div>
       <h1 class="info-title" id="infoTitle"></h1>
       <p class="info-desc" id="infoDesc"></p>
+      <div class="phase-media" id="phaseMedia"></div>
+    </div>
+  </div>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox-card" role="dialog" aria-modal="true" aria-label="Image preview">
+      <div class="lightbox-top">
+        <div id="lbTitle">SCREEN</div>
+        <div class="lb-spacer"></div>
+        <button class="lb-btn" id="lbClose" type="button">CLOSE</button>
+      </div>
+      <div class="lightbox-body">
+        <img id="lbImg" alt="">
+      </div>
     </div>
   </div>
 
   <script>
-    // ===== iOS/iPad: keep desktop layout + stable viewport height (no logic changes) =====
+    // ===== iOS/iPad: stable viewport height =====
     (function(){
       const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
         (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -984,9 +977,17 @@
       if (window.visualViewport) window.visualViewport.addEventListener('resize', setVhVar);
     })();
 
+    function viewportSize(){
+      const vv = window.visualViewport;
+      return {
+        w: (vv && vv.width) ? vv.width : window.innerWidth,
+        h: (vv && vv.height) ? vv.height : window.innerHeight
+      };
+    }
+
     // ========= FPS CONTROL (old OS vibe) =========
     const OFF_FPS = 12;
-    const OFF_TICK_MS = Math.round(1000 / OFF_FPS); // ~83ms
+    const OFF_TICK_MS = Math.round(1000 / OFF_FPS);
 
     // ========= SWITCH / MODES =========
     const modeSwitch = document.getElementById('modeSwitch');
@@ -1003,7 +1004,6 @@
         else { try { bgVideo.pause(); } catch(e){} }
       }
 
-      // OFF-only loops
       if (!on) startOffLoops();
       else stopOffLoops();
     }
@@ -1060,48 +1060,63 @@
         <div class="pane-title">Уникальные характеристики протестных сообщений</div>
         <div class="pane-card">
           Короткие формулы → меметичность → “инструкции” → микро-ритуалы → переводы между платформами.
-          <div class="ticker" aria-hidden="true">
-            <div class="track">
-              <div class="ticker-line">
-                СООБЩЕНИЕ=СИГНАЛ • МЕМ=ИНСТРУКЦИЯ • РЕПОСТ=МАРШРУТ • ТЕГ=КООРДИНАТЫ • СООБЩЕНИЕ=СИГНАЛ • МЕМ=ИНСТРУКЦИЯ • РЕПОСТ=МАРШРУТ • ТЕГ=КООРДИНАТЫ •
-              </div>
-            </div>
-          </div>
         </div>
       `,
       i: `
-        <div class="pane-title">Выявлена инфраструктура кибер-мобилизации</div>
+        <div class="pane-title">Инфраструктура кибер-мобилизации</div>
         <div class="pane-card">
           Контуры ретрансляции, “переводчики” повестки, узлы дублирования, расписания публикаций,
-          точки синхронизации и периоды усиления. Повторяющийся маршрут: ядро → периферия → локальные сборки.
+          точки синхронизации и периоды усиления.
         </div>
       `,
       l: `
-        <div class="pane-title">Выявлены лидеры "Youth Against Corruption"</div>
+        <div class="pane-title">Лидеры "Youth Against Corruption"</div>
         <div class="pane-card">
-          Стабильные хабы распространения и организаторы “мостов” между кластерами:
-          аккаунты/каналы, которые (а) первыми запускают формулировки, (б) получают максимум ранних репостов,
-          (в) соединяют разрозненные группы в общую сеть.<br><br>
-          Дополнительно: выделены роли “курьеров” (переносят сообщения между платформами)
-          и “сборщиков” (консолидируют повестку в понятный пакет).
+          Стабильные хабы распространения и организаторы “мостов” между кластерами.
+          Дополнительно: роли “курьеров” и “сборщиков”.
         </div>
       `,
       h: `
         <div class="pane-title">Горизонтальные практики взаимного обучения</div>
         <div class="pane-card">
-          Взаимное обучение работает как набор простых модулей, которые люди передают друг другу “вручную”.
-          <div class="grid4">
-            <div class="block"><b>Шаблоны</b>Короткие тексты, которые легко копируются и адаптируются под локальный контекст.</div>
-            <div class="block"><b>Навигация</b>“Куда идти / что делать / как не потеряться” — краткие правила и маршруты.</div>
-            <div class="block"><b>Координация</b>Мини-протоколы: время, место, сигнал, проверка, запасной план.</div>
-            <div class="block"><b>Поддержка</b>Памятки, взаимопомощь, распределение задач без иерархий.</div>
-          </div>
+          Взаимное обучение как набор простых модулей (шаблоны, навигация, координация, поддержка).
+        </div>
+      `,
+      n: `
+        <div class="pane-title">Новости: как протест увидели медиа</div>
+        <div class="pane-card">
+          Медиа-оптика часто сводит сложный протест к простым “кадрам”. Разные редакции выбирают разные рамки.
+        </div>
+      `,
+      c: `
+        <div class="pane-title">Два взгляда: нарратив и цитаты</div>
+        <div class="pane-card">
+          Сопоставление объясняющей рамки и “голоса изнутри”.
+        </div>
+      `,
+      g: `
+        <div class="pane-title">Коллективная идентичность «Gen Z»</div>
+        <div class="pane-card">
+          Идентичность как инструмент координации: общий язык, этический код, опыт и тактики.
+        </div>
+      `,
+      k: `
+        <div class="pane-title">Ключевые находки</div>
+        <div class="pane-card">
+          Сигналы, маршруты, роли, динамика — как блоки “панели управления”.
+        </div>
+      `,
+      s: `
+        <div class="pane-title">Выводы</div>
+        <div class="pane-card">
+          Сообщения работают как интерфейс коллективного действия: объясняют, координируют, создают принадлежность.
         </div>
       `
     };
 
     function renderTab(key){
       pane.innerHTML = tabContent[key] || `<div class="pane-title">…</div><div class="pane-card">Нет данных.</div>`;
+      pane.scrollTop = 0;
     }
 
     tabsWrap.addEventListener('click', (e) => {
@@ -1112,29 +1127,17 @@
       renderTab(key);
     });
 
-    // default OFF pane content
     renderTab('q');
 
     // ========= OFF RANDOM SLOGANS (12fps-ish) =========
     const pixelDesktop = document.getElementById('pixelDesktop');
 
     const slogans = [
-      "NO CAP",
-      "BASED",
-      "TOUCH GRASS",
-      "WE MOVE",
-      "СТОЙКОСТЬ",
-      "СВОБОДА ДЛЯ ВСЕХ",
-      "ПРАВА НЕ ТИШИНА",
-      "ГОЛОС ИМЕЕТ ЗНАЧЕНИЕ",
-      "НЕ НОРМА • НЕ ОК",
-      "WE SEE YOU",
-      "SAY IT LOUD",
-      "KEEP SIGNAL",
-      "ДЕРЖИ СИГНАЛ"
+      "NO CAP","BASED","TOUCH GRASS","WE MOVE","СТОЙКОСТЬ",
+      "СВОБОДА ДЛЯ ВСЕХ","ПРАВА НЕ ТИШИНА","ГОЛОС ИМЕЕТ ЗНАЧЕНИЕ",
+      "НЕ НОРМА • НЕ ОК","WE SEE YOU","SAY IT LOUD","KEEP SIGNAL","ДЕРЖИ СИГНАЛ"
     ];
 
-    let offLoopTimer = null;
     let offSloganTimer = null;
 
     function quantizedTimeout(fn, ms){
@@ -1149,10 +1152,10 @@
       el.className = 'slogan';
       el.textContent = slogans[(Math.random() * slogans.length) | 0];
 
-      // safe placement
       const pad = 18;
-      const w = window.innerWidth;
-      const h = window.innerHeight;
+      const vp = viewportSize();
+      const w = vp.w;
+      const h = vp.h;
 
       const maxX = Math.max(pad, w - pad - 220);
       const maxY = Math.max(pad, h - pad - 120);
@@ -1165,112 +1168,78 @@
 
       pixelDesktop.appendChild(el);
 
-      // show with quantized "old OS" feel
       quantizedTimeout(() => el.classList.add('on'), OFF_TICK_MS);
-
-      // hide & remove
       quantizedTimeout(() => el.classList.remove('on'), 1800 + Math.random()*900);
       quantizedTimeout(() => { if(el.parentNode) el.remove(); }, 2400 + Math.random()*900);
     }
 
     function startOffLoops(){
-      if (offLoopTimer) return;
-
-      // occasional slogans
+      if (offSloganTimer) return;
       offSloganTimer = setInterval(() => {
         if (Math.random() < 0.62) spawnSlogan();
       }, 900);
-
     }
 
     function stopOffLoops(){
-      if (offLoopTimer){ clearInterval(offLoopTimer); offLoopTimer = null; }
       if (offSloganTimer){ clearInterval(offSloganTimer); offSloganTimer = null; }
-      const msgWin = document.querySelector('.messenger-window');
-      if (msgWin) msgWin.style.transform = "translate(-50%,-50%)";
     }
 
-    // ========= TIMELINE DATA (ON MODE) =========
-    const FIRE_WIDTH_MULT = 1.55;
-    const FIRE_MAX_COLS = 360;
-
+    // ========= ON DATA + MEDIA (click-to-open for EVERY year) =========
     const data = [
-      { year: "2018", title: "SEED / ЗАРОЖДЕНИЕ", desc: "Первые искры: разрозненные группы, локальные поводы, поиск языка и символов.", panelTitle: "SEED SIGNALS", panelBody: "Низкий порог входа. Много шума, мало координации. Главное — сформировать узнаваемый визуальный код и ритм действий." },
-      { year: "2019", title: "IGNITION / ИМПУЛЬС", desc: "Ускорение: общие точки сборки, повторяемые сценарии, резонансные триггеры.", panelTitle: "IGNITION PHASE", panelBody: "Появляются регулярные всплески и первые устойчивые каналы. Цена ошибки растёт, но растёт и масштаб." },
-      { year: "2020", title: "SHIFT / ПОВОРОТ", desc: "Смена режима: новые каналы, новые риски, новая скорость распространения сигналов.", panelTitle: "SHIFT / RECODE", panelBody: "Перенастройка тактик. Информация становится топливом. Важнее не громкость, а синхронизация." },
-      { year: "2021", title: "GENESIS / ИСТОКИ", desc: "Сборка структуры: роли, протоколы, инфраструктура выживания и устойчивости.", panelTitle: "GENESIS STRUCTURE", panelBody: "Фиксируются правила игры: кто говорит, кто собирает, кто держит контур. Без этого всё распадается." },
-      { year: "2022", title: "EXPANSION / РОСТ", desc: "Расширение: география, аудитория, сложность коалиций, уровень наблюдения.", panelTitle: "EXPANSION PRESSURE", panelBody: "Чем шире сеть, тем сложнее контроль. Нужны простые, масштабируемые ритуалы и интерфейсы." },
-      { year: "2023", title: "SYNERGY / СИНТЕЗ", desc: "Синтез: коалиции, совместные действия, общая грамматика визуала и поведения.", panelTitle: "SYNERGY / MERGE", panelBody: "Движение становится платформой. Успех зависит от совместимости: символов, каналов, темпа." },
-      { year: "2024", title: "FUTURE / ЗАВТРА", desc: "Будущее: сценарии эскалации/затухания. Выбор между вспышкой и долгим тлением.", panelTitle: "FUTURE EDGE", panelBody: "Ставка на устойчивость или на резкий рывок. В обоих случаях решает дисциплина и ясный дизайн сигналов." }
+      { year: "2018", title: "SEED / ЗАРОЖДЕНИЕ", desc: "Первые искры: разрозненные группы, локальные поводы, поиск языка и символов.", media: [
+        { label: "2018 SCREEN #1", src: "" },
+        { label: "2018 SCREEN #2", src: "" }
+      ]},
+      { year: "2019", title: "IGNITION / ИМПУЛЬС", desc: "Ускорение: общие точки сборки, повторяемые сценарии, резонансные триггеры.", media: [
+        { label: "2019 SCREEN #1", src: "" },
+        { label: "2019 SCREEN #2", src: "" }
+      ]},
+      { year: "2020", title: "SHIFT / ПОВОРОТ", desc: "Смена режима: новые каналы, новые риски, новая скорость распространения сигналов.", media: [
+        { label: "2020 SCREEN #1", src: "" },
+        { label: "2020 SCREEN #2", src: "" }
+      ]},
+      { year: "2021", title: "GENESIS / ИСТОКИ", desc: "Сборка структуры: роли, протоколы, инфраструктура выживания и устойчивости.", media: [
+        { label: "2021 SCREEN #1", src: "2021_1.jpg" },
+        { label: "2021 SCREEN #2", src: "2021_2.jpg" }
+      ]},
+      { year: "2022", title: "EXPANSION / РОСТ", desc: "Расширение: география, аудитория, сложность коалиций, уровень наблюдения.", media: [
+        { label: "2022 SCREEN #1", src: "" },
+        { label: "2022 SCREEN #2", src: "" }
+      ]},
+      { year: "2023", title: "SYNERGY / СИНТЕЗ", desc: "Синтез: коалиции, совместные действия, общая грамматика визуала и поведения.", media: [
+        { label: "2023 SCREEN #1", src: "" },
+        { label: "2023 SCREEN #2", src: "" }
+      ]},
+      { year: "2024", title: "FUTURE / ЗАВТРА", desc: "Будущее: сценарии эскалации/затухания. Выбор между вспышкой и долгим тлением.", media: [
+        { label: "2024 SCREEN #1", src: "" },
+        { label: "2024 SCREEN #2", src: "" }
+      ]}
     ];
 
     let currentIndex = 0;
-    let isDragging = false;
-    let startX = 0;
-    let currentX = 0;
     let isAnimating = false;
 
-    const orb = document.getElementById('orb');
     const yearContainer = document.getElementById('yearContainer');
     const infoTitle = document.getElementById('infoTitle');
     const infoDesc  = document.getElementById('infoDesc');
-    const asciiFireEl = document.getElementById('asciiFire');
-
-    const panelTitleEl = document.getElementById('panelTitle');
-    const panelBodyEl  = document.getElementById('panelBody');
-
-    const notches = Array.from({length: data.length}, (_, i) => document.getElementById('n' + i));
-
-    let TRIGGER_DIST = window.innerWidth * 0.14;
-    let MAX_DRAG = window.innerWidth * 0.24;
-
-    window.addEventListener('resize', () => {
-      TRIGGER_DIST = window.innerWidth * 0.14;
-      MAX_DRAG = window.innerWidth * 0.24;
-      fireResize(true);
-    });
+    const phaseMedia = document.getElementById('phaseMedia');
 
     function splitChars(text) {
       return Array.from(text).map(ch => `<span class="ch">${ch}</span>`).join('');
     }
 
-    function updateNotches(idx) {
-      notches.forEach((n, i) => n && n.classList.toggle('active', i === idx));
-    }
-
-    function updateInfo(index){
-      infoTitle.classList.remove('visible');
-      infoDesc.classList.remove('visible');
-      setTimeout(() => {
-        infoTitle.textContent = data[index].title || "";
-        infoDesc.textContent = data[index].desc || "";
-        infoTitle.classList.add('visible');
-        infoDesc.classList.add('visible');
-      }, 240);
-    }
-
-    function updatePanelCopy(index){
-      panelTitleEl.innerHTML = (data[index].panelTitle || "STREET SIGNALS").replace(/\n/g, "<br>");
-      panelBodyEl.textContent = data[index].panelBody || "";
-    }
-
     function renderYear(index, stateClass) {
-      const old = yearContainer.querySelector('.active');
+      const old = yearContainer.querySelector('.huge-text.active');
       if (old) {
-        if (stateClass === 'enter-right') old.className = 'huge-text exit-left';
-        else if (stateClass === 'enter-left') old.className = 'huge-text exit-right';
+        if (stateClass === 'enter-right') old.className = 'huge-text active exit-left';
+        else if (stateClass === 'enter-left') old.className = 'huge-text active exit-right';
         else old.remove();
-        setTimeout(() => { if (old.parentNode) old.remove(); }, 800);
+        setTimeout(() => { if (old && old.parentNode) old.remove(); }, 800);
       }
 
       const el = document.createElement('div');
       el.className = `huge-text ${stateClass}`;
       el.innerHTML = splitChars(data[index].year);
-
-      el.addEventListener('click', (e) => {
-        e.stopPropagation();
-        togglePanel();
-      });
 
       yearContainer.appendChild(el);
 
@@ -1280,109 +1249,113 @@
       });
     }
 
-    function changeSlide(direction) {
+    function renderPhaseMedia(index){
+      const items = (data[index] && data[index].media) ? data[index].media : [];
+      phaseMedia.innerHTML = items.map((it, i) => {
+        const src = (it.src || "").trim();
+        const label = (it.label || "IMAGE PLACEHOLDER");
+        const safeLabel = label.replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+        const safeSrc = src.replace(/"/g,"&quot;");
+
+        if (src){
+          return `
+            <div class="media-slot" data-year="${data[index].year}" data-idx="${i}" data-src="${safeSrc}" data-label="${safeLabel}" title="Open">
+              <img src="${safeSrc}" alt="">
+            </div>`;
+        }
+        return `
+          <div class="media-slot disabled" data-year="${data[index].year}" data-idx="${i}" data-src="" data-label="${safeLabel}" title="No image yet">
+            ${safeLabel}
+          </div>`;
+      }).join("");
+
+      phaseMedia.classList.add('visible');
+    }
+
+    function updateInfo(index){
+      infoTitle.classList.remove('visible');
+      infoDesc.classList.remove('visible');
+      phaseMedia.classList.remove('visible');
+
+      setTimeout(() => {
+        infoTitle.textContent = data[index].title || "";
+        infoDesc.textContent = data[index].desc || "";
+        infoTitle.classList.add('visible');
+        infoDesc.classList.add('visible');
+        renderPhaseMedia(index);
+      }, 240);
+    }
+
+    const timeline = document.getElementById('timeline');
+    const milestones = Array.from(timeline.querySelectorAll('.milestone'));
+
+    function updateMilestones(idx) {
+      milestones.forEach((m, i) => m.classList.toggle('active', i === idx));
+    }
+
+    function goToIndex(targetIndex) {
       if (isAnimating) return;
-      if (document.body.classList.contains('panel-open')) return;
       if (document.body.classList.contains('mode-off')) return;
+
+      targetIndex = Math.max(0, Math.min(data.length - 1, targetIndex));
+      if (targetIndex === currentIndex) return;
+
       isAnimating = true;
 
-      let nextIndex = currentIndex + direction;
-      if (nextIndex >= data.length) nextIndex = 0;
-      if (nextIndex < 0) nextIndex = data.length - 1;
-
+      const direction = targetIndex > currentIndex ? 1 : -1;
       const animationClass = direction > 0 ? 'enter-right' : 'enter-left';
-      renderYear(nextIndex, animationClass);
-      updateNotches(nextIndex);
-      updateInfo(nextIndex);
-      updatePanelCopy(nextIndex);
 
-      currentIndex = nextIndex;
+      renderYear(targetIndex, animationClass);
+      updateMilestones(targetIndex);
+      updateInfo(targetIndex);
+
+      currentIndex = targetIndex;
       setFireTargetByIndex(currentIndex);
 
       setTimeout(() => { isAnimating = false; }, 800);
     }
 
-    function togglePanel(forceClose = false) {
-      const open = document.body.classList.contains('panel-open');
-      if (forceClose || open) {
-        document.body.classList.remove('panel-open');
-        document.body.classList.remove('invert');
-        return;
-      }
-      document.body.classList.add('panel-open');
-      document.body.classList.add('invert');
-    }
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') togglePanel(true);
+    milestones.forEach((m, idx) => {
+      const handler = (e) => { e.stopPropagation(); goToIndex(idx); };
+      m.addEventListener('click', handler, { passive:true });
+      m.addEventListener('touchend', handler, { passive:true });
+      m.addEventListener('pointerdown', (e)=>e.stopPropagation(), { passive:true });
     });
 
-    window.addEventListener('pointerdown', () => {
-      if (document.body.classList.contains('panel-open')) togglePanel(true);
+    // ===== Lightbox: open by clicking any year’s media slot (if src present) =====
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbTitle = document.getElementById('lbTitle');
+    const lbClose = document.getElementById('lbClose');
+
+    function openLightbox(src, title){
+      if (!src) return;
+      lbImg.src = src;
+      lbTitle.textContent = title || "SCREEN";
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden','false');
+    }
+    function closeLightbox(){
+      lightbox.classList.remove('open');
+      lightbox.setAttribute('aria-hidden','true');
+      lbImg.src = "";
+    }
+
+    lbClose.addEventListener('click', (e)=>{ e.preventDefault(); closeLightbox(); });
+    lightbox.addEventListener('click', (e)=>{ if (e.target === lightbox) closeLightbox(); });
+    window.addEventListener('keydown', (e)=>{
+      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
     });
 
-    orb.addEventListener('pointerdown', (e) => e.stopPropagation());
-
-    // --- PHYSICS LOOP ---
-    let orbX = 0;
-    let velocity = 0;
-    const stiffness = 0.085;
-    const damping = 0.76;
-
-    function animateOrb() {
-      if (!isDragging) {
-        const force = (0 - orbX) * stiffness;
-        velocity += force;
-        velocity *= damping;
-        orbX += velocity;
-      } else {
-        const diff = currentX - orbX;
-        orbX += diff * 0.22;
-      }
-      orb.style.transform = `translate(calc(-50% + ${orbX}px), 50%)`;
-      requestAnimationFrame(animateOrb);
-    }
-    animateOrb();
-
-    function onStart(x) {
-      if (isAnimating) return;
-      if (document.body.classList.contains('panel-open')) return;
-      if (document.body.classList.contains('mode-off')) return;
-      isDragging = true;
-      startX = x;
-      document.body.style.cursor = 'grabbing';
-    }
-
-    function onMove(x) {
-      if (!isDragging) return;
-      let delta = x - startX;
-
-      const limit = MAX_DRAG;
-      const sign = Math.sign(delta);
-      const abs = Math.abs(delta);
-      const damped = sign * limit * Math.log10(1 + (abs / limit) * 9);
-      currentX = damped;
-    }
-
-    function onEnd() {
-      if (!isDragging) return;
-      isDragging = false;
-      document.body.style.cursor = 'default';
-
-      if (Math.abs(orbX) > TRIGGER_DIST) {
-        if (orbX > 0) changeSlide(1);
-        else changeSlide(-1);
-      }
-      currentX = 0;
-    }
-
-    orb.addEventListener('mousedown', e => onStart(e.clientX));
-    window.addEventListener('mousemove', e => onMove(e.clientX));
-    window.addEventListener('mouseup', onEnd);
-
-    orb.addEventListener('touchstart', e => { e.preventDefault(); onStart(e.touches[0].clientX); }, { passive:false });
-    window.addEventListener('touchmove', e => { e.preventDefault(); onMove(e.touches[0].clientX); }, { passive:false });
-    window.addEventListener('touchend', onEnd);
+    phaseMedia.addEventListener('click', (e)=>{
+      const slot = e.target.closest('.media-slot');
+      if (!slot || slot.classList.contains('disabled')) return;
+      const src = (slot.getAttribute('data-src') || "").trim();
+      if (!src) return;
+      const year = slot.getAttribute('data-year') || "";
+      const label = slot.getAttribute('data-label') || "SCREEN";
+      openLightbox(src, `${year} / ${label}`);
+    });
 
     // ===== Ensure local video plays =====
     const bgVideo = document.getElementById('bgVideo');
@@ -1401,6 +1374,11 @@
     // =========================
     // ASCII FIRE
     // =========================
+    const FIRE_WIDTH_MULT = 1.55;
+    const FIRE_MAX_COLS = 360;
+
+    const asciiFireEl = document.getElementById('asciiFire');
+
     let fireCols = 0;
     let fireRowsBase = 0;
     let fireRows = 0;
@@ -1412,15 +1390,16 @@
     function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
 
     function fireResize(forceReinit=false) {
+      const vp = viewportSize();
       const approxCharW = 9;
       const cols = clamp(
-        Math.floor((window.innerWidth / approxCharW) * FIRE_WIDTH_MULT),
+        Math.floor((vp.w / approxCharW) * FIRE_WIDTH_MULT),
         140,
         FIRE_MAX_COLS
       );
 
       const approxLineH = 12;
-      const basePx = window.innerHeight * 0.05;
+      const basePx = vp.h * 0.05;
       const baseRows = clamp(Math.floor(basePx / approxLineH), 6, 22);
 
       fireCols = cols;
@@ -1519,21 +1498,28 @@
       requestAnimationFrame(fireTick);
     }
 
+    // init
     function init() {
-      renderYear(0, 'active');
-      updateNotches(0);
+      renderYear(0, 'enter-right');
+      requestAnimationFrame(() => {
+        const el = yearContainer.querySelector('.huge-text');
+        if (el && !el.classList.contains('active')) el.classList.add('active');
+      });
+
+      updateMilestones(0);
       updateInfo(0);
-      updatePanelCopy(0);
 
       fireResize(true);
       setFireTargetByIndex(0);
       fireTick();
 
-      // Default: ON
       setMode(true);
     }
 
     init();
+
+    window.addEventListener('resize', () => fireResize(true));
+    if (window.visualViewport) window.visualViewport.addEventListener('resize', () => fireResize(true));
   </script>
 </body>
 </html>
