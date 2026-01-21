@@ -900,41 +900,62 @@ body.mode-off .pane{
   touch-action: pan-y; /* но внутри окон — можно скроллить */
 }
 
-/* ===== Pixel Messenger: ALWAYS-VISIBLE draggable scrollbar for sidebar ===== */
+/* ===== Mobile-only arrows to move Pixel Messenger categories ===== */
 .sidebar{
   position: relative;
-  padding-right: 30px; /* место под скроллбар */
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
-.sidebar .sb-scrollbar{
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  bottom: 8px;
-  width: 12px;
-  background: #fff;
-  border: 2px solid #111;
-  box-shadow: 2px 2px 0 #111;
-  z-index: 9999;
-  pointer-events: auto;
-  display: block; /* ВСЕГДА виден */
+/* стрелки спрятаны по умолчанию */
+.sidebar-arrows{ display:none; }
+
+/* показываем на устройствах с touch + мелких экранах */
+@media (hover: none) and (pointer: coarse){
+  .sidebar{
+    overflow: hidden;           /* отключаем ручной скролл жестом */
+    padding-right: 40px;        /* место под стрелки */
+  }
+
+  .sidebar-arrows{
+    display:flex;
+    position:absolute;
+    top:10px;
+    right:10px;
+    bottom:10px;
+    width:28px;
+    flex-direction:column;
+    gap:10px;
+    z-index:9999;
+    pointer-events:auto;
+  }
+
+  .sidebar-arrow{
+    flex: 0 0 44px;
+    background:#fff;
+    border:2px solid #111;
+    box-shadow: 2px 2px 0 #111;
+    font-family: 'Fira Code', monospace;
+    font-weight: 900;
+    color:#111;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    user-select:none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .sidebar-arrow:active{ transform: translate(1px,1px); }
+
+  /* нижняя стрелка прижимается вниз */
+  .sidebar-arrow.down{ margin-top:auto; }
+
+  /* если “некуда” — делаем бледной */
+  .sidebar-arrow.disabled{
+    opacity:0.35;
+    pointer-events:none;
+  }
 }
 
-.sidebar .sb-thumb{
-  position: absolute;
-  left: 0;
-  width: 100%;
-  height: 44px; /* перезапишется JS-ом */
-  background: var(--red);
-  border-bottom: 2px solid #111;
-  box-shadow: 0 0 0 2px rgba(0,0,0,0.06) inset;
-  cursor: grab;
-  touch-action: none;   /* важно для drag на iOS */
-  pointer-events: auto; /* чтобы точно ловило */
-}
-.sidebar .sb-thumb:active{ cursor: grabbing; }
 
   </style>
 </head>
@@ -1049,6 +1070,12 @@ body.mode-off .pane{
       <h1 class="info-title" id="infoTitle"></h1>
       <p class="info-desc" id="infoDesc"></p>
     </div>
+
+    <div class="sidebar-arrows" aria-hidden="true">
+      <div class="sidebar-arrow up" id="tabsUp">▲</div>
+      <div class="sidebar-arrow down" id="tabsDown">▼</div>
+    </div>
+
   </div>
 
   <script>
@@ -1066,142 +1093,6 @@ body.mode-off .pane{
       window.addEventListener('resize', setVhVar);
       if (window.visualViewport) window.visualViewport.addEventListener('resize', setVhVar);
     })();
-
-    // ===== Custom ALWAYS-VISIBLE draggable scrollbar for Pixel Messenger sidebar (iOS-safe) =====
-(function(){
-  const sidebar = document.getElementById('tabs');
-  if(!sidebar) return;
-
-  // создаём элементы скроллбара
-  const bar = document.createElement('div');
-  bar.className = 'sb-scrollbar';
-  const thumb = document.createElement('div');
-  thumb.className = 'sb-thumb';
-  bar.appendChild(thumb);
-  sidebar.appendChild(bar);
-
-  function clamp(v, a, b){ return Math.max(a, Math.min(b, v)); }
-
-  function updateThumb(){
-    const ch = sidebar.clientHeight;
-    const sh = sidebar.scrollHeight;
-
-    const trackH = bar.clientHeight;
-    const minThumb = 34;
-
-    // ВСЕГДА показываем, просто делаем "недвигаемый" ползунок если прокрутки нет
-    if (sh <= ch + 1){
-      thumb.style.height = trackH + 'px';
-      thumb.style.top = '0px';
-      return;
-    }
-
-    const thumbH = clamp(Math.round(trackH * (ch / sh)), minThumb, trackH);
-    thumb.style.height = thumbH + 'px';
-
-    const maxScroll = sh - ch;
-    const maxTop = trackH - thumbH;
-    const top = (maxScroll > 0) ? (sidebar.scrollTop / maxScroll) * maxTop : 0;
-    thumb.style.top = clamp(top, 0, maxTop) + 'px';
-  }
-
-  sidebar.addEventListener('scroll', updateThumb, { passive:true });
-  window.addEventListener('resize', updateThumb);
-
-  // drag логика (общая для pointer+touch)
-  let dragging = false;
-  let startY = 0;
-  let startScrollTop = 0;
-
-  function startDrag(clientY){
-    dragging = true;
-    startY = clientY;
-    startScrollTop = sidebar.scrollTop;
-  }
-
-  function moveDrag(clientY){
-    if(!dragging) return;
-
-    const ch = sidebar.clientHeight;
-    const sh = sidebar.scrollHeight;
-
-    // если скролла нет — нечего двигать
-    if (sh <= ch + 1) return;
-
-    const maxScroll = sh - ch;
-    const trackH = bar.clientHeight;
-    const thumbH = thumb.clientHeight;
-    const maxTop = Math.max(1, trackH - thumbH);
-
-    const deltaY = clientY - startY;
-    const deltaScroll = (deltaY / maxTop) * maxScroll;
-
-    sidebar.scrollTop = startScrollTop + deltaScroll;
-  }
-
-  function endDrag(){
-    dragging = false;
-  }
-
-  // --- Pointer events (если работают) ---
-  thumb.addEventListener('pointerdown', (e) => {
-    startDrag(e.clientY);
-    try { thumb.setPointerCapture(e.pointerId); } catch(_) {}
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  thumb.addEventListener('pointermove', (e) => {
-    moveDrag(e.clientY);
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  thumb.addEventListener('pointerup', (e) => {
-    endDrag();
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  thumb.addEventListener('pointercancel', (e) => {
-    endDrag();
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  // --- Touch fallback (на iPhone это часто решает "не реагирует") ---
-  thumb.addEventListener('touchstart', (e) => {
-    if(!e.touches || !e.touches[0]) return;
-    startDrag(e.touches[0].clientY);
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  thumb.addEventListener('touchmove', (e) => {
-    if(!e.touches || !e.touches[0]) return;
-    moveDrag(e.touches[0].clientY);
-    e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  thumb.addEventListener('touchend', (e) => {
-    endDrag();
-    if (e.cancelable) e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  thumb.addEventListener('touchcancel', (e) => {
-    endDrag();
-    if (e.cancelable) e.preventDefault();
-    e.stopPropagation();
-  }, { passive:false });
-
-  // первичная отрисовка + подстраховка после включения OFF режима
-  requestAnimationFrame(updateThumb);
-  setTimeout(updateThumb, 250);
-  setTimeout(updateThumb, 900);
-})();
-
 
     // ========= FPS CONTROL (old OS vibe) =========
     const OFF_FPS = 12;
@@ -1342,6 +1233,64 @@ body.mode-off .pane{
   Array.from(tabsWrap.querySelectorAll('.tab')).forEach(el => el.classList.toggle('active', el === t));
   renderTab(key);
 }
+
+// ===== Mobile arrows: step-scroll categories list reliably (no gesture scroll) =====
+(function(){
+  const sidebar = document.getElementById('tabs');
+  const up = document.getElementById('tabsUp');
+  const down = document.getElementById('tabsDown');
+  if(!sidebar || !up || !down) return;
+
+  const isCoarse = window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches;
+
+  function maxScroll(){
+    return Math.max(0, sidebar.scrollHeight - sidebar.clientHeight);
+  }
+
+  function stepAmount(){
+    // шаг примерно как 3 вкладки; но не меньше 140px
+    return Math.max(140, Math.round(sidebar.clientHeight * 0.38));
+  }
+
+  function updateButtons(){
+    const m = maxScroll();
+    const y = sidebar.scrollTop;
+
+    up.classList.toggle('disabled', y <= 2);
+    down.classList.toggle('disabled', y >= m - 2);
+  }
+
+  function scrollByStep(dir){
+    const m = maxScroll();
+    const next = Math.max(0, Math.min(m, sidebar.scrollTop + dir * stepAmount()));
+    sidebar.scrollTop = next;
+    updateButtons();
+  }
+
+  function tapHandler(fn){
+    return (e) => {
+      if (e.cancelable) e.preventDefault();
+      e.stopPropagation();
+      fn();
+    };
+  }
+
+  // делаем “тап” максимально совместимым
+  up.addEventListener('touchend', tapHandler(() => scrollByStep(-1)), { passive:false });
+  down.addEventListener('touchend', tapHandler(() => scrollByStep(1)), { passive:false });
+  up.addEventListener('click', (e)=>{ e.stopPropagation(); scrollByStep(-1); });
+  down.addEventListener('click', (e)=>{ e.stopPropagation(); scrollByStep(1); });
+
+  sidebar.addEventListener('scroll', updateButtons, { passive:true });
+  window.addEventListener('resize', updateButtons);
+
+  // на мобилках включаем стрелки сразу, и убеждаемся что scrollHeight посчитан
+  if (isCoarse){
+    requestAnimationFrame(updateButtons);
+    setTimeout(updateButtons, 250);
+  }
+})();
+
 
 // iOS/Safari: pointerdown/touchstart срабатывают стабильнее, чем click
 function activateTab(t){
