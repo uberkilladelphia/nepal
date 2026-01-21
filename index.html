@@ -288,6 +288,8 @@
         #fdfdfd;
       padding: 10px;
       overflow:auto;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
     }
     .tab{
       border:2px solid #111;
@@ -300,6 +302,8 @@
       cursor:pointer;
       user-select:none;
       transition: transform .14s steps(12,end);
+      pointer-events:auto;
+      touch-action: manipulation;
     }
     .tab:active{ transform: translate(1px,1px); }
     .tab.active{
@@ -316,6 +320,8 @@
         #ffffff;
       min-height:0;
       position:relative;
+      -webkit-overflow-scrolling: touch;
+      touch-action: pan-y;
     }
 
     .pane-title{
@@ -540,7 +546,7 @@
       line-height:1;
       white-space:pre;
       margin:0;
-      padding:0 0 1.2vh;
+      padding:0; /* FIX #1: no bottom padding gap */
       color: var(--ui-accent);
       opacity:0.92;
       mix-blend-mode: screen;
@@ -853,6 +859,23 @@
     body.mobile-desktop .pane-card{ font-size: 13px; }
     body.mobile-desktop .tab{ font-size: 13px; }
     body.mobile-desktop .grid4 .block{ font-size: 13px; }
+
+    /* =========================================================
+       FIX #3: iPhone landscape anti-overlap (small height)
+       ========================================================= */
+    @media (max-height: 430px) and (orientation: landscape){
+      .thread-container{ bottom: 10vh; }
+      .orb-cursor{ bottom: calc(10vh + 13px); width:70px; height:70px; }
+      .info-wrap{ bottom: 15vh; }
+      .huge-text{ font-size: min(26vw, 240px); }
+      body.panel-open .huge-text.active{
+        transform: translateY(-48vh) rotateX(18deg) scale(0.98);
+      }
+      .center-panel{ height: min(360px, 56vh); }
+      .panel-content{ inset:18px; }
+      .panel-title{ font-size: clamp(22px, 3vw, 38px); }
+      .panel-body{ font-size: clamp(14px, 1.25vw, 16px); }
+    }
   </style>
 </head>
 
@@ -1381,7 +1404,14 @@
     window.addEventListener('mouseup', onEnd);
 
     orb.addEventListener('touchstart', e => { e.preventDefault(); onStart(e.touches[0].clientX); }, { passive:false });
-    window.addEventListener('touchmove', e => { e.preventDefault(); onMove(e.touches[0].clientX); }, { passive:false });
+
+    // FIX #2: don't globally preventDefault touchmove (it breaks OFF tabs in iPhone landscape)
+    window.addEventListener('touchmove', e => {
+      if (!isDragging) return;
+      e.preventDefault();
+      onMove(e.touches[0].clientX);
+    }, { passive:false });
+
     window.addEventListener('touchend', onEnd);
 
     // ===== Ensure local video plays =====
