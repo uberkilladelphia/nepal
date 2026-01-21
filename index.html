@@ -515,6 +515,106 @@
     .huge-text.exit-left  { transform:translateX(-58vw) rotateY(18deg); opacity:0; }
     .huge-text.exit-right { transform:translateX(58vw) rotateY(-18deg); opacity:0; }
 
+    /* NEW: panel open hides year (matches your earlier behavior) */
+    body.panel-open .huge-text.active{
+      transform: translateY(-55vh) rotateX(22deg) scale(0.98);
+      opacity: 0.0;
+    }
+
+    /* NEW: CENTER PANEL (year description popup) */
+    .center-panel{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform: translate(-50%,-50%) scale(0.96);
+      width: min(920px, 88vw);
+      height: min(440px, 46vh);
+      border-radius: 12px;
+      z-index: 90;
+      pointer-events: none;
+      background: var(--panel-bg);
+      border: 2px solid var(--panel-border);
+      box-shadow:
+        0 30px 120px rgba(0,0,0,0.55),
+        0 0 0 2px rgba(0,0,0,0.16) inset;
+      opacity: 0;
+      will-change: transform, opacity;
+    }
+    body.panel-open .center-panel{
+      opacity: 1;
+      pointer-events: auto;
+      animation: panelIn 720ms cubic-bezier(.12,1,.22,1) both;
+    }
+    @keyframes panelIn{
+      0%   { transform: translate(-50%,-50%) scale(0.84) rotateX(10deg); opacity: 0; }
+      55%  { transform: translate(-50%,-50%) scale(1.02) rotateX(0deg); opacity: 1; }
+      100% { transform: translate(-50%,-50%) scale(1.00) rotateX(0deg); opacity: 1; }
+    }
+    .panel-grid{
+      position:absolute; inset:0; border-radius:10px; pointer-events:none;
+      opacity:0.30;
+      background:
+        linear-gradient(to right, rgba(0,0,0,0.28) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.22) 1px, transparent 1px);
+      background-size: 26px 26px;
+      mix-blend-mode: multiply;
+    }
+    body.invert .panel-grid{
+      background:
+        linear-gradient(to right, rgba(255,46,46,0.22) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,46,46,0.18) 1px, transparent 1px);
+      mix-blend-mode: normal;
+      opacity:0.28;
+    }
+    .panel-content{
+      position:absolute; inset:22px;
+      display:flex; flex-direction:column; gap:14px;
+      color: var(--panel-text);
+    }
+    .panel-kicker{
+      font-size:12px; letter-spacing:0.22em;
+      text-transform:uppercase; opacity:0.9;
+      font-family:'Fira Code', monospace;
+      font-weight:900;
+    }
+    .panel-title{
+      font-size: clamp(26px, 3vw, 44px);
+      line-height:1.02; letter-spacing:-0.02em;
+      font-weight:900; text-transform:uppercase;
+      font-family:'Inter', sans-serif;
+    }
+    .panel-body{
+      font-size: clamp(14px, 1.25vw, 18px);
+      line-height:1.35; max-width: 70ch; opacity:0.95;
+      font-family:'Inter', sans-serif;
+      white-space: pre-wrap;
+    }
+    .panel-actions{
+      margin-top:auto; display:flex; gap:12px; align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:44px; padding:0 16px; border-radius:10px;
+      border:2px solid rgba(0,0,0,0.35);
+      background: rgba(0,0,0,0.18);
+      color: var(--panel-text);
+      font-weight:900; letter-spacing:0.12em;
+      text-transform:uppercase; font-size:12px;
+      font-family:'Fira Code', monospace;
+      user-select:none;
+    }
+    body.invert .btn{
+      border-color: rgba(255,46,46,0.55);
+      background: rgba(255,46,46,0.10);
+      color: rgba(255,46,46,0.98);
+    }
+    .panel-note{
+      font-size:12px; letter-spacing:0.14em;
+      text-transform:uppercase; opacity:0.85;
+      font-family:'Fira Code', monospace;
+      font-weight:900;
+    }
+
     /* TIMELINE */
     .thread-container{
       position:absolute;
@@ -522,7 +622,7 @@
       bottom: calc(16vh + env(safe-area-inset-bottom, 0px));
       width:100%;
       height:34px;
-      z-index:30;
+      z-index:80; /* was 30: keep milestones always clickable */
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -651,10 +751,11 @@
       opacity:0;
       transform: translateY(10px);
       transition: opacity .45s, transform .45s;
-      pointer-events:auto;
+      pointer-events:none; /* important: don't block timeline */
     }
     .phase-media.visible{ opacity:1; transform: translateY(0); }
     .media-slot{
+      pointer-events:auto; /* clickable */
       flex: 0 1 280px;
       border: 2px dashed rgba(255,255,255,0.55);
       background:
@@ -876,6 +977,20 @@
       <pre class="ascii-fire" id="asciiFire"></pre>
     </div>
 
+    <!-- NEW: Center panel popup -->
+    <div class="center-panel" id="centerPanel" aria-hidden="true">
+      <div class="panel-grid"></div>
+      <div class="panel-content">
+        <div class="panel-kicker" id="panelKicker">ALERT / TIMELINE</div>
+        <div class="panel-title" id="panelTitle">…</div>
+        <div class="panel-body" id="panelBody">…</div>
+        <div class="panel-actions">
+          <div class="btn">CONTINUE</div>
+          <div class="panel-note">ESC / CLICK — CLOSE</div>
+        </div>
+      </div>
+    </div>
+
     <div class="year-display" id="yearContainer"></div>
 
     <div class="thread-container" id="timeline">
@@ -1006,6 +1121,9 @@
 
       if (!on) startOffLoops();
       else stopOffLoops();
+
+      // close panel if switching modes
+      if (!on) togglePanel(true);
     }
 
     switchBtn.addEventListener('click', (e) => {
@@ -1191,8 +1309,8 @@
         { label: "2018 SCREEN #2", src: "" }
       ]},
       { year: "2019", title: "IGNITION / ИМПУЛЬС", desc: "Ускорение: общие точки сборки, повторяемые сценарии, резонансные триггеры.", media: [
-        { label: "2019 SCREEN #1", src: "Screenshot-2025-09-15-162511-min.jpg" },
-        { label: "2019 SCREEN #2", src: "image7.png" }
+        { label: "2019 SCREEN #1", src: "" },
+        { label: "2019 SCREEN #2", src: "" }
       ]},
       { year: "2020", title: "SHIFT / ПОВОРОТ", desc: "Смена режима: новые каналы, новые риски, новая скорость распространения сигналов.", media: [
         { label: "2020 SCREEN #1", src: "" },
@@ -1224,6 +1342,28 @@
     const infoDesc  = document.getElementById('infoDesc');
     const phaseMedia = document.getElementById('phaseMedia');
 
+    // Panel elements
+    const panelTitleEl = document.getElementById('panelTitle');
+    const panelBodyEl  = document.getElementById('panelBody');
+
+    function updatePanelCopy(index){
+      const t = (data[index] && (data[index].title || data[index].year)) || "…";
+      const b = (data[index] && (data[index].desc || "")) || "";
+      panelTitleEl.innerHTML = String(t).replace(/\n/g, "<br>");
+      panelBodyEl.textContent = String(b);
+    }
+
+    function togglePanel(forceClose = false){
+      const open = document.body.classList.contains('panel-open');
+      if (forceClose || open){
+        document.body.classList.remove('panel-open');
+        document.body.classList.remove('invert');
+        return;
+      }
+      document.body.classList.add('panel-open');
+      document.body.classList.add('invert');
+    }
+
     function splitChars(text) {
       return Array.from(text).map(ch => `<span class="ch">${ch}</span>`).join('');
     }
@@ -1240,6 +1380,14 @@
       const el = document.createElement('div');
       el.className = `huge-text ${stateClass}`;
       el.innerHTML = splitChars(data[index].year);
+
+      // NEW: click year -> open panel with this year's description
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (document.body.classList.contains('mode-off')) return;
+        updatePanelCopy(index);
+        togglePanel();
+      });
 
       yearContainer.appendChild(el);
 
@@ -1296,6 +1444,7 @@
     function goToIndex(targetIndex) {
       if (isAnimating) return;
       if (document.body.classList.contains('mode-off')) return;
+      if (document.body.classList.contains('panel-open')) return;
 
       targetIndex = Math.max(0, Math.min(data.length - 1, targetIndex));
       if (targetIndex === currentIndex) return;
@@ -1308,6 +1457,7 @@
       renderYear(targetIndex, animationClass);
       updateMilestones(targetIndex);
       updateInfo(targetIndex);
+      updatePanelCopy(targetIndex);
 
       currentIndex = targetIndex;
       setFireTargetByIndex(currentIndex);
@@ -1343,9 +1493,6 @@
 
     lbClose.addEventListener('click', (e)=>{ e.preventDefault(); closeLightbox(); });
     lightbox.addEventListener('click', (e)=>{ if (e.target === lightbox) closeLightbox(); });
-    window.addEventListener('keydown', (e)=>{
-      if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
-    });
 
     phaseMedia.addEventListener('click', (e)=>{
       const slot = e.target.closest('.media-slot');
@@ -1355,6 +1502,20 @@
       const year = slot.getAttribute('data-year') || "";
       const label = slot.getAttribute('data-label') || "SCREEN";
       openLightbox(src, `${year} / ${label}`);
+    });
+
+    // NEW: ESC closes lightbox first, else closes panel
+    window.addEventListener('keydown', (e)=>{
+      if (e.key !== 'Escape') return;
+      if (lightbox.classList.contains('open')) { closeLightbox(); return; }
+      if (document.body.classList.contains('panel-open')) { togglePanel(true); return; }
+    });
+
+    // NEW: click outside panel closes it (but doesn't interfere with other clicks)
+    window.addEventListener('pointerdown', (e) => {
+      if (!document.body.classList.contains('panel-open')) return;
+      if (e.target.closest('#centerPanel')) return;
+      togglePanel(true);
     });
 
     // ===== Ensure local video plays =====
@@ -1508,6 +1669,7 @@
 
       updateMilestones(0);
       updateInfo(0);
+      updatePanelCopy(0);
 
       fireResize(true);
       setFireTargetByIndex(0);
