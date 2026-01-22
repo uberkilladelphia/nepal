@@ -1343,11 +1343,20 @@
       }
 
       function shouldIgnoreTarget(t){
-        if (!t) return false;
-        if (t.closest && (t.closest('#timeline') || t.closest('#panelContinue') || t.closest('.btn') || t.closest('#homeBtn'))) return true;
-        if (t.closest && t.closest('#panelBody')) return true; // оставить выделение текста
-        return false;
-      }
+  if (!t) return false;
+  if (t.closest && (t.closest('#timeline') || t.closest('#panelContinue') || t.closest('.btn') || t.closest('#homeBtn'))) return true;
+  // ВАЖНО: больше НЕ игнорируем #panelBody, чтобы свайп работал по окну
+  return false;
+}
+
+function isTextSelectionActive(){
+  try{
+    const sel = window.getSelection && window.getSelection();
+    return !!(sel && sel.rangeCount && !sel.isCollapsed);
+  }catch(_){
+    return false;
+  }
+}
 
       // --- touch events ---
       let tsx=0, tsy=0, tst=0, tracking=false, moved=false;
@@ -1363,20 +1372,26 @@
       }, { passive:false });
 
       onSceneEl.addEventListener('touchmove', (e)=>{
-        if (!tracking) return;
-        if (!e.touches || e.touches.length !== 1) { tracking=false; return; }
+  if (!tracking) return;
 
-        const t = e.touches[0];
-        const dx = t.clientX - tsx;
-        const dy = t.clientY - tsy;
+  // если пользователь выделяет текст — не трогаем (и свайп отменяем)
+  if (isTextSelectionActive()) { tracking = false; return; }
 
-        if (!moved && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) moved = true;
+  if (!e.touches || e.touches.length !== 1) { tracking=false; return; }
 
-        // если явно горизонтальный свайп — блокируем “резиновую” прокрутку Safari
-        if (Math.abs(dx) > Math.abs(dy) * AXIS_BIAS) {
-          e.preventDefault();
-        }
-      }, { passive:false });
+  const t = e.touches[0];
+  const dx = t.clientX - tsx;
+  const dy = t.clientY - tsy;
+
+  if (!moved && (Math.abs(dx) > 10 || Math.abs(dy) > 10)) moved = true;
+
+  // чуть “позже” начинаем блокировать Safari-скролл, чтобы не мешать жестам внутри окна
+  const ARM = 18; // было по сути сразу; теперь ждём минимальный горизонтальный сдвиг
+  if (Math.abs(dx) > ARM && Math.abs(dx) > Math.abs(dy) * AXIS_BIAS) {
+    e.preventDefault();
+  }
+}, { passive:false });
+
 
       onSceneEl.addEventListener('touchend', (e)=>{
         if (!tracking) return;
