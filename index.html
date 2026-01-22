@@ -194,7 +194,7 @@
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
       overflow:hidden;
-      opacity: 0.45; /* базовый уровень */
+      opacity: 0.45;
       filter: saturate(1.02);
       transition: opacity .35s ease;
     }
@@ -734,7 +734,7 @@
     <div class="thread-container" id="timeline">
       <div class="thread-line"></div>
 
-      <!-- 12 milestones -->
+      <!-- 11 milestones -->
       <div class="milestone" data-idx="0" aria-label="MAP"></div>
       <div class="milestone" data-idx="1" aria-label="Q"></div>
       <div class="milestone" data-idx="2" aria-label="DATA"></div>
@@ -745,8 +745,7 @@
       <div class="milestone" data-idx="7" aria-label="LEARN"></div>
       <div class="milestone" data-idx="8" aria-label="ARENA"></div>
       <div class="milestone" data-idx="9" aria-label="GEN Z"></div>
-      <div class="milestone" data-idx="10" aria-label="FIND"></div>
-      <div class="milestone" data-idx="11" aria-label="OUTRO"></div>
+      <div class="milestone" data-idx="10" aria-label="OUTRO"></div>
 
       <svg class="active-flame" id="activeFlame" viewBox="0 0 64 64" aria-hidden="true">
         <path class="fill-primary" d="M49 8l3 9 9 3-9 3-3 9-3-9-9-3 9-3 3-9z" opacity="0.95"/>
@@ -1062,52 +1061,6 @@
         `
       },
       {
-        title: "Ключевые находки",
-        desc: "Сводка по ключевым блокам анализа.",
-        html: `
-          <div class="pane-title">Ключевые находки</div>
-          <div class="pane-card">
-            <div class="pm-grid4">
-              <div class="pm-box">
-                <div class="pm-box-title">Emergency Arena</div>
-                <div class="pm-box-body">
-                  Экстренный чат/пространство в Discord против насилия и эскалации.<br><br>
-                  Функция «тревожной кнопки»: сбор сообщений о насилии, верификация, быстрые сводки.<br><br>
-                  Механика доверия: модераторы, правила, “чёрные списки”, опровержение фейков.<br><br>
-                </div>
-              </div>
-
-              <div class="pm-box">
-                <div class="pm-box-title">Мультиязычность</div>
-                <div class="pm-box-body">
-                  Смешение непальского и английского: один и тот же тезис в нескольких версиях.<br><br>
-                  Переводы как инструмент расширения аудитории и легитимации «международного взгляда».<br><br>
-                  Код-свитчинг как маркер «молодёжного» и «сетевого» стиля.<br><br>
-                </div>
-              </div>
-
-              <div class="pm-box">
-                <div class="pm-box-title">Ценности и отношение к ним</div>
-                <div class="pm-box-body">
-                  Антикоррупция и анти-непотизм (“Nepo Kids”) как моральный каркас.<br><br>
-                  Требование прозрачности: “покажите правила/процедуры/ответственных”.<br><br>
-                  Амбивалентность к насилию: поддержка протеста + границы «допустимого».<br><br>
-                </div>
-              </div>
-
-              <div class="pm-box">
-                <div class="pm-box-title">Социотехника координации</div>
-                <div class="pm-box-body">
-                  Каждая инструкция репостится в среднем 3,6 раза в первые 20 минут<br><br>
-                  Наиболее «вирусные» темы: правовые тонкости (46%) и цифровые инструменты (38%)<br><br>
-                  Peer-to-peer обучение — ключевой ресурс движения
-                </div>
-              </div>
-            </div>
-          </div>
-        `
-      },
-      {
         title: "Выводы",
         desc: "Финальные тезисы.",
         html: `
@@ -1125,6 +1078,8 @@
     ];
 
     // ========= UI hooks =========
+    const onSceneEl = document.getElementById('onScene');
+
     const infoTitle = document.getElementById('infoTitle');
     const infoDesc  = document.getElementById('infoDesc');
 
@@ -1234,7 +1189,6 @@
       currentIndex = targetIndex;
       setFireTargetByIndex(currentIndex);
 
-      // режим для парящих карточек (0-й слайд собирает нужные)
       if (typeof window.setFloatCardsMode === 'function') window.setFloatCardsMode(currentIndex);
 
       setTimeout(() => { isAnimating = false; }, 220);
@@ -1250,8 +1204,88 @@
     function nextSlide(){
       goToIndex((currentIndex + 1) % slides.length);
     }
+    function prevSlide(){
+      goToIndex((currentIndex - 1 + slides.length) % slides.length);
+    }
+
     panelContinue.addEventListener('click', (e)=>{ e.preventDefault(); nextSlide(); });
     panelContinue.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') { e.preventDefault(); nextSlide(); } });
+
+    // ===== Swipe navigation (iPad / touch) =====
+    (function(){
+      if (!onSceneEl) return;
+
+      let sx = 0, sy = 0, st = 0;
+      let tracking = false;
+      let moved = false;
+
+      const THRESH = 58;      // минимум px для срабатывания
+      const AXIS_BIAS = 1.2;  // насколько горизонталь должна доминировать
+      const MAX_TIME = 850;   // мс
+
+      function shouldIgnoreTarget(t){
+        if (!t) return false;
+        if (t.closest && (t.closest('#timeline') || t.closest('#panelContinue') || t.closest('.btn'))) return true;
+        if (t.closest && t.closest('#panelBody')) return true; // чтобы текст можно было выделять
+        return false;
+      }
+
+      onSceneEl.addEventListener('touchstart', (e)=>{
+        if (document.body.classList.contains('is-splash')) return;
+        if (lightbox && lightbox.classList.contains('open')) return;
+        if (!e.touches || e.touches.length !== 1) return;
+        const t = e.target;
+        if (shouldIgnoreTarget(t)) return;
+
+        const touch = e.touches[0];
+        sx = touch.clientX;
+        sy = touch.clientY;
+        st = performance.now();
+        tracking = true;
+        moved = false;
+      }, { passive:true });
+
+      onSceneEl.addEventListener('touchmove', (e)=>{
+        if (!tracking) return;
+        if (!e.touches || e.touches.length !== 1) return;
+
+        const touch = e.touches[0];
+        const dx = touch.clientX - sx;
+        const dy = touch.clientY - sy;
+
+        if (!moved){
+          if (Math.abs(dx) > 12 || Math.abs(dy) > 12) moved = true;
+        }
+
+        // если пошёл явный горизонтальный свайп — слегка притормаживаем, чтобы не было “липких” жестов
+        if (Math.abs(dx) > Math.abs(dy) * AXIS_BIAS){
+          e.preventDefault();
+        }
+      }, { passive:false });
+
+      onSceneEl.addEventListener('touchend', (e)=>{
+        if (!tracking) return;
+        tracking = false;
+
+        const dt = performance.now() - st;
+        if (dt > MAX_TIME) return;
+        if (!moved) return;
+
+        const touch = (e.changedTouches && e.changedTouches[0]) ? e.changedTouches[0] : null;
+        if (!touch) return;
+
+        const dx = touch.clientX - sx;
+        const dy = touch.clientY - sy;
+
+        if (Math.abs(dx) < THRESH) return;
+        if (Math.abs(dx) < Math.abs(dy) * AXIS_BIAS) return;
+
+        if (dx < 0) nextSlide();
+        else prevSlide();
+      }, { passive:true });
+
+      onSceneEl.addEventListener('touchcancel', ()=>{ tracking = false; }, { passive:true });
+    })();
 
     // ===== Lightbox (kept as-is; currently unused) =====
     const lightbox = document.getElementById('lightbox');
@@ -1303,7 +1337,6 @@
 
       const COUNT = 12;
 
-      // важно: добавлены image7/8/9/11/12.png (чтобы их можно было "собирать" на 1-м слайде)
       const IMAGES = [
         "2.jpg",
         "10.png",
@@ -1382,11 +1415,8 @@
             p1: rand(0, Math.PI*2),
             p2: rand(0, Math.PI*2),
             wob: rand(0.35, 0.95),
-            // оригиналы
             o: null,
-            // цели (для мягкого перехода)
             t: null,
-            // текущая opacity (мягкая)
             opacity: 0.45
           };
 
@@ -1418,7 +1448,6 @@
           c.o.baseY = clamp(c.o.baseY, 18, Math.max(18, vp.h - 18 - c.h));
         }
 
-        // чтобы собранные карточки не "уехали" после ресайза
         if (typeof window.setFloatCardsMode === 'function') window.setFloatCardsMode(currentIndex);
       }
 
@@ -1427,10 +1456,9 @@
         if (!panel) return null;
 
         const pr = panel.getBoundingClientRect();
-        const pad = 14;      // насколько близко к рамке
-        const gap = 12;      // зазор от панели
+        const pad = 14;
+        const gap = 12;
 
-        // 5 точек вокруг панели (снаружи, чтобы не перекрывать текст)
         const yTop = pr.top + pad;
         const yMid = pr.top + pr.height * 0.48;
         const yBot = pr.top + pr.height - pad;
@@ -1448,13 +1476,9 @@
       }
 
       function applyMode(slideIndex){
-        // только на первом (карта) — собираем нужные изображения
         const gather = (slideIndex === 0);
-
-        // карточки-кандидаты
         const pinned = cards.filter(c => PIN_SET.has(c.src)).slice(0, 5);
 
-        // сброс целей всем
         for (const c of cards){
           c.t.baseX = c.o.baseX;
           c.t.baseY = c.o.baseY;
@@ -1469,38 +1493,31 @@
         const pts = computePinnedTargets();
         if (!pts) return;
 
-        // распределяем по точкам, учитывая размеры
         for (let i=0; i<pinned.length; i++){
           const c = pinned[i];
           const p = pts[i % pts.length];
 
           let tx;
-          if (p.side === 'L') tx = p.x - c.w; // прижимаем правый край карточки к левой стороне панели
-          else tx = p.x; // правая сторона: карточка начинается сразу после панели
+          if (p.side === 'L') tx = p.x - c.w;
+          else tx = p.x;
 
           let ty = p.y - (c.h * 0.5);
 
-          // кламп по экрану
           tx = clamp(tx, 16, Math.max(16, vp.w - 16 - c.w));
           ty = clamp(ty, 16, Math.max(16, vp.h - 16 - c.h));
 
           c.t.baseX = tx;
           c.t.baseY = ty;
 
-          // "слегка двигаются"
           const smallA = 18 + (i*4);
           c.t.ax = (Math.random() < 0.5 ? -1 : 1) * smallA;
           c.t.ay = (Math.random() < 0.5 ? -1 : 1) * (smallA * 0.8);
 
-          // немного ближе "к зрителю"
           c.t.z  = 120;
-
-          // выше непрозрачность, чтобы читалось
           c.t.opacity = 0.86;
         }
       }
 
-      // наружу: чтобы goToIndex дергал
       window.setFloatCardsMode = function(slideIndex){
         applyMode(slideIndex);
       };
@@ -1509,7 +1526,6 @@
         const now = t || performance.now();
 
         for (const c of cards){
-          // мягко тянем к целям
           const k = 0.07;
           c.baseX = lerp(c.baseX, c.t.baseX, k);
           c.baseY = lerp(c.baseY, c.t.baseY, k);
@@ -1682,7 +1698,6 @@
       setFireTargetByIndex(0);
       fireTick();
 
-      // сразу выставим режим на первом слайде
       if (typeof window.setFloatCardsMode === 'function') window.setFloatCardsMode(0);
 
       function onResize(){
